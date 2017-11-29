@@ -1,7 +1,8 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1251">
+
 	<TITLE></TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.1  (Win32)">
 	<META NAME="CREATED" CONTENT="20090416;11320264">
@@ -25,52 +26,52 @@
 	</STYLE>
 </HEAD>
 <BODY LANG="de-DE" LINK="#000080" VLINK="#800000" DIR="LTR">
-<H1 LANG="ru-RU" CLASS="western">1<SPAN LANG="ru-RU">регламент.</SPAN></H1>
+<H1 LANG="ru-RU" CLASS="western">1<SPAN LANG="ru-RU">СЂРµРіР»Р°РјРµРЅС‚.</SPAN></H1>
 <P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
 </P>
 <UL>
-	<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">Формы
-	для названия конкурса, даты проведения, организатора (Таблица
+	<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">Р¤РѕСЂРјС‹
+	РґР»СЏ РЅР°Р·РІР°РЅРёСЏ РєРѕРЅРєСѓСЂСЃР°, РґР°С‚С‹ РїСЂРѕРІРµРґРµРЅРёСЏ, РѕСЂРіР°РЅРёР·Р°С‚РѕСЂР° (РўР°Р±Р»РёС†Р°
 	setings)</SPAN></P>
-	<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">Формы
-	для категорий турнира (таблица category)</SPAN></P>
+	<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">Р¤РѕСЂРјС‹
+	РґР»СЏ РєР°С‚РµРіРѕСЂРёР№ С‚СѓСЂРЅРёСЂР° (С‚Р°Р±Р»РёС†Р° category)</SPAN></P>
 	<UL>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">название
-		(юниоры 1)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">соло
-		(да/нет)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">номер
-		отделения (1)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">программа
-		(1-</SPAN><SPAN LANG="en-US">st,2-la,3-</SPAN><SPAN LANG="ru-RU">десятка)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">минимальный
-		допустимый возраст(12)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">Максимальный
-		допустимый возраст(14)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">класс
-		пары допустимый в категории(</SPAN><SPAN LANG="en-US">A,B,C)</SPAN></P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm">тип
-		подсчета результатов(1-кресты+скейтинг в финале, 2-балы)</P>
-		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm">перечень
-		танцев(1,15,20)</P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">РЅР°Р·РІР°РЅРёРµ
+		(СЋРЅРёРѕСЂС‹ 1)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">СЃРѕР»Рѕ
+		(РґР°/РЅРµС‚)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">РЅРѕРјРµСЂ
+		РѕС‚РґРµР»РµРЅРёСЏ (1)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">РїСЂРѕРіСЂР°РјРјР°
+		(1-</SPAN><SPAN LANG="en-US">st,2-la,3-</SPAN><SPAN LANG="ru-RU">РґРµСЃСЏС‚РєР°)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">РјРёРЅРёРјР°Р»СЊРЅС‹Р№
+		РґРѕРїСѓСЃС‚РёРјС‹Р№ РІРѕР·СЂР°СЃС‚(12)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№
+		РґРѕРїСѓСЃС‚РёРјС‹Р№ РІРѕР·СЂР°СЃС‚(14)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><SPAN LANG="ru-RU">РєР»Р°СЃСЃ
+		РїР°СЂС‹ РґРѕРїСѓСЃС‚РёРјС‹Р№ РІ РєР°С‚РµРіРѕСЂРёРё(</SPAN><SPAN LANG="en-US">A,B,C)</SPAN></P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm">С‚РёРї
+		РїРѕРґСЃС‡РµС‚Р° СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ(1-РєСЂРµСЃС‚С‹+СЃРєРµР№С‚РёРЅРі РІ С„РёРЅР°Р»Рµ, 2-Р±Р°Р»С‹)</P>
+		<LI><P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm">РїРµСЂРµС‡РµРЅСЊ
+		С‚Р°РЅС†РµРІ(1,15,20)</P>
 	</UL>
 </UL>
-<H1 LANG="ru-RU" CLASS="western">2регистрация.</H1>
-<H1 LANG="ru-RU" CLASS="western">3Регламент (часть 2)</H1>
+<H1 LANG="ru-RU" CLASS="western">2СЂРµРіРёСЃС‚СЂР°С†РёСЏ.</H1>
+<H1 LANG="ru-RU" CLASS="western">3Р РµРіР»Р°РјРµРЅС‚ (С‡Р°СЃС‚СЊ 2)</H1>
 <P LANG="ru-RU" CLASS="western"><BR><BR>
 </P>
-<H1 LANG="ru-RU" CLASS="western">4Подготовка и печать документации
-для судей, спортсменов и т.д.</H1>
+<H1 LANG="ru-RU" CLASS="western">4РџРѕРґРіРѕС‚РѕРІРєР° Рё РїРµС‡Р°С‚СЊ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё
+РґР»СЏ СЃСѓРґРµР№, СЃРїРѕСЂС‚СЃРјРµРЅРѕРІ Рё С‚.Рґ.</H1>
 <P LANG="ru-RU" CLASS="western"><BR><BR>
 </P>
-<H1 LANG="ru-RU" CLASS="western">5Ввод оценок</H1>
+<H1 LANG="ru-RU" CLASS="western">5Р’РІРѕРґ РѕС†РµРЅРѕРє</H1>
 <P LANG="ru-RU" CLASS="western"><BR><BR>
 </P>
-<H1 LANG="ru-RU" CLASS="western">6Подсчет результатов тура</H1>
+<H1 LANG="ru-RU" CLASS="western">6РџРѕРґСЃС‡РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ С‚СѓСЂР°</H1>
 <P LANG="ru-RU" CLASS="western"><BR><BR>
 </P>
-<H1 LANG="ru-RU" CLASS="western">7Печать дипломов участников и
-отчетной документации</H1>
+<H1 LANG="ru-RU" CLASS="western">7РџРµС‡Р°С‚СЊ РґРёРїР»РѕРјРѕРІ СѓС‡Р°СЃС‚РЅРёРєРѕРІ Рё
+РѕС‚С‡РµС‚РЅРѕР№ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё</H1>
 <P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
 </P>
 </BODY>
