@@ -2,28 +2,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-
-	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.1  (Win32)">
-	<META NAME="CREATED" CONTENT="20090416;11320264">
-	<META NAME="CHANGED" CONTENT="20171129;21534772">
-	<META NAME="Info 1" CONTENT="">
-	<META NAME="Info 2" CONTENT="">
-	<META NAME="Info 3" CONTENT="">
-	<META NAME="Info 4" CONTENT="">
-	<STYLE TYPE="text/css">
-	<!--
-		@page { size: 21cm 29.7cm; margin: 2cm }
-		P { margin-bottom: 0.21cm }
-		P.western { so-language: ru-RU }
-		P.cjk { so-language: zxx }
-		P.ctl { so-language: zxx }
-		H1 { margin-bottom: 0.21cm; page-break-after: avoid }
-		H1.western { font-family: "Arial", sans-serif; font-size: 16pt; so-language: ru-RU; font-weight: bold }
-		H1.cjk { font-family: "Andale Sans UI"; font-size: 16pt; so-language: zxx; font-weight: bold }
-		H1.ctl { font-family: "Tahoma"; font-size: 16pt; so-language: zxx; font-weight: bold }
-	-->
-	</STYLE>
 </HEAD>
 <BODY LANG="de-DE" LINK="#000080" VLINK="#800000" DIR="LTR">
 <H1 LANG="ru-RU" CLASS="western">1<SPAN LANG="ru-RU">регламент.</SPAN></H1>
