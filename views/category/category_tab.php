@@ -58,7 +58,7 @@ $gridColumns = [
     'headerOptions' => ['class' => 'kartik-sheet-style'], 
     'expandOneOnly' => true
 ],
-'otd',
+// 'otd',
 'name',
 'clas',
 'program',
