@@ -37,18 +37,41 @@ class CategoryController extends AppController
      */
     public function actionIndex()
     {
+
+        // $otdCount = Category::find()
+        //     ->select(['otd'])
+        //     ->DISTINCT(true)
+        //     ->count();
+        
         $searchModel = new CategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        // for ($otd=1; $otd<=$otdCount; $otd++) {
 
-        $turSearchModel = new TurSearch();
-        $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams);        
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+            return $this->render('category_tab', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'turSearchModel' => $turSearchModel,
-            'turDataProvider' => $turDataProvider,
-        ]);
+            ]);
+        // }
+
+        
+
+        
+
+
+        // $turSearchModel = new TurSearch();
+        // $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams);        
+
+        
+
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        //     'turSearchModel' => $turSearchModel,
+        //     'turDataProvider' => $turDataProvider,
+        // ]);
     }
 
     /**

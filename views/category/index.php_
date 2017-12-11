@@ -43,6 +43,29 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);    ?>
 
+    
+
+    <?= GridView::widget([
+        'dataProvider' => $turDataProvider,
+        'filterModel' => $turSearchModel,
+        'columns' => [
+            'name',
+            'nomer',
+            'ParNextTur',
+            'regPairs',  
+            [
+                'attribute'=>'regPairs',
+                'label'=>'Кол-во участников',
+                'format'=>'text', // Возможные варианты: raw, html
+                'content'=>function($data){
+                    return $data->getRegPairs();
+                },
+                // 'filter' => Tur::getRegPairsList(),
+            ],         
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 
 
 

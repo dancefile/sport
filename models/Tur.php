@@ -113,5 +113,11 @@ class Tur extends \yii\db\ActiveRecord
         $count = $this->getIns()->count();
         return $count;
     }
+
+    public static function getRegPairsList()
+    {
+        $pairs = Tur::find()->ins->count()->all();
+        return $pairs;
+    }
 }
 

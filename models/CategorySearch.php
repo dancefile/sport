@@ -73,6 +73,7 @@ class CategorySearch extends Category
             ->andFilterWhere(['like', 'clas', $this->clas])
             ->andFilterWhere(['like', 'dances', $this->dances]);
 
+        // $query->andFilterWhere(['otd' => $otd]);
         
 
         return $dataProvider;
