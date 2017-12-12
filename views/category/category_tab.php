@@ -8,34 +8,12 @@ use app\models\TurSearch;
 use app\models\Category;
 // Generate a bootstrap responsive striped table with row highlighted on hover
 
-$this->title = 'Регламент';
+$this->title = 'Регламент турнира';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
 <?php
-
-    $colorPluginOptions =  [
-        'showPalette' => true,
-        'showPaletteOnly' => true,
-        'showSelectionPalette' => true,
-        'showAlpha' => false,
-        'allowEmpty' => false,
-        'preferredFormat' => 'name',
-        'palette' => [
-            [
-                "white", "black", "grey", "silver", "gold", "brown", 
-            ],
-            [
-                "red", "orange", "yellow", "indigo", "maroon", "pink"
-            ],
-            [
-                "blue", "green", "violet", "cyan", "magenta", "purple", 
-            ],
-        ]
-    ];
     $gridColumns = [
         [
             'class' => 'kartik\grid\ExpandRowColumn',
@@ -61,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'=>'otd', 
             'width'=>'310px',
             'value'=>function ($model, $key, $index, $widget) { 
-                return $model->otd->distinct();
+                return $model->otds->name;
             },
-            'group'=>true,  // enable grouping
+            'group'=>true,
             'groupedRow' => true,
         ],
         
@@ -84,10 +62,14 @@ $this->params['breadcrumbs'][] = $this->title;
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'panel'=>['type'=>'primary', 'heading'=>'Grid Grouping Example'],
-        'columns' => $gridColumns, // check the configuration for grid columns by clicking button above
-        'pjax' => true, // pjax is set to always true for this demo
-        // set your toolbar
+        'showPageSummary'=>true,
+        'striped'=>true,
+        'hover'=>true,
+        'pjax' => true,
+        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
+        
+        'columns' => $gridColumns,
+         
         'toolbar' =>  [
             ['content' => 
                 Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-success', 'onclick' => 'category/create']) . ' '.

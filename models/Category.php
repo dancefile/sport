@@ -39,7 +39,7 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['solo', 'otd', 'program', 'agemin', 'agemax', 'age_id', 'skay'], 'integer'],
+            [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'age_id', 'skay'], 'integer'],
             [['name', 'clas'], 'string', 'max' => 200],
             [['dances'], 'string', 'max' => 100],
             [['age_id'], 'exist', 'skipOnError' => true, 'targetClass' => Age::className(), 'targetAttribute' => ['age_id' => 'id']],
@@ -55,7 +55,7 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'solo' => 'Solo',
-            'otd' => 'Otd',
+            'otd_id' => 'Otd',
             'program' => 'Program',
             'agemin' => 'Agemin',
             'agemax' => 'Agemax',
@@ -71,7 +71,12 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getAge()
     {
-        return $this->hasOne(Age::className(), ['id' => 'age_id'])->inverseOf('categories');
+        return $this->hasOne(Age::className(), ['id' => 'age_id'])->inverseOf('category');
+    }
+
+    public function getOtds()
+    {
+        return $this->hasOne(Otd::className(), ['id' => 'otd_id'])->inverseOf('category');
     }
 
     /**

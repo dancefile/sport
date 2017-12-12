@@ -18,7 +18,7 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['id', 'solo', 'otd', 'program', 'agemin', 'agemax', 'age_id', 'skay'], 'integer'],
+            [['id', 'solo', 'otd_id', 'program', 'agemin', 'agemax', 'age_id', 'skay'], 'integer'],
             [['name', 'clas', 'dances'], 'safe'],
         ];
     }
@@ -61,7 +61,7 @@ class CategorySearch extends Category
         $query->andFilterWhere([
             'id' => $this->id,
             'solo' => $this->solo,
-            'otd' => $this->otd,
+            'otd_id' => $this->otd_id,
             'program' => $this->program,
             'agemin' => $this->agemin,
             'agemax' => $this->agemax,
