@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'=>'otd', 
             'width'=>'310px',
             'value'=>function ($model, $key, $index, $widget) { 
-                return $model->otds->name;
+                return 'Отделение ' . $model->otds->name;
             },
             'group'=>true,
             'groupedRow' => true,
