@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'toolbar' =>  [
             ['content' => 
-                Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => 'Добавить тур', 'class' => 'btn btn-success', 'href' => Url::to(["tur/create"])]) . ' '.
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['tur/create'], ['title' => 'Добавить тур', 'class' => 'btn btn-success']) . ' '.
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
             ],
             '{export}',
