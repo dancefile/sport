@@ -61,18 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'=>'otd', 
             'width'=>'310px',
             'value'=>function ($model, $key, $index, $widget) { 
-                return $model->otd;
+                return $model->otd->distinct();
             },
-            'filterType'=>GridView::FILTER_SELECT2,
-            'filter'=>ArrayHelper::map(Category::find()->orderBy('otd')->groupBy('otd')->asArray(), 'id', 'otd'), 
-            'filterWidgetOptions'=>[
-                'pluginOptions'=>['allowClear'=>true],
-            ],
             'group'=>true,  // enable grouping
             'groupedRow' => true,
-            'groupOddCssClass'=>'kv-grouped-row',  // configure odd group cell css class
-            'groupEvenCssClass'=>'kv-grouped-row', // configure even group cell css class
-            'subGroupOf'=>1,
         ],
         
         'name',
