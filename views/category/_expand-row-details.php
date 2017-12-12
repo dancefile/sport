@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TurSearch */
@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -33,6 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'status',
 
             ['class' => 'yii\grid\ActionColumn'],
+        ],
+        'toolbar' =>  [
+            ['content' => 
+                Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => 'Добавить тур', 'class' => 'btn btn-success', 'href' => Url::to(["tur/create"])]) . ' '.
+                Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
+            ],
+            '{export}',
+            '{toggleData}',
         ],
     ]); ?>
 
