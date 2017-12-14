@@ -49,7 +49,7 @@ class CategoryController extends AppController
 
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             
-            return $this->render('category_tab', [
+            return $this->render('reglament', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
 

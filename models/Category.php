@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\controllers;
 
 /**
  * This is the model class for table "category".
@@ -53,16 +54,18 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'solo' => 'Solo',
+            'name' => 'Название категории',
+            'solo' => 'Соло',
             'otd_id' => 'Otd',
-            'program' => 'Program',
-            'agemin' => 'Agemin',
-            'agemax' => 'Agemax',
+            'program' => 'Программа',
+            'agemin' => 'min возраст',
+            'agemax' => 'max возраст',
             'age_id' => 'Age ID',
-            'clas' => 'Clas',
-            'skay' => 'Skay',
-            'dances' => 'Dances',
+            'clas' => 'Класс',
+            'skay' => 'Подсчет результатов',
+            'dances' => 'Перечень танцев',
+            'reg_pairs' => 'Зарегистрировано пар',
+            'judges_count' => 'Количество судий'
         ];
     }
 
@@ -102,6 +105,22 @@ class Category extends \yii\db\ActiveRecord
     public static function find()
     {
         return new CategoryQuery(get_called_class());
+    }
+
+    public function getCatRegPairs($id)
+    {
+        
+        $s=0;
+        $turs = Tur::find()->where('category_id = :id', [ 'id' => $id ])->all();
+        foreach ($turs as $tur) {
+            $s = $s+$tur->regPairs;
+        }
+
+        return $s;
+        
+
+
+        
     }
 
 }

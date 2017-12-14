@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $turSearchModel->category_id = $model->id;
                 $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams); 
                 
-                return Yii::$app->controller->renderPartial('_expand-row-details', [
+                return Yii::$app->controller->renderPartial('_category_turs', [
                     'searchModel' => $turSearchModel, 
                     'dataProvider' => $turDataProvider,
                 ]);
@@ -54,6 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'agemax',
         'age_id',            
         'dances',
+        [
+            'attribute'=>'reg_pairs', 
+            'width'=>'30px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->getCatRegPairs($model->id);
+            },
+
+        ],
     
     ];
 
