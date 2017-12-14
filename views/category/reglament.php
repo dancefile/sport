@@ -51,8 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'skay',
         'solo',
         'agemin',
-        'agemax',
-        'age_id',            
+        'agemax',           
         'dances',
         [
             'attribute'=>'reg_pairs', 

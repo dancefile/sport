@@ -15,7 +15,6 @@ use app\controllers;
  * @property integer $program
  * @property integer $agemin
  * @property integer $agemax
- * @property integer $age_id
  * @property string $clas
  * @property integer $skay
  * @property string $dances
@@ -43,7 +42,6 @@ class Category extends \yii\db\ActiveRecord
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
             [['name', 'clas'], 'string', 'max' => 200],
             [['dances'], 'string', 'max' => 100],
-            [['age_id'], 'exist', 'skipOnError' => true, 'targetClass' => Age::className(), 'targetAttribute' => ['age_id' => 'id']],
         ];
     }
 
