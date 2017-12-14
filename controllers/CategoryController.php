@@ -10,6 +10,8 @@ use app\models\TurSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\grid\EditableColumnAction;
+use yii\helpers\ArrayHelper;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -58,7 +60,7 @@ class CategoryController extends AppController
 
         
 
-        
+    
 
 
         // $turSearchModel = new TurSearch();
@@ -73,6 +75,30 @@ class CategoryController extends AppController
         //     'turDataProvider' => $turDataProvider,
         // ]);
     }
+
+
+    public function actions()
+       {
+           return ArrayHelper::merge(parent::actions(), [
+               'editname' => [                                       // identifier for your editable column action
+                   'class' => EditableColumnAction::className(),     // action class name
+                   'modelClass' => Category::className(),                // the model for the record being edited
+                   // 'outputValue' => function ($model, $attribute, $key, $index) {
+                   //       return (int) $model->$attribute / 100;      // return any custom output value if desired
+                   // },
+                   'outputMessage' => function($model, $attribute, $key, $index) {
+                         return '';                                  // any custom error to return after model save
+                   },
+                   'showModelErrors' => true,                        // show model validation errors after save
+                   'errorOptions' => ['header' => '']                // error summary HTML options
+                   // 'postOnly' => true,
+                   // 'ajaxOnly' => true,
+                   // 'findModel' => function($id, $action) {},
+                   // 'checkAccess' => function($action, $model) {}
+               ]
+           ]);
+       }    
+
 
     /**
      * Displays a single Category model.

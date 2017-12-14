@@ -41,7 +41,7 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
-        $query = Category::find()->with('turs');
+        $query = Category::find();
 
         // add conditions that should always apply here
 

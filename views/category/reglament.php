@@ -6,7 +6,8 @@ use yii\helpers\ArrayHelper;
 use app\models\Tur;
 use app\models\TurSearch;
 use app\models\Category;
-// Generate a bootstrap responsive striped table with row highlighted on hover
+
+
 
 $this->title = 'Регламент турнира';
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,6 +15,25 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="category-index">
 
 <?php
+    $colorPluginOptions =  [
+        'showPalette' => true,
+        'showPaletteOnly' => true,
+        'showSelectionPalette' => true,
+        'showAlpha' => false,
+        'allowEmpty' => false,
+        'preferredFormat' => 'name',
+        'palette' => [
+            [
+                "white", "black", "grey", "silver", "gold", "brown", 
+            ],
+            [
+                "red", "orange", "yellow", "indigo", "maroon", "pink"
+            ],
+            [
+                "blue", "green", "violet", "cyan", "magenta", "purple", 
+            ],
+        ]
+    ];
     $gridColumns = [
         [
             'class' => 'kartik\grid\ExpandRowColumn',
@@ -44,8 +64,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'group'=>true,
             'groupedRow' => true,
         ],
-        
-        'name',
+
+
+        [
+            'class' => 'kartik\grid\EditableColumn',
+            'attribute' => 'name',
+            'vAlign' => 'middle',
+            'width' => '210px',
+
+            'editableOptions' =>  function ($model, $key, $index) use ($colorPluginOptions) {
+                return [
+                    'header' => 'Название категории', 
+                    'size' => 'md',
+                    'formOptions'=>['action' => ['/category/editname']],
+                ];
+            }
+        ],
+
         'clas',
         'program',
         'skay',
@@ -69,11 +104,12 @@ $this->params['breadcrumbs'][] = $this->title;
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'showPageSummary'=>true,
         'striped'=>true,
         'hover'=>true,
         'pjax' => true,
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
+
+        
         
         'columns' => $gridColumns,
          
