@@ -80,7 +80,7 @@ class CategoryController extends AppController
     public function actions()
        {
            return ArrayHelper::merge(parent::actions(), [
-               'editname' => [                                       // identifier for your editable column action
+               'editCell' => [                                       // identifier for your editable column action
                    'class' => EditableColumnAction::className(),     // action class name
                    'modelClass' => Category::className(),                // the model for the record being edited
                    // 'outputValue' => function ($model, $attribute, $key, $index) {
@@ -141,7 +141,7 @@ class CategoryController extends AppController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['reglament/index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

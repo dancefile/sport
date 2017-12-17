@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $turSearchModel->category_id = $model->id;
                 $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams); 
                 
-                return Yii::$app->controller->renderPartial('_category_turs', [
+                return Yii::$app->controller->renderPartial('_turs', [
                     'searchModel' => $turSearchModel, 
                     'dataProvider' => $turDataProvider,
                 ]);
@@ -69,33 +69,84 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'class' => 'kartik\grid\EditableColumn',
             'attribute' => 'name',
-            'vAlign' => 'middle',
-            'width' => '210px',
-
+            // 'width' => '210px',
             'editableOptions' =>  function ($model, $key, $index) use ($colorPluginOptions) {
                 return [
                     'header' => 'Название категории', 
                     'size' => 'md',
-                    'formOptions'=>['action' => ['/category/editname']],
+                    'formOptions'=>['action' => ['/category/editCell']],
                 ];
             }
         ],
+        [
+            'class' => 'kartik\grid\EditableColumn',
+            'attribute' => 'clas',
+            'width' => '50px',
+            'editableOptions' =>  function ($model, $key, $index) use ($colorPluginOptions) {
+                return [
+                    'header' => 'Класс', 
+                    'size' => 'md',
+                    'formOptions'=>['action' => ['/category/editCell']],
+                ];
+            }
+        ],
+        [
+            'attribute' => 'program',
+            'width' => '80px',
+        ],
+        [
+            'attribute' => 'skay',
+            'width' => '80px',
+        ],
+        [
+            'class' => 'kartik\grid\BooleanColumn',
+            'attribute' => 'solo', 
+            'vAlign' => 'middle'
 
-        'clas',
-        'program',
-        'skay',
-        'solo',
-        'agemin',
-        'agemax',           
-        'dances',
+        ],        
+        [
+            'attribute' => 'agemin',
+            'width' => '50px',
+        ],
+
+        [
+            'attribute' => 'agemax',
+            'width' => '50px',
+        ],
+        [
+            'attribute' => 'dances',
+            'width' => '100px',
+        ],
         [
             'attribute'=>'reg_pairs', 
-            'width'=>'30px',
+            'width'=>'50px',
             'value'=>function ($model, $key, $index, $widget) { 
                 return $model->getCatRegPairs($model->id);
             },
 
         ],
+
+        [
+            'attribute'=>'judges_count', 
+            'width'=>'50px',
+            'value'=>'agemax',
+
+        ],
+
+        // 'judges_count',
+
+        [
+            'class' => 'kartik\grid\ActionColumn',
+            'noWrap' => true,
+            'mergeHeader' => false,
+            'vAlign' => GridView::ALIGN_TOP,
+            'width' => '50px',
+            'template' => '{update}&nbsp;&nbsp;{delete}',
+            'urlCreator'=>function($action, $model, $key, $index){
+                return \yii\helpers\Url::to(['category/'.$action,'id'=>$model->id]);
+            }
+        ],
+
     
     ];
 
@@ -104,19 +155,20 @@ $this->params['breadcrumbs'][] = $this->title;
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'bootstrap' => true,
         'striped'=>true,
         'hover'=>true,
         'pjax' => true,
+        'responsive' => true,
+        'responsiveWrap' => false,
+        'condensed' => true,
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
-
-        
         
         'columns' => $gridColumns,
          
         'toolbar' =>  [
             ['content' => 
-                Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type' => 'button', 'title' => Yii::t('kvgrid', 'Add Book'), 'class' => 'btn btn-success', 'onclick' => 'category/create']) . ' '.
-                Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['category/create'], ['class' => 'btn btn-default']) 
             ],
             '{export}',
             '{toggleData}',

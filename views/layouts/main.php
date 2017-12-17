@@ -39,7 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
                         ['label' => 'Справочники', 'items' => [
-                                ['label' => 'Регламент', 'url' => ['/category/index']],
+                                ['label' => 'Регламент', 'url' => ['/reglament/index']],
                                 ['label' => 'Турниры', 'url' => ['/setting/index']],
                                 ],
                         ],

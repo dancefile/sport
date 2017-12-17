@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Category;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TurSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'category_id',
+            'category.name',
             'nomer',
             'name',
             'zahodcount',

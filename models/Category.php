@@ -61,8 +61,8 @@ class Category extends \yii\db\ActiveRecord
             'clas' => 'Класс',
             'skay' => 'Подсчет результатов',
             'dances' => 'Перечень танцев',
-            'reg_pairs' => 'Зарегистрировано пар',
-            'judges_count' => 'Количество судий'
+            'reg_pairs' => 'Пар',
+            'judges_count' => 'Cудий'
         ];
     }
 
@@ -108,6 +108,12 @@ class Category extends \yii\db\ActiveRecord
             $s = $s+$tur->regPairs;
         }
         return $s;        
+    }
+
+    public static function getPairsList()
+    {
+        $categories = Category::find()->select(['id', Category::getCatRegPairs($id)])->all();
+        return ArrayHelper::map($categories, 'id', 'name');;
     }
 
 }
