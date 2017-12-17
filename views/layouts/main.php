@@ -41,6 +41,7 @@ AppAsset::register($this);
                         ['label' => 'Справочники', 'items' => [
                                 ['label' => 'Регламент', 'url' => ['/category/index']],
                                 ['label' => 'Турниры', 'url' => ['/setting/index']],
+                                ['label' => 'Scating', 'url' => ['/scating/index']],
                                 ],
                         ],
 
