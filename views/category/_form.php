@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;
+
+use app\models\Otd;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Category */
 /* @var $form yii\widgets\ActiveForm */
@@ -26,8 +30,11 @@ use yii\widgets\ActiveForm;
             ]);
             
         ?>
-
-        <?= $form->field($model, 'otds')->textInput()?>
+        <?php
+            $otd = Otd::find()->all();
+            $items = ArrayHelper::map($otd,'id','name');
+            echo $form->field($model, 'otd_id')->dropDownList($items);
+        ?>
 
         <?= $form->field($model, 'program')
             ->radioList([
@@ -48,7 +55,16 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'agemax')->textInput() ?>
 
-        <?= $form->field($model, 'clas')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'clas')->textInput()
+            // ->checkboxList([
+            //     'N' => 'N',
+            //     'A' => 'A',
+            //     'B' => 'B',
+            //     'C' => 'C',
+            //     'D' => 'D',
+            //     'E' => 'E',
+            // ]);
+        ?>
 
         <?= $form->field($model, 'dances')->textInput(['maxlength' => true]) ?>
 

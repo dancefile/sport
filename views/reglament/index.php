@@ -56,10 +56,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
 
         [
-            'attribute'=>'otd', 
+            'attribute'=>'otd_id', 
             'width'=>'310px',
             'value'=>function ($model, $key, $index, $widget) { 
-                return 'Отделение ' . $model->otds->name;
+                return 'Отделение ' . $model->otd->name;
             },
             'group'=>true,
             'groupedRow' => true,
@@ -70,6 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'clas',
             'width' => '50px',
+            // 'value' => function ($model, $key, $index, $widget) { 
+            //     $array = $widget->clas;
+            //     $s = implode($array);
+            //     return  $s;
+            // }
         ],
         [
             'attribute' => 'program',
@@ -131,7 +136,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'template' => '{update}&nbsp;&nbsp;{delete}',
             'urlCreator'=>function($action, $model, $key, $index){
                 return \yii\helpers\Url::to(['category/'.$action,'id'=>$model->id]);
-            }
+            },
+            'header' => false,
         ],
 
     
@@ -142,12 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
-        'bootstrap' => true,
-        'striped'=>true,
-        'hover'=>true,
         'pjax' => true,
-        'responsive' => true,
-        'responsiveWrap' => false,
         'condensed' => true,
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
         

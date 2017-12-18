@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
-use app\models\Category;
+// use app\models\Category;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TurSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -28,11 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'nomer',
             'name',
             'zahodcount',
-            // 'typezahod',
-            // 'dances',
-            // 'ParNextTur',
-            // 'typeSkating',
-            // 'status',
+            'typezahod',
+            'dances',
+            'ParNextTur',
+            'typeSkating',
+            'status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

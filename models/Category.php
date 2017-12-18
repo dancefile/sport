@@ -41,7 +41,8 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
             [['name'], 'string', 'max' => 200],
-            [['dances', 'clas'], 'string', 'max' => 100],
+            [['dances'], 'string', 'max' => 100],
+            [['clas'], 'safe'],
         ];
     }
 
@@ -70,7 +71,7 @@ class Category extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
    
-    public function getOtds()
+    public function getOtd()
     {
         return $this->hasOne(Otd::className(), ['id' => 'otd_id'])->inverseOf('category');
     }
@@ -90,11 +91,6 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Tur::className(), ['category_id' => 'id'])->inverseOf('category');
     }
-
-    // public function getClas()
-    // {
-    //     return $this->hasOne(Clas::className(), ['id' => 'clas_id'])->inverseOf('category');
-    // }
 
     /**
      * @inheritdoc
