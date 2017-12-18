@@ -19,7 +19,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
-            [['name', 'clas', 'dances'], 'safe'],
+            [['name', 'dances', 'clas'], 'safe'],
         ];
     }
 

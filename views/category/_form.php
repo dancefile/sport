@@ -16,25 +16,39 @@ use yii\widgets\ActiveForm;
 
         
         <?= $form->field($model, 'solo')
-            ->checkbox([
-                'label' => 'Соло',
-                'labelOptions' => [
-                    'style' => 'padding-left:20px;'
-                ],
-                'disabled' => false
-            ]); ?>
+            ->radioList([
+                '1' => 'Пары',
+                '2' => 'Соло'
+            ],
+            [
+                'enableLabel' => false,
+                'template' => '{error}{hint}'
+            ]);
+            
+        ?>
 
-        <?= $form->field($model, 'otds')->textInput() ?>
+        <?= $form->field($model, 'otds')->textInput()?>
 
-        <?= $form->field($model, 'program')->textInput() ?>
+        <?= $form->field($model, 'program')
+            ->radioList([
+                '1' => 'Latina',
+                '2' => 'Standart'
+            ]); 
+        ?>
+
+        <?= $form->field($model, 'skay')
+            ->radioList([
+                '1' => 'Баллы',
+                '2' => 'Кресты',
+                '3' => 'Скейтинг'
+            ]); 
+        ?>
 
         <?= $form->field($model, 'agemin')->textInput() ?>
 
         <?= $form->field($model, 'agemax')->textInput() ?>
 
         <?= $form->field($model, 'clas')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'skay')->textInput() ?>
 
         <?= $form->field($model, 'dances')->textInput(['maxlength' => true]) ?>
 

@@ -40,8 +40,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
-            [['name', 'clas'], 'string', 'max' => 200],
-            [['dances'], 'string', 'max' => 100],
+            [['name'], 'string', 'max' => 200],
+            [['dances', 'clas'], 'string', 'max' => 100],
         ];
     }
 
@@ -91,14 +91,19 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(Tur::className(), ['category_id' => 'id'])->inverseOf('category');
     }
 
+    // public function getClas()
+    // {
+    //     return $this->hasOne(Clas::className(), ['id' => 'clas_id'])->inverseOf('category');
+    // }
+
     /**
      * @inheritdoc
      * @return CategoryQuery the active query used by this AR class.
      */
-    // public static function find()
-    // {
-    //     return new CategoryQuery(get_called_class());
-    // }
+    public static function find()
+    {
+        return new CategoryQuery(get_called_class());
+    }
 
     public function getCatRegPairs($id)
     { 
@@ -109,13 +114,6 @@ class Category extends \yii\db\ActiveRecord
         }
         return $s;        
     }
-
-    public static function getPairsList()
-    {
-        $categories = Category::find()->select(['id', Category::getCatRegPairs($id)])->all();
-        return ArrayHelper::map($categories, 'id', 'name');;
-    }
-
 }
 
 

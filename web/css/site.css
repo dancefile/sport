@@ -119,3 +119,9 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/* M Dolgopolov */
+
+.field-category-solo > .control-label {
+    display:none;
+}

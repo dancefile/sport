@@ -61,6 +61,11 @@ class Clas extends \yii\db\ActiveRecord
         return $this->hasMany(Dancer::className(), ['clas_id_la' => 'id'])->inverseOf('clasIdLa');
     }
 
+    public function getCategory()
+    {
+        return $this->hasMany(Category::className(), ['clas_id' => 'id']);
+    }
+
     /**
      * @inheritdoc
      * @return ClasQuery the active query used by this AR class.

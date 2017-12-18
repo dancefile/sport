@@ -65,43 +65,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'groupedRow' => true,
         ],
 
+        'name',
 
         [
-            'class' => 'kartik\grid\EditableColumn',
-            'attribute' => 'name',
-            // 'width' => '210px',
-            'editableOptions' =>  function ($model, $key, $index) use ($colorPluginOptions) {
-                return [
-                    'header' => 'Название категории', 
-                    'size' => 'md',
-                    'formOptions'=>['action' => ['/category/editCell']],
-                ];
-            }
-        ],
-        [
-            'class' => 'kartik\grid\EditableColumn',
             'attribute' => 'clas',
             'width' => '50px',
-            'editableOptions' =>  function ($model, $key, $index) use ($colorPluginOptions) {
-                return [
-                    'header' => 'Класс', 
-                    'size' => 'md',
-                    'formOptions'=>['action' => ['/category/editCell']],
-                ];
-            }
         ],
         [
             'attribute' => 'program',
             'width' => '80px',
+            'value' => function ($model, $key, $index, $widget) { 
+                return $model->program == '1' ? 'Latina' : 'Standart' ;
+            }
         ],
         [
             'attribute' => 'skay',
             'width' => '80px',
+            'value' => function ($model, $key, $index, $widget) { 
+                return $model->skay == '1' ? 'Баллы' : ($model->skay == '2' ? 'Кресты' : 'Скейтинг') ;
+            }
         ],
         [
-            'class' => 'kartik\grid\BooleanColumn',
             'attribute' => 'solo', 
-            'vAlign' => 'middle'
+            'width' => '80px',
+            'value' => function ($model, $key, $index, $widget) { 
+                return $model->solo == '1' ? 'Пары' : 'Соло' ;
+            }
 
         ],        
         [
@@ -133,8 +122,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
 
-        // 'judges_count',
-
         [
             'class' => 'kartik\grid\ActionColumn',
             'noWrap' => true,
@@ -154,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'bootstrap' => true,
         'striped'=>true,
         'hover'=>true,
