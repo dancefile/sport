@@ -125,3 +125,9 @@ a.desc:after {
 .field-category-solo > .control-label {
     display:none;
 }
+
+#category-dances label, #category-clas label {
+    background: rgb(221, 221, 221);
+    padding: 5px 10px;
+    margin-right: 10px;
+}

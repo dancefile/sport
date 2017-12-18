@@ -70,8 +70,8 @@ class Category extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        $this->clas = implode($this->clas);
-        $this->dances = implode($this->dances);
+        $this->clas = implode(", ", $this->clas);
+        $this->dances = implode(", ", $this->dances);
         return  true;
     }
 

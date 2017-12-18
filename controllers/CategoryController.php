@@ -145,6 +145,9 @@ class CategoryController extends AppController
     {
         $model = $this->findModel($id);
 
+        $model->clas = explode(", ", $model->clas);
+        $model->dances = explode(", ", $model->dances);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['reglament/index']);
         } else {
