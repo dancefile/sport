@@ -38,6 +38,13 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+        
+		                ['label' => 'Судьи', 'items' => [
+                                ['label' => 'Список', 'url' => ['/judges/list']],
+                                ['label' => 'Шахматка', 'url' => ['/judges/shaxmat']],
+
+                                ],
+                        ],
                         ['label' => 'Справочники', 'items' => [
                                 ['label' => 'Регламент', 'url' => ['/reglament/index']],
                                 ['label' => 'Турниры', 'url' => ['/setting/index']],
