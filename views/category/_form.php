@@ -27,6 +27,15 @@ $this->registerCssFile('css/jquery-ui.css');
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+        <?php
+            $otd = Otd::find()->all();
+            $items = ArrayHelper::map($otd,'id','name');
+            echo $form->field($model, 'otd_id')->dropDownList($items);
+        ?>
+
+        <?= $form->field($model, 'agemin')->textInput() ?>
+
+        <?= $form->field($model, 'agemax')->textInput() ?>
         
         <?= $form->field($model, 'solo')
             ->radioList([
@@ -39,11 +48,7 @@ $this->registerCssFile('css/jquery-ui.css');
             ]);
             
         ?>
-        <?php
-            $otd = Otd::find()->all();
-            $items = ArrayHelper::map($otd,'id','name');
-            echo $form->field($model, 'otd_id')->dropDownList($items);
-        ?>
+        
 
         <?= $form->field($model, 'program')
             ->radioList([
@@ -69,15 +74,16 @@ $this->registerCssFile('css/jquery-ui.css');
                 'W' => 'Wals',
                 'V' => 'Vienus wals',
                 'Q' => 'QuickStep',
-                
+                'Ch' => 'ChaCha',
+                'R' => 'Rumba',
+                'J' => 'Jive',
+                'SF' => 'Slow Foxtrot',                
             ]);
         ?>
         
         <!--<input type="submit" id="save" value="ok">-->
 
-        <?= $form->field($model, 'agemin')->textInput() ?>
-
-        <?= $form->field($model, 'agemax')->textInput() ?>
+        
 
         <?= $form->field($model, 'clas')
             ->checkboxList([

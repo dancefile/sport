@@ -121,13 +121,29 @@ a.desc:after {
 }
 
 /* M Dolgopolov */
-
+label{
+    font-weight: normal;
+}
 .field-category-solo > .control-label {
     display:none;
 }
-
+#category-dances, #category-clas, #category-skay, #category-program, #category-solo{
+    border: 1px solid #cccccc;
+    background: #fff9e8;
+    padding: 10px;
+}
 #category-dances label, #category-clas label {
     background: rgb(221, 221, 221);
     padding: 5px 10px;
     margin-right: 10px;
+}
+
+.panel, .panel-heading{
+    border-radius: 0;
+}
+
+.field-category-agemin, .field-category-agemax, .field-category-otd_id{
+    width: 90px;
+    display: inline-block;
+    margin-right: 20px;
 }
