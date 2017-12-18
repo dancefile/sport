@@ -70,10 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'clas',
             'width' => '50px',
-            // 'value' => function ($model, $key, $index, $widget) { 
-            //     $array = $widget->clas;
-            //     $s = implode($array);
-            //     return  $s;
+            // 'value' => function ($model, $key, $index, $widget) {
+            //     return $model->classStr;
             // }
         ],
         [

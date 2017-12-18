@@ -25,6 +25,8 @@ use app\controllers;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    public $classStr;
+
     /**
      * @inheritdoc
      */
@@ -40,7 +42,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
-            [['name'], 'string', 'max' => 200],
+            [['name', 'classStr'], 'string', 'max' => 200],
             [['dances'], 'string', 'max' => 100],
             [['clas'], 'safe'],
         ];
@@ -65,6 +67,13 @@ class Category extends \yii\db\ActiveRecord
             'reg_pairs' => 'Пар',
             'judges_count' => 'Cудий'
         ];
+    }
+
+
+    public function beforeSave($insert)
+    {
+        $this->clas = implode($this->clas);
+        return  true;
     }
 
     /**

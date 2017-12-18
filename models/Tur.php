@@ -55,14 +55,14 @@ class Tur extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'category_id' => 'Category ID',
-            'nomer' => 'Nomer',
-            'name' => 'Name',
-            'zahodcount' => 'Zahodcount',
-            'typezahod' => 'Typezahod',
-            'dances' => 'Dances',
-            'ParNextTur' => 'Par Next Tur',
-            'typeSkating' => 'Type Skating',
-            'status' => 'Status',
+            'nomer' => 'Номер',
+            'name' => 'Название тура',
+            'zahodcount' => 'Кол-во заходов',
+            'typezahod' => 'Форм. заходов',
+            'dances' => 'Перечень танцев',
+            'ParNextTur' => 'Пар в след. тур',
+            'typeSkating' => 'Система подсчета',
+            'status' => 'Статус',
         ];
     }
 

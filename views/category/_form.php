@@ -48,22 +48,26 @@ use app\models\Otd;
                 '1' => 'Баллы',
                 '2' => 'Кресты',
                 '3' => 'Скейтинг'
-            ]); 
+            ],
+            [
+                'default' => '1'
+            ]
+            ); 
         ?>
 
         <?= $form->field($model, 'agemin')->textInput() ?>
 
         <?= $form->field($model, 'agemax')->textInput() ?>
 
-        <?= $form->field($model, 'clas')->textInput()
-            // ->checkboxList([
-            //     'N' => 'N',
-            //     'A' => 'A',
-            //     'B' => 'B',
-            //     'C' => 'C',
-            //     'D' => 'D',
-            //     'E' => 'E',
-            // ]);
+        <?= $form->field($model, 'clas')
+            ->checkboxList([
+                'N' => 'N',
+                'A' => 'A',
+                'B' => 'B',
+                'C' => 'C',
+                'D' => 'D',
+                'E' => 'E',
+            ]);
         ?>
 
         <?= $form->field($model, 'dances')->textInput(['maxlength' => true]) ?>

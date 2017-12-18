@@ -121,6 +121,11 @@ class CategoryController extends AppController
     {
         $model = new Category();
 
+        //Значения по умолчанию
+        $model->skay = 1;
+        $model->solo = 1;
+        $model->program = 1;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['reglament/index']);
         } else {
