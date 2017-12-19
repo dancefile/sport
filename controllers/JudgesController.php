@@ -6,6 +6,9 @@ use Yii;
 use yii\web\Controller;
 use app\models\JudgeSearch;
 use app\models\Judge;
+use app\models\Otd;
+use app\models\Category;
+use app\models\Chess;
 
 class JudgesController extends \yii\web\Controller
 {
@@ -14,36 +17,24 @@ class JudgesController extends \yii\web\Controller
 	public function actionList()
 	{
 	 	
-		        $searchModel = new JudgeSearch();
+		$searchModel = new JudgeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('list', [
-            'dataProvider' => $dataProvider,
-        ]);	
+        return $this->render('list', ['dataProvider' => $dataProvider,]);	
 	}
 
     public function actionCreate()
     {
         $model = new Judge();
-
-        //Значения по умолчанию
-        //$model->skay = 1;
-        //$model->solo = 1;
-        //$model->program = 1;
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['judges/list']);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model,]);
         }
     }
 	
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['list']);
     }
 
@@ -60,9 +51,6 @@ protected function findModel($id)
     {
         $model = $this->findModel($id);
 
-     //   $model->clas = explode(", ", $model->clas);
-     //   $model->dances = explode(", ", $model->dances);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['judges/list']);
         } else {
@@ -73,5 +61,24 @@ protected function findModel($id)
     }
 
 
+    public function actionShaxmat($otd=0)
+    {
+    	
+
+		if ($otd) {
+			$otdes = Otd::findOne($otd);
+			$Categories = Category::find()->where(['otd_id' => $otd])->orderBy('name')->all();
+			$Chess = Chess::findall(['category_id' => 30]);
+			$Judges = Judge::find()->orderBy('name')->all();
+			return $this->render('shaxmat', ['otd' => $otd, 'otdname' => $otdes->name, 'Categories' => $Categories, 'Chess' => $Chess, 'Judges' => $Judges]);	
+					 } else {
+					 		$otdes = Otd::find()->orderBy('name')->all(); 
+		            		return $this->render('listotd', ['otdes' => $otdes]);
+					 	}
+		
+		//return $this->redirect(['judges/shaxmat','otd'=>'1']);;
+
+
+	}
 
 }
