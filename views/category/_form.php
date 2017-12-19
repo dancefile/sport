@@ -8,10 +8,10 @@ use yii\helpers\ArrayHelper;
 use app\models\Otd;
  
 
-$this->registerJsFile('sport/web/js/jquery-ui.min.js',
+$this->registerJsFile('js/jquery-ui.min.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-$this->registerJsFile('sport/web/js/main.js',
+$this->registerJsFile('js/main.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
 $this->registerCssFile('css/jquery-ui.css');
