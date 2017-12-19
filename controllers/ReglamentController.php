@@ -40,31 +40,16 @@ class ReglamentController extends AppController
     public function actionIndex()
     {        
         $searchModel = new CategorySearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);      
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);      
+        
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
 
-            ]);
+        ]);
     }
 
-
-    // public function actions()
-    //    {
-    //        return ArrayHelper::merge(parent::actions(), [
-    //            'editCell' => [                                       // identifier for your editable column action
-    //                'class' => EditableColumnAction::className(),     // action class name
-    //                'modelClass' => Category::className(),                // the model for the record being edited
-    //                'outputMessage' => function($model, $attribute, $key, $index) {
-    //                      return '';                                  // any custom error to return after model save
-    //                },
-    //                'showModelErrors' => true,                        // show model validation errors after save
-    //                'errorOptions' => ['header' => '']                // error summary HTML options
-    //            ]
-    //        ]);
-    //    }    
-
-
+    
     /**
      * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

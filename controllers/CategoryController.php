@@ -39,41 +39,15 @@ class CategoryController extends AppController
      */
     public function actionIndex()
     {
-
-        // $otdCount = Category::find()
-        //     ->select(['otd'])
-        //     ->DISTINCT(true)
-        //     ->count();
         
         $searchModel = new CategorySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        // for ($otd=1; $otd<=$otdCount; $otd++) {
+        return $this->render('reglament', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
 
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            
-            return $this->render('reglament', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-
-            ]);
-        // }
-
-        
-
-    
-
-
-        // $turSearchModel = new TurSearch();
-        // $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams);        
-
-        
-
-        // return $this->render('index', [
-        //     'searchModel' => $searchModel,
-        //     'dataProvider' => $dataProvider,
-        //     'turSearchModel' => $turSearchModel,
-        //     'turDataProvider' => $turDataProvider,
-        // ]);
+        ]);
     }
 
 
@@ -83,18 +57,11 @@ class CategoryController extends AppController
                'editCell' => [                                       // identifier for your editable column action
                    'class' => EditableColumnAction::className(),     // action class name
                    'modelClass' => Category::className(),                // the model for the record being edited
-                   // 'outputValue' => function ($model, $attribute, $key, $index) {
-                   //       return (int) $model->$attribute / 100;      // return any custom output value if desired
-                   // },
                    'outputMessage' => function($model, $attribute, $key, $index) {
                          return '';                                  // any custom error to return after model save
                    },
                    'showModelErrors' => true,                        // show model validation errors after save
                    'errorOptions' => ['header' => '']                // error summary HTML options
-                   // 'postOnly' => true,
-                   // 'ajaxOnly' => true,
-                   // 'findModel' => function($id, $action) {},
-                   // 'checkAccess' => function($action, $model) {}
                ]
            ]);
        }    

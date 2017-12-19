@@ -8,6 +8,8 @@ use app\models\TurSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use kartik\grid\EditableColumnAction;
 
 /**
  * TurController implements the CRUD actions for Tur model.
@@ -29,6 +31,22 @@ class TurController extends Controller
         ];
     }
 
+
+
+    public function actions()
+       {
+           return ArrayHelper::merge(parent::actions(), [
+               'editCell' => [                                       // identifier for your editable column action
+                   'class' => EditableColumnAction::className(),     // action class name
+                   'modelClass' => Tur::className(),                // the model for the record being edited
+                   'outputMessage' => function($model, $attribute, $key, $index) {
+                         return '';                                  // any custom error to return after model save
+                   },
+                   'showModelErrors' => true,                        // show model validation errors after save
+                   'errorOptions' => ['header' => '']                // error summary HTML options
+               ]
+           ]);
+       }    
     /**
      * Lists all Tur models.
      * @return mixed
@@ -61,12 +79,15 @@ class TurController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($category_id)
     {
         $model = new Tur();
 
+        $model->typeSkating = 1;
+        $model->category_id = $category_id;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['reglament/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +106,7 @@ class TurController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['reglament/index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -103,7 +124,7 @@ class TurController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['reglament/index']);
     }
 
     /**

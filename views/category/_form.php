@@ -2,9 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
 use yii\helpers\ArrayHelper;
-
 use app\models\Otd;
  
 
@@ -62,11 +60,7 @@ $this->registerCssFile('css/jquery-ui.css');
                 '1' => 'Баллы',
                 '2' => 'Кресты',
                 '3' => 'Скейтинг'
-            ],
-            [
-                'default' => '1'
-            ]
-            ); 
+            ]); 
         ?>
         
         <?= $form->field($model, 'dances')

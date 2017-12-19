@@ -40,7 +40,7 @@ class Tur extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'nomer'], 'required'],
-            [['category_id', 'nomer', 'zahodcount', 'typezahod', 'ParNextTur', 'typeSkating', 'status'], 'integer'],
+            [['nomer', 'zahodcount', 'typezahod', 'ParNextTur', 'typeSkating', 'status'], 'integer'],
             [['name'], 'string', 'max' => 250],
             [['dances'], 'string', 'max' => 200],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],

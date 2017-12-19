@@ -2,6 +2,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Category;
+ 
+
+$this->registerJsFile('sport/web/js/jquery-ui.min.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerJsFile('sport/web/js/main.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerCssFile('css/jquery-ui.css');
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tur */
@@ -12,7 +23,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?php
+        $category = Category::find()->all();
+        $items = ArrayHelper::map($category,'id','name');
+        echo $form->field($model, 'category_id')->dropDownList($items);
+    ?>
 
     <?= $form->field($model, 'nomer')->textInput() ?>
 
@@ -22,13 +37,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'typezahod')->textInput() ?>
 
-    <?= $form->field($model, 'dances')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'dances')
+        ->checkboxList([
+            'W' => 'Wals',
+            'V' => 'Vienus wals',
+            'Q' => 'QuickStep',
+            'Ch' => 'ChaCha',
+            'R' => 'Rumba',
+            'J' => 'Jive',
+            'SF' => 'Slow Foxtrot',                
+        ]);
+    ?>
 
     <?= $form->field($model, 'ParNextTur')->textInput() ?>
 
-    <?= $form->field($model, 'typeSkating')->textInput() ?>
+    <?= $form->field($model, 'typeSkating')
+        ->radioList([
+            '1' => 'Баллы',
+            '2' => 'Кресты',
+            '3' => 'Скейтинг'
+        ]); 
+    ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

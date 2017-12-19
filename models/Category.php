@@ -41,7 +41,6 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
             [['name'], 'string', 'max' => 200],
-            // [[], 'string', 'max' => 100],
             [['clas', 'dances'], 'safe'],
         ];
     }

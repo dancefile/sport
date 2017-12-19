@@ -1,12 +1,13 @@
 
     $(function(){
         $('#category-dances').sortable();
+        $('#tur-dances').sortable();
          
         // if ($("#category-solo inpur:radio").value = 2) {alert('rere')};
 
-        $("inpur:radio").click(function(){
-        	alert ('gfgfg');
-        });
+        // $("input:radio").click(function(){
+        // 	alert ('gfgfg');
+        // });
     });
 
     
