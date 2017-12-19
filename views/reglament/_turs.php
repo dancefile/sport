@@ -10,8 +10,8 @@ use yii\helpers\ArrayHelper;
 /* @var $searchModel app\models\TurSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Список туров';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->title = 'Список туров';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tur-index">
 
