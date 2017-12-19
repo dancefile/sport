@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Otd;
+use app\models\Judge;
  
 
 $this->registerJsFile('js/jquery-ui.min.js',

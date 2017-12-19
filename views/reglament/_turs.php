@@ -32,11 +32,28 @@ use yii\helpers\ArrayHelper;
             'name',
             'nomer',
             'zahodcount',
-            'typezahod',
+            
             'dances',
             'regPairs',
             'ParNextTur',
-            'typeSkating',
+            
+            [
+                'attribute' => 'typezahod',
+                'width' => '80px',
+                'value' => function ($model, $key, $index, $widget) { 
+                    return $model->typezahod == '1' ? 'Постоянный' : ($model->typezahod == '2' ? 'Переменный' : 'Чередование') ;
+                }
+            ],
+
+
+            [
+                'attribute' => 'typeSkating',
+                'width' => '80px',
+                'value' => function ($model, $key, $index, $widget) { 
+                    return $model->typeSkating == '1' ? 'Баллы' : ($model->typeSkating == '2' ? 'Кресты' : 'Скейтинг') ;
+                }
+            ],
+
             'status',
 
              [

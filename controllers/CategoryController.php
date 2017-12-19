@@ -134,7 +134,7 @@ class CategoryController extends AppController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['reglament/index']);
     }
 
     /**

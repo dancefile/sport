@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\controllers;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category".
@@ -41,7 +42,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
             [['name'], 'string', 'max' => 200],
-            [['clas', 'dances'], 'safe'],
+            [['clas', 'dances', 'judges_list'], 'safe'],
         ];
     }
 
@@ -116,6 +117,12 @@ class Category extends \yii\db\ActiveRecord
             $s = $s+$tur->regPairs;
         }
         return $s;        
+    }
+
+    public function getJudgesList()
+    {
+        $jlist = ArrayHelper::map(Judge::find()->all(), 'id', 'name') ;
+        return $jlist;
     }
 }
 

@@ -35,7 +35,13 @@ $this->registerCssFile('css/jquery-ui.css');
 
     <?= $form->field($model, 'zahodcount')->textInput() ?>
 
-    <?= $form->field($model, 'typezahod')->textInput() ?>
+    <?= $form->field($model, 'typezahod')
+        ->radioList([
+            '1' => 'Постоянный',
+            '2' => 'Переменный',
+            '3' => 'Чередование'
+        ]); 
+    ?>
 
     <?= $form->field($model, 'dances')
         ->checkboxList([

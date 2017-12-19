@@ -104,7 +104,8 @@ class TurController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->dances = explode(", ", $model->dances);
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['reglament/index']);
         } else {

@@ -42,8 +42,9 @@ class Tur extends \yii\db\ActiveRecord
             [['category_id', 'nomer'], 'required'],
             [['nomer', 'zahodcount', 'typezahod', 'ParNextTur', 'typeSkating', 'status'], 'integer'],
             [['name'], 'string', 'max' => 250],
-            [['dances'], 'string', 'max' => 200],
+            // [['dances'], 'string', 'max' => 200],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['dances'], 'safe'],
         ];
     }
 
@@ -64,6 +65,12 @@ class Tur extends \yii\db\ActiveRecord
             'typeSkating' => 'Система подсчета',
             'status' => 'Статус',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->dances = implode(", ", $this->dances);
+        return  true;
     }
 
     /**

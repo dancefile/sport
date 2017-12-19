@@ -196,7 +196,7 @@ class ExpandRowColumn extends DataColumn
      * @var string|integer the animation duration to slide up/down the detail row.
      * @see http://api.jquery.com/slidedown/
      */
-    public $detailAnimationDuration = 'slow';
+    public $detailAnimationDuration = 'fast';
 
     /**
      * @inheritdoc

@@ -7,6 +7,7 @@ use app\models\Category;
 use app\models\CategorySearch;
 use app\models\Tur;
 use app\models\TurSearch;
+use app\models\Judge;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
