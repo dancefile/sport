@@ -47,9 +47,9 @@ class Judge extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'sname' => 'Sname',
-            'language_id' => 'Language ID',
+            'name' => 'Имя',
+            'sname' => 'Фамилия',
+            'language_id' => 'Язык',
         ];
     }
 

@@ -19,13 +19,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
             'sname',
-            'language_id',
-            ['class' => 'yii\grid\ActionColumn'],
+                    [
+            'attribute' => 'language_id',
+            
+            'value' => function ($model, $key, $index, $widget) { 
+                return $model->language_id == '1' ? 'Английский' : 'Русский' ;
+            }
+        ],
+            
+            ['class' => 'yii\grid\ActionColumn',
+            'template' => '{update}&nbsp;&nbsp;{delete}',
+			'header' => false,            
+            ],
         ],
     ]); ?>
 </div>
