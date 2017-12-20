@@ -71,7 +71,7 @@ use yii\helpers\ArrayHelper;
         ],
         'toolbar' =>  [
             ['content' => 
-                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['tur/create','category_id'=>$searchModel->category_id], ['title' => 'Добавить тур', 'class' => 'btn btn-success']) . ' '.
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['tur/create', 'category_id'=>$searchModel->category_id, 'dances' => $searchModel->category->dances], ['title' => 'Добавить тур', 'class' => 'btn btn-success']) . ' '.
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
             ],
             '{export}',

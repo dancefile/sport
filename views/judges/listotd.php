@@ -12,10 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-		<? foreach ($otdes as $otd): ?>
-     <p>
- <?= Html::a($otd->name, ['shaxmat','otd'=>$otd->id]) ?>
-     </p>
-<?php endforeach; ?>
-
+	<?php foreach ($otdes as $otd): ?>
+	    <p>
+	 		<?= Html::a($otd->name, ['shaxmat','otd'=>$otd->id]) ?>
+	    </p>
+	<?php endforeach; ?>
 </div>

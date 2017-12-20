@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Tur;
-use app\models\TurSearch;
+use app\models\Chess;
+use app\models\ChessSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
-use kartik\grid\EditableColumnAction;
 
 /**
- * TurController implements the CRUD actions for Tur model.
+ * ChessController implements the CRUD actions for Chess model.
  */
-class TurController extends Controller
+class ChessController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,29 +29,13 @@ class TurController extends Controller
         ];
     }
 
-
-
-    public function actions()
-       {
-           return ArrayHelper::merge(parent::actions(), [
-               'editCell' => [                                       // identifier for your editable column action
-                   'class' => EditableColumnAction::className(),     // action class name
-                   'modelClass' => Tur::className(),                // the model for the record being edited
-                   'outputMessage' => function($model, $attribute, $key, $index) {
-                         return '';                                  // any custom error to return after model save
-                   },
-                   'showModelErrors' => true,                        // show model validation errors after save
-                   'errorOptions' => ['header' => '']                // error summary HTML options
-               ]
-           ]);
-       }    
     /**
-     * Lists all Tur models.
+     * Lists all Chess models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TurSearch();
+        $searchModel = new ChessSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +45,7 @@ class TurController extends Controller
     }
 
     /**
-     * Displays a single Tur model.
+     * Displays a single Chess model.
      * @param integer $id
      * @return mixed
      */
@@ -75,21 +57,17 @@ class TurController extends Controller
     }
 
     /**
-     * Creates a new Tur model.
+     * Creates a new Chess model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($category_id, $dances)
+    public function actionCreate($category_id)
     {
-        $model = new Tur();
-
-        $model->typeSkating = 1;
-        $model->typezahod = 1;
+        $model = new Chess();
         $model->category_id = $category_id;
-        $model->dances = explode(", ", $dances);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['reglament/index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -98,7 +76,7 @@ class TurController extends Controller
     }
 
     /**
-     * Updates an existing Tur model.
+     * Updates an existing Chess model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -106,10 +84,9 @@ class TurController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->dances = explode(", ", $model->dances);
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['reglament/index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -118,7 +95,7 @@ class TurController extends Controller
     }
 
     /**
-     * Deletes an existing Tur model.
+     * Deletes an existing Chess model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -127,19 +104,19 @@ class TurController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['reglament/index']);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Tur model based on its primary key value.
+     * Finds the Chess model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tur the loaded model
+     * @return Chess the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tur::findOne($id)) !== null) {
+        if (($model = Chess::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

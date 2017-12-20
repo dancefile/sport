@@ -52,7 +52,8 @@ $this->registerCssFile('css/jquery-ui.css');
         <?= $form->field($model, 'program')
             ->radioList([
                 '1' => 'Latina',
-                '2' => 'Standart'
+                '2' => 'Standart',
+                '3' => '10 dances',
             ]); 
         ?>
 
@@ -91,10 +92,18 @@ $this->registerCssFile('css/jquery-ui.css');
             ]);
         ?>
 
+        <?= $form->field($model, 'chesses_list')
+            ->checkboxList(
+                Judge::find()->select(['sname'])->indexBy('id')->column()
+            );
+        ?>
+        
+
         
 
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            
         </div>
 
     <?php ActiveForm::end(); ?>

@@ -25,6 +25,7 @@ class JudgesController extends \yii\web\Controller
     public function actionCreate()
     {
         $model = new Judge();
+        $model->language_id = 1;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['judges/list']);
         } else {
@@ -71,14 +72,12 @@ protected function findModel($id)
 			$Chess = Chess::findall(['category_id' => 30]);
 			$Judges = Judge::find()->orderBy('name')->all();
 			return $this->render('shaxmat', ['otd' => $otd, 'otdname' => $otdes->name, 'Categories' => $Categories, 'Chess' => $Chess, 'Judges' => $Judges]);	
-					 } else {
-					 		$otdes = Otd::find()->orderBy('name')->all(); 
-		            		return $this->render('listotd', ['otdes' => $otdes]);
-					 	}
+    	} else {
+	 		$otdes = Otd::find()->orderBy('name')->all(); 
+    		return $this->render('listotd', ['otdes' => $otdes]);
+	 	}
 		
 		//return $this->redirect(['judges/shaxmat','otd'=>'1']);;
-
-
 	}
 
 }

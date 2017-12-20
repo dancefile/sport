@@ -42,7 +42,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
             [['name'], 'string', 'max' => 200],
-            [['clas', 'dances', 'judges_list'], 'safe'],
+            [['clas', 'dances', 'chesses_list'], 'safe'],
         ];
     }
 
@@ -67,11 +67,22 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    public $chesses_list;
 
     public function beforeSave($insert)
     {
         $this->clas = implode(", ", $this->clas);
         $this->dances = implode(", ", $this->dances);
+
+        $judgeArr = $this->chesses_list;
+        Chess::deleteAll(['category_id' => $this->id]);
+        foreach ($judgeArr as $judge) {   
+            $chess = new Chess;
+            $chess->judge_id = $judge;
+            $chess->category_id = $this->id;
+            $chess->save();
+        }
+        
         return  true;
     }
 
@@ -92,6 +103,10 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(Chess::className(), ['category_id' => 'id'])->inverseOf('category');
     }
 
+    public function getJudges()
+    {
+        return $this->hasMany(Judge::className(), ['id' => 'judge_id'])->viaTable('chesses', ['category_id' => 'id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -117,12 +132,6 @@ class Category extends \yii\db\ActiveRecord
             $s = $s+$tur->regPairs;
         }
         return $s;        
-    }
-
-    public function getJudgesList()
-    {
-        $jlist = ArrayHelper::map(Judge::find()->all(), 'id', 'name') ;
-        return $jlist;
     }
 }
 

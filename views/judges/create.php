@@ -13,23 +13,23 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-create">
 
-     <h1><?= Html::encode($this->title) ?></h1>    
+    <h1><?= Html::encode($this->title) ?></h1>    
     <div class="category-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'sname')->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'language_id')
+        <?= $form->field($model, 'language_id')
             ->radioList([
-                '0' => 'Русский',
-                '1' => 'Английский'
+                '1' => 'Русский',
+                '2' => 'Английский'
             ]); 
         ?>
 
         
         
-               <div class="form-group">
+        <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
 
@@ -37,9 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
         
        </div>
 
-    <? //$this->render('_form', [
+    <!--<? //$this->render('_form', [
         //'model' => $model,
    // ]) 
-   ?>
+   ?>-->
 
 </div>

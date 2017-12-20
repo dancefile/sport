@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'program',
             'width' => '80px',
             'value' => function ($model, $key, $index, $widget) { 
-                return $model->program == '1' ? 'Latina' : 'Standart' ;
+                return $model->program == '1' ? 'Latina' : ($model->program == '2' ? 'Standart' : '10 dances') ;
             }
         ],
         [

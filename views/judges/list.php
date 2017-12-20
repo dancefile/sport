@@ -19,13 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'name',
             'sname',
-                    [
-            'attribute' => 'language_id',
-            
-            'value' => function ($model, $key, $index, $widget) { 
-                return $model->language_id == '1' ? 'Английский' : 'Русский' ;
-            }
-        ],
+            [
+                'attribute' => 'language_id',
+                'value' => function ($model, $key, $index, $widget) { 
+                    return $model->language_id == '2' ? 'Английский' : 'Русский' ;
+                }
+            ],
             
             ['class' => 'yii\grid\ActionColumn',
             'template' => '{update}&nbsp;&nbsp;{delete}',

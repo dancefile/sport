@@ -7,6 +7,8 @@ use app\models\Category;
 use app\models\CategorySearch;
 use app\models\Tur;
 use app\models\TurSearch;
+use app\models\Judge;
+use app\models\Chess;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -94,6 +96,7 @@ class CategoryController extends AppController
         $model->program = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
             return $this->redirect(['reglament/index']);
         } else {
             return $this->render('create', [
@@ -114,6 +117,14 @@ class CategoryController extends AppController
 
         $model->clas = explode(", ", $model->clas);
         $model->dances = explode(", ", $model->dances);
+        // print_r($model->chesses);
+        // exit;
+        // if (count($model->chesses) == 1) {
+            $model->chesses_list = Chess::find()->select(['judge_id'])->indexBy('judge_id')->where(['category_id' => $model->id])->column();    
+        // } else {
+        //     $model->chesses_list = Judge::find()->select(['sname'])->indexBy('id')->column();    
+        // }
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['reglament/index']);
