@@ -32,8 +32,7 @@ class Chess extends \yii\db\ActiveRecord
     {
         return [
             [['judge_id', 'category_id'], 'required'],
-            [['judge_id', 'category_id'], 'integer'],
-            [['nomer'], 'string', 'max' => 10],
+            [['judge_id', 'category_id', 'nomer'], 'integer'],
             [['judge_id'], 'exist', 'skipOnError' => true, 'targetClass' => Judge::className(), 'targetAttribute' => ['judge_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];

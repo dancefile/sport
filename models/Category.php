@@ -63,11 +63,13 @@ class Category extends \yii\db\ActiveRecord
             'skay' => 'Подсчет результатов',
             'dances' => 'Перечень танцев',
             'reg_pairs' => 'Пар',
-            'judges_count' => 'Cудий'
+            'judges_count' => 'Cудий',
+            'chesses_list' => 'Судейская комиссия'
         ];
     }
 
     public $chesses_list;
+
 
     public function beforeSave($insert)
     {
@@ -76,13 +78,17 @@ class Category extends \yii\db\ActiveRecord
 
         $judgeArr = $this->chesses_list;
         Chess::deleteAll(['category_id' => $this->id]);
+        $i=1;
         foreach ($judgeArr as $judge) {   
             $chess = new Chess;
             $chess->judge_id = $judge;
             $chess->category_id = $this->id;
+            $i==1 ? $chess->chief = 1 : $chess->chief = 0;
+            $chess->nomer = $i++;
             $chess->save();
         }
-        
+        // print_r($chess);
+        // exit;
         return  true;
     }
 

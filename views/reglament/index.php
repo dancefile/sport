@@ -118,7 +118,9 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute'=>'judges_count', 
             'width'=>'50px',
-            'value'=>'agemax',
+            'value'=>function ($model, $key, $index, $widget) {
+                return count($model->chesses);
+            }
 
         ],
 

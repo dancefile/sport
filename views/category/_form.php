@@ -7,10 +7,10 @@ use app\models\Otd;
 use app\models\Judge;
  
 
-$this->registerJsFile('js/jquery-ui.min.js',
+$this->registerJsFile('sport/web/js/jquery-ui.min.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-$this->registerJsFile('js/main.js',
+$this->registerJsFile('sport/web/js/main.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
 $this->registerCssFile('css/jquery-ui.css');
@@ -91,10 +91,10 @@ $this->registerCssFile('css/jquery-ui.css');
                 'E' => 'E',
             ]);
         ?>
-
+        
         <?= $form->field($model, 'chesses_list')
             ->checkboxList(
-                Judge::find()->select(['sname'])->indexBy('id')->column()
+                $judge_list
             );
         ?>
         

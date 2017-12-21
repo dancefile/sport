@@ -127,12 +127,28 @@ label{
 .field-category-solo > .control-label {
     display:none;
 }
-#category-dances, #category-clas, #category-skay, #category-program, #category-solo{
+#category-dances, 
+#category-clas, 
+#category-skay, 
+#category-program, 
+#category-solo,
+#category-chesses_list,
+#tur-typezahod,
+#tur-dances,
+#tur-typeskating,
+.field-tur-status
+{
     border: 1px solid #cccccc;
     background: #fff9e8;
     padding: 10px;
 }
-#category-dances label, #category-clas label {
+#category-dances label, 
+#category-clas label,
+#category-chesses_list label,
+#tur-typezahod label,
+#tur-dances label,
+#tur-typeskating label
+{
     background: rgb(221, 221, 221);
     padding: 5px 10px;
     margin-right: 10px;
@@ -142,8 +158,32 @@ label{
     border-radius: 0;
 }
 
-.field-category-agemin, .field-category-agemax, .field-category-otd_id{
-    width: 90px;
+.field-category-agemin, 
+.field-category-agemax, 
+.field-category-otd_id,
+.field-category-solo,
+.field-category-program,
+.field-category-skay,
+.field-tur-zahodcount,
+.field-tur-typezahod,
+.field-tur-parnexttur,
+.field-tur-typeskating,
+.field-tur-status,
+.field-tur-nomer
+{
     display: inline-block;
     margin-right: 20px;
 }
+
+.field-category-agemin, 
+.field-category-agemax{
+    width: 90px;
+}
+
+/*#category-chesses_list label:first-child{
+    background: red;
+    color: #fff;
+    font-weight: bold;
+}*/
+
+

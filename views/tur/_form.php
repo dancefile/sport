@@ -29,17 +29,29 @@ $this->registerCssFile('css/jquery-ui.css');
         echo $form->field($model, 'category_id')->dropDownList($items);
     ?>
 
-    <?= $form->field($model, 'nomer')->textInput() ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'nomer')->textInput() ?>
+
     <?= $form->field($model, 'zahodcount')->textInput() ?>
+
+    <?= $form->field($model, 'ParNextTur')->textInput() ?>
+
+<div> </div>
 
     <?= $form->field($model, 'typezahod')
         ->radioList([
             '1' => 'Постоянный',
             '2' => 'Переменный',
             '3' => 'Чередование'
+        ]); 
+    ?>
+
+    <?= $form->field($model, 'typeSkating')
+        ->radioList([
+            '1' => 'Баллы',
+            '2' => 'Кресты',
+            '3' => 'Скейтинг'
         ]); 
     ?>
 
@@ -53,17 +65,7 @@ $this->registerCssFile('css/jquery-ui.css');
             'J' => 'Jive',
             'SF' => 'Slow Foxtrot',                
         ]);
-    ?>
-
-    <?= $form->field($model, 'ParNextTur')->textInput() ?>
-
-    <?= $form->field($model, 'typeSkating')
-        ->radioList([
-            '1' => 'Баллы',
-            '2' => 'Кресты',
-            '3' => 'Скейтинг'
-        ]); 
-    ?>
+    ?>  
 
     <?= $form->field($model, 'status')->checkbox() ?>
 

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tur */
 
-$this->title = 'Create Tur';
+$this->title = 'Новый тур';
 $this->params['breadcrumbs'][] = ['label' => 'Turs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -68,6 +68,7 @@ class CategoryController extends AppController
            ]);
        }    
 
+    public $judge_list;
 
     /**
      * Displays a single Category model.
@@ -95,12 +96,15 @@ class CategoryController extends AppController
         $model->solo = 1;
         $model->program = 1;
 
+        $judge_list = Judge::find()->select(['sname'])->indexBy('id')->column();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
             return $this->redirect(['reglament/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'judge_list' => $judge_list,
             ]);
         }
     }
@@ -111,26 +115,30 @@ class CategoryController extends AppController
      * @param integer $id
      * @return mixed
      */
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         $model->clas = explode(", ", $model->clas);
         $model->dances = explode(", ", $model->dances);
-        // print_r($model->chesses);
-        // exit;
-        // if (count($model->chesses) == 1) {
-            $model->chesses_list = Chess::find()->select(['judge_id'])->indexBy('judge_id')->where(['category_id' => $model->id])->column();    
-        // } else {
-        //     $model->chesses_list = Judge::find()->select(['sname'])->indexBy('id')->column();    
-        // }
+
+        $judge_list = Judge::find()->select(['sname'])->indexBy('id')->column();
+
+        // $judge_list = Judge::find()->with('chesses')->all();
         
+        // print_r($judge_list);
+        // exit;
+
+        $model->chesses_list = Chess::find()->select(['judge_id'])->indexBy('judge_id')->where(['category_id' => $model->id])->column();    
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['reglament/index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'judge_list' => $judge_list,
             ]);
         }
     }
