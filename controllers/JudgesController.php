@@ -69,7 +69,7 @@ protected function findModel($id)
 		if ($otd) {
 			$otdes = Otd::findOne($otd);
 			$Categories = Category::find()->where(['otd_id' => $otd])->orderBy('name')->all();
-			$Chess = Chess::findall(['category_id' => 30]);
+			$Chess = Chess::find()->all();//['category_id' => 30]
 			$Judges = Judge::find()->orderBy('name')->all();
 			return $this->render('shaxmat', ['otd' => $otd, 'otdname' => $otdes->name, 'Categories' => $Categories, 'Chess' => $Chess, 'Judges' => $Judges]);	
     	} else {

@@ -29,9 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     endforeach;
 
     foreach ($Chess as $Ches):
-    	$data[$Ches->judge_id] = array_merge($data[3],['s'.$Ches->category_id=>$Ches->nomer]);
+    	$data[$Ches->judge_id] = array_merge($data[$Ches->judge_id],['s'.$Ches->category_id=>$Ches->nomer.(($Ches->chief) ? ' chief' : '')]);
     endforeach;
-
     $provider = new ArrayDataProvider([
         'allModels' => $data,
         'pagination' => 
