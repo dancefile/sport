@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "couple".
@@ -48,6 +50,8 @@ class Couple extends \yii\db\ActiveRecord
             'dancer_id_1' => 'Dancer Id 1',
             'dancer_id_2' => 'Dancer Id 2',
             'nomer' => 'Nomer',
+            'club' => 'Клуб',
+            'trenersString' => 'Тренер',
         ];
     }
 
@@ -74,6 +78,32 @@ class Couple extends \yii\db\ActiveRecord
     {
         return $this->hasMany(In::className(), ['couple_id' => 'id'])->inverseOf('couple');
     }
+
+    public function getAge()
+    {
+        $a1 = $this->dancerId1->date;
+        $a2 = $this->dancerId2->date;
+
+        return date('Y') - ($a1 < $a2 ? $a1 : $a2);
+    }
+
+    public function getTrenersString()
+    {
+        $t1=$this->dancerId1->trenersList;
+        $t2=$this->dancerId2->trenersList;  
+
+        return implode(', ', array_merge($t1, array_diff($t2,$t1)));
+    }
+
+    public function getClub()
+    {
+        $c1 = $this->dancerId1->club0;
+        $c2 = $this->dancerId2->club0;
+
+        return $c1->id == $c2->id ? $c1->name : $c1->name . ', ' . $c2->name;
+    }
+
+
 
     /**
      * @inheritdoc

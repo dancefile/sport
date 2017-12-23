@@ -44,8 +44,8 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'country_id' => 'Country ID',
+            'name' => 'Город',
+            'country_id' => 'Страна',
         ];
     }
 

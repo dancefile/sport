@@ -108,12 +108,30 @@ class Dancer extends \yii\db\ActiveRecord
         return $this->hasOne(Club::className(), ['id' => 'club'])->inverseOf('dancers');
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getDancerTreners()
     {
         return $this->hasMany(DancerTrener::className(), ['dancer_id' => 'id'])->inverseOf('dancer');
+    }
+
+    public function getTrenersList()
+    {
+        if ($this->dancerTreners){
+            foreach ($this->dancerTreners as $tren) {
+                $t[] = $tren->trener->name . ' ' .  $tren->trener->sname;
+            };   
+        } else {
+            $t[] = '';   
+        }
+        return $t;
+    }
+
+    public function getDancerFullName()
+    {
+        return $this->name . ' ' . $this->sname;
     }
 
     /**

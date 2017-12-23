@@ -139,6 +139,18 @@ class Category extends \yii\db\ActiveRecord
         }
         return $s;        
     }
+
+    public static function getSoloList(){
+        return ['0'=>'Соло', '1'=>'Пары'];
+    }
+
+    public static function getProgrammList(){
+        return ['1' => 'Latina',
+                '2' => 'Standart',
+                '3' => '10 dances',
+                ];
+    }
+
 }
 
 

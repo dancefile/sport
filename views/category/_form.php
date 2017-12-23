@@ -37,24 +37,17 @@ $this->registerCssFile('css/jquery-ui.css');
         <?= $form->field($model, 'agemax')->textInput() ?>
         
         <?= $form->field($model, 'solo')
-            ->radioList([
-                '1' => 'Пары',
-                '2' => 'Соло'
-            ],
+            ->radioList(
+                $model->getSoloList(),
             [
                 'enableLabel' => false,
-                'template' => '{error}{hint}'
             ]);
             
         ?>
         
 
         <?= $form->field($model, 'program')
-            ->radioList([
-                '1' => 'Latina',
-                '2' => 'Standart',
-                '3' => '10 dances',
-            ]); 
+            ->radioList($model->getProgrammList()); 
         ?>
 
         <?= $form->field($model, 'skay')
