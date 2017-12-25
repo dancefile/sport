@@ -66,6 +66,11 @@ class Clas extends \yii\db\ActiveRecord
         return $this->hasMany(Category::className(), ['clas_id' => 'id']);
     }
 
+    public static function getClassList()
+    {
+        return ArrayHelper::map($self->find()->all(), 'id', 'name');
+    }
+
     /**
      * @inheritdoc
      * @return ClasQuery the active query used by this AR class.

@@ -63,13 +63,7 @@ class DancerTrener extends \yii\db\ActiveRecord
         return $this->hasOne(Trener::className(), ['id' => 'trener_id'])->inverseOf('dancerTreners');
     }
 
-    public function getTrenersString()
-    {
-        $d=$this->trener->name;
-        print_r($d);
-        exit;
-        return implode(', ', $this->trener->name);
-    }
+    
     /**
      * @inheritdoc
      * @return DancerTrenerQuery the active query used by this AR class.

@@ -4,19 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\In */
+/* @var $model app\models\Dancer */
 
-$this->title = 'Create In';
-$this->params['breadcrumbs'][] = ['label' => 'Ins', 'url' => ['index']];
+$this->title = 'Create Dancer';
+$this->params['breadcrumbs'][] = ['label' => 'Dancers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="in-create">
+<div class="dancer-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'in' => $in,
-        'couple' => $couple,
+        'model' => $model,
     ]) ?>
 
 </div>

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Clas;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "in".
@@ -24,6 +26,8 @@ class In extends \yii\db\ActiveRecord
     {
         return 'in';
     }
+
+    public $clasIdSt1;
 
     /**
      * @inheritdoc
@@ -72,6 +76,11 @@ class In extends \yii\db\ActiveRecord
     public function getInDance()
     {
         return $this->hasOne(InDance::className(), ['id' => 'id'])->inverseOf('id0');
+    }
+
+    public function getClassList()
+    {
+        return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
     }
 
     /**

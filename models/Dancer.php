@@ -141,6 +141,8 @@ class Dancer extends \yii\db\ActiveRecord
         return $this->clasIdSt->name . '(St), ' . $this->clasIdLa->name . '(La)';
     }
 
+
+    
     /**
      * @inheritdoc
      * @return DancerQuery the active query used by this AR class.

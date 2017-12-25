@@ -5,10 +5,13 @@ namespace app\controllers;
 use Yii;
 use app\models\In;
 use app\models\InSearch;
+use app\models\Dancer;
+use app\models\Couple;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 
 /**
  * InController implements the CRUD actions for In model.
@@ -68,15 +71,44 @@ class InController extends Controller
      */
     public function actionCreate()
     {
-        $model = new In();
+        $in = new In();
+        $couple = new Couple();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(isset($_POST['In'], $_POST['Couple']))
+        {
+            $in->attributes=$_POST['In'];
+            $couple->attributes=$_POST['Couple'];
+     
+            $valid=$couple->validate();
+            if($valid)
+            {
+                $couple->save(false);
+                $in->couple_id = $couple->id;
+            }
+
+            $valid=$in->validate() && $valid;
+     
+            if($valid)
+            {
+                $in->save(false);
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
-                'model' => $model,
-            ]);
+                    'in'=>$in,
+                    'couple'=>$couple,
+                ]);
         }
+        
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'id' => $model->id]);
+        // } else {
+        //     return $this->render('create', [
+        //         'model' => $model,
+        //         'dancer' => $dancer,
+        //     ]);
+        // }
     }
 
     /**
@@ -109,6 +141,25 @@ class InController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionList($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query;
+            $query->select('id, sname AS text')
+                ->from('dancer')
+                ->where(['like', 'sname', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Dancer::find($id)->sname];
+        }
+        return $out;
     }
 
     /**

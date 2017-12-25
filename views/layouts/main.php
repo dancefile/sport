@@ -39,6 +39,11 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
         
+                        ['label' => 'Регистрация', 'items' => [
+                                ['label' => 'Список участников', 'url' => ['/in/index']],
+                                ['label' => 'Добавить пару', 'url' => ['/couple/create']],
+                                ],
+                        ],
 		                ['label' => 'Судьи', 'items' => [
                                 ['label' => 'Список', 'url' => ['/judges/list']],
                                 ['label' => 'Шахматка', 'url' => ['/judges/shaxmat']],
