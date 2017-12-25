@@ -65,6 +65,8 @@ class Dancer extends \yii\db\ActiveRecord
             'booknumber' => 'Booknumber',
             'gender' => 'Gender',
             'club' => 'Club',
+            'dancerFullName' => 'ФИО',
+            'classes' => 'Класс',
         ];
     }
 
@@ -132,6 +134,11 @@ class Dancer extends \yii\db\ActiveRecord
     public function getDancerFullName()
     {
         return $this->name . ' ' . $this->sname;
+    }
+
+    public function getClasses()
+    {
+        return $this->clasIdSt->name . '(St), ' . $this->clasIdLa->name . '(La)';
     }
 
     /**

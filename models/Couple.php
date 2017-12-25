@@ -49,9 +49,10 @@ class Couple extends \yii\db\ActiveRecord
             'id' => 'ID',
             'dancer_id_1' => 'Dancer Id 1',
             'dancer_id_2' => 'Dancer Id 2',
-            'nomer' => 'Nomer',
+            'nomer' => 'Номер',
             'club' => 'Клуб',
             'trenersString' => 'Тренер',
+            'age' => 'Возраст',
         ];
     }
 

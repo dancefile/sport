@@ -18,27 +18,39 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        
         'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
-
-            // 'id',
             'tur.category.name',
-            'couple.nomer',
+            [
+                'attribute' => 'couple_nomer',
+                'value' => function($model){
+                    return $model->couple->nomer;
+                }
+            ],
             'couple.age',
-            'couple.dancerId1.dancerFullName',
-            'couple.dancerId1.clasIdSt.name',
-            'couple.dancerId1.clasIdLa.name',
-            'couple.dancerId2.DancerFullName',
-            'couple.dancerId2.clasIdSt.name',
-            'couple.dancerId2.clasIdLa.name',
+            [
+                'attribute' => 'dancerId1',
+                'value' => function($model){
+                    return $model->couple->dancerId1->dancerFullName;
+                }
+            ],
+            'couple.dancerId1.classes',
+            [
+                'attribute' => 'dancerId2',
+                'value' => function($model){
+                    return $model->couple->dancerId2->dancerFullName;
+                }
+            ],
+            'couple.dancerId2.classes',
             'couple.dancerId1.club0.city.name',
             'couple.club',
-            'couple.trenersString',
-            // добавить тренеров циклом
+            'couple.trenersString',            
 
-            
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}&nbsp;&nbsp;{delete}',
+            ],
         ],
     ]); ?>
 </div>

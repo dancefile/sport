@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\In;
+use app\models\InSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -35,12 +36,16 @@ class InController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => In::find(),
-        ]);
+        $searchModel = new InSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => In::find(),
+        // ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
