@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,13 +13,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create In', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        
+        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],         
+        'toolbar' =>  [
+            ['content' => 
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['in/create'], ['class' => 'btn btn-success']) 
+            ],
+            '{export}',
+            '{toggleData}',
+        ],
+        'export' => [
+            'fontAwesome' => true
+        ],
         'columns' => [
             'tur.category.name',
             [

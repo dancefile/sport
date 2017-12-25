@@ -41,7 +41,7 @@ AppAsset::register($this);
         
                         ['label' => 'Регистрация', 'items' => [
                                 ['label' => 'Список участников', 'url' => ['/in/index']],
-                                ['label' => 'Добавить пару', 'url' => ['/couple/create']],
+                                ['label' => 'Регистрация', 'url' => ['/in/create']],
                                 ],
                         ],
 		                ['label' => 'Судьи', 'items' => [
