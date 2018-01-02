@@ -56,15 +56,7 @@ $this->registerCssFile('css/jquery-ui.css');
     ?>
 
     <?= $form->field($model, 'dances')
-        ->checkboxList([
-            'W' => 'Wals',
-            'V' => 'Vienus wals',
-            'Q' => 'QuickStep',
-            'Ch' => 'ChaCha',
-            'R' => 'Rumba',
-            'J' => 'Jive',
-            'SF' => 'Slow Foxtrot',                
-        ]);
+        ->checkboxList($model->danceList);
     ?>  
 
     <?= $form->field($model, 'status')->checkbox() ?>

@@ -144,6 +144,16 @@ class Category extends \yii\db\ActiveRecord
         return ['0'=>'Соло', '1'=>'Пары'];
     }
 
+    public function getDanceList()
+    {
+        return ArrayHelper::map(Dance::find()->all(), 'id', 'name');
+    }
+
+    public function getDanceToString($dances)
+    {
+        return implode(", ", Dance::find()->asArray()->select('name')->where(['id' => explode(", ", $dances)])->column());
+    }
+
     public static function getProgrammList(){
         return ['1' => 'Latina',
                 '2' => 'Standart',

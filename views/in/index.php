@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'couple_nomer',
                 'value' => function($model){
-                    return $model->couple->nomer;
+                    return $model->nomer;
                 }
             ],
             'couple.age',

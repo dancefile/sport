@@ -32,8 +32,12 @@ use yii\helpers\ArrayHelper;
             'name',
             'nomer',
             'zahodcount',
-            
-            'dances',
+            [
+                'attribute' => 'dances',
+                'value' => function($model){
+                    return $model->getDanceToString($model->dances);
+                },
+            ],
             'regPairs',
             'ParNextTur',
             

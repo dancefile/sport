@@ -27,7 +27,14 @@ class In extends \yii\db\ActiveRecord
         return 'in';
     }
 
-    public $clasIdSt1;
+
+    public $dancer1=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
+    public $dancer2=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
+    public $common=['club'=>'', 'city'=>'', 'country'=>'', 'dancer_trener'=>[]];
+    // public $reg_list=['tur_id'=>'', 'number'=>'', 'dancer_id_1'=>'', 'dancer_id_2'=>''];
+
+
+
 
     /**
      * @inheritdoc
@@ -39,6 +46,7 @@ class In extends \yii\db\ActiveRecord
             [['couple_id', 'tur_id'], 'integer'],
             [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
+            [['dancer1', 'dancer2', 'common'], 'safe'],
         ];
     }
 
@@ -81,6 +89,13 @@ class In extends \yii\db\ActiveRecord
     public function getClassList()
     {
         return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
+    }
+
+    public function getCategoryList()
+    {
+        $a = Tur::find()->select(['id', 'nomer'])->all();
+// ArrayHelper::map($a, 'turs.id', 'name')
+        return $a;
     }
 
     /**

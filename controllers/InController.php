@@ -13,11 +13,15 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
+
 /**
  * InController implements the CRUD actions for In model.
  */
 class InController extends Controller
 {
+
+    
+
     /**
      * @inheritdoc
      */
@@ -63,6 +67,7 @@ class InController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    
 
     /**
      * Creates a new In model.
@@ -72,44 +77,44 @@ class InController extends Controller
     public function actionCreate()
     {
         $in = new In();
+        // $category_list = Category::find()->joinWith(['otd', 'turs'])
         $couple = new Couple();
+        $number = In::find()->max('nomer');
 
-        if(isset($_POST['In'], $_POST['Couple']))
-        {
-            $in->attributes=$_POST['In'];
-            $couple->attributes=$_POST['Couple'];
-     
-            $valid=$couple->validate();
-            if($valid)
-            {
-                $couple->save(false);
-                $in->couple_id = $couple->id;
-            }
-
-            $valid=$in->validate() && $valid;
-     
-            if($valid)
-            {
-                $in->save(false);
-            }
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                    'in'=>$in,
-                    'couple'=>$couple,
-                ]);
-        }
         
 
-        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        //     return $this->redirect(['view', 'id' => $model->id]);
-        // } else {
-        //     return $this->render('create', [
-        //         'model' => $model,
-        //         'dancer' => $dancer,
-        //     ]);
-        // }
+       if ($in->load(Yii::$app->request->post()) ) 
+       {    
+            $dancer = new Dancer;
+            $dancer->attributes = $in->dancer1;
+            $dancer->save();
+            
+            $couple->dancer_id_1 = $dancer->id;
+
+            $dancer = new Dancer;
+            $dancer->attributes = $in->dancer2;
+            $dancer->save();
+            
+            $couple->dancer_id_2 = $dancer->id;
+
+            $couple->save();
+
+            $in->couple_id = $couple->id;
+            $in->nomer = ++$number;
+            $in->tur_id = 7;
+            $in->save();
+
+            return $this->redirect(['index']);
+
+        } else {
+            return $this->render('create', [
+                'in' => $in,
+                'couple' => $couple,
+
+            ]);
+        }
     }
+
 
     /**
      * Updates an existing In model.
@@ -119,13 +124,13 @@ class InController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $in = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($in->load(Yii::$app->request->post()) && $in->save()) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'in' => $in,
             ]);
         }
     }

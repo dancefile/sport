@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\helpers\ArrayHelper;
+
 use Yii;
 
 /**
@@ -119,6 +121,16 @@ class Tur extends \yii\db\ActiveRecord
     {
         $count = $this->getIns()->count();
         return $count;
+    }
+
+    public function getDanceList()
+    {
+        return ArrayHelper::map(Dance::find()->all(), 'id', 'name');
+    }
+
+    public function getDanceToString($dances)
+    {
+        return implode(", ", Dance::find()->asArray()->select('name')->where(['id' => explode(", ", $dances)])->column());
     }
 
     public static function getRegPairsList()

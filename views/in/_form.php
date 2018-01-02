@@ -9,7 +9,9 @@ use kartik\widgets\Select2;
 use yii\web\JsExpression;
 
 use app\models\In;
-use app\models\Dancer;
+use app\models\Couple;
+use app\models\Clas;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\In */
@@ -19,18 +21,43 @@ use app\models\Dancer;
 <div class="in-form">
 
     <?php $form = ActiveForm::begin(); ?>
+	
+	<?= $form->field($in, 'dancer1[sname]')->textInput(['placeholder' => 'фамилия'])->label(false) ?>
+    <?= $form->field($in, 'dancer1[name]')->textInput(['placeholder' => 'Имя'])->label(false) ?>
+    <?= $form->field($in, 'dancer1[date]')->textInput(['placeholder' => 'ДР'])->label(false) ?>
+    <?= $form->field($in, 'dancer1[clas_id_st]')
+    	->dropDownList($in->classList,['prompt' => 'Класс St'])
+    	->label(false) 
+    ?>
+    <?= $form->field($in, 'dancer1[clas_id_la]')
+    	->dropDownList($in->classList,['prompt' => 'Класс La'])
+    	->label(false) 
+    ?>
+    <?= $form->field($in, 'dancer1[booknumber]')->textInput(['placeholder' => 'Номер книжки'])->label(false) ?>
 
-    
+	<br><br>
+	<?= $form->field($in, 'dancer2[sname]')->textInput(['placeholder' => 'фамилия'])->label(false) ?>
+    <?= $form->field($in, 'dancer2[name]')->textInput(['placeholder' => 'Имя'])->label(false) ?>
+    <?= $form->field($in, 'dancer2[date]')->textInput(['placeholder' => 'ДР'])->label(false) ?>
+    <?= $form->field($in, 'dancer2[clas_id_st]')
+    	->dropDownList($in->classList,['prompt' => 'Класс St'])
+    	->label(false) 
+    ?>
+    <?= $form->field($in, 'dancer2[clas_id_la]')
+    	->dropDownList($in->classList,['prompt' => 'Класс La'])
+    	->label(false) 
+    ?>
+    <?= $form->field($in, 'dancer2[booknumber]')->textInput(['placeholder' => 'Номер книжки'])->label(false) ?>
 
-    <?= $form->field($in, 'tur_id')->textInput() ?>
-
-	<?= $form->field($couple, 'dancer_id_1')->textInput() ?>
-
-    <?= $form->field($couple, 'dancer_id_2')->textInput() ?>
-
-    <?= $form->field($couple, 'nomer')->textInput() ?>
-
- 
+    <br><br>
+ 	<?= $form->field($in, 'common[club]')->textInput(['placeholder' => 'Клуб'])->label(false) ?>
+    <?= $form->field($in, 'common[city]')->textInput(['placeholder' => 'Город'])->label(false) ?>
+    <?= $form->field($in, 'common[country]')->textInput(['placeholder' => 'Страна'])->label(false) ?>
+	
+	<?php 
+		print_r($in->categoryList);
+		exit;
+	?>
 
     <div class="form-group">
         <?= Html::submitButton($in->isNewRecord ? 'Create' : 'Update', ['class' => $in->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

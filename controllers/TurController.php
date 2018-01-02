@@ -87,6 +87,8 @@ class TurController extends Controller
         $model->typezahod = 1;
         $model->category_id = $category_id;
         $model->dances = explode(", ", $dances);
+        $n = Tur::find()->where(['category_id' => $category_id])->max('nomer');
+        $model->nomer = ++$n;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['reglament/index']);

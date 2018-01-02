@@ -84,8 +84,8 @@ class Couple extends \yii\db\ActiveRecord
     {
         $a1 = $this->dancerId1->date;
         $a2 = $this->dancerId2->date;
-
-        return date('Y') - ($a1 < $a2 ? $a1 : $a2);
+        $d = (int)date('Y') - (int)($a1 < $a2 ? $a1 : $a2);
+        return $d==(int)date('Y') ? '': $d;
     }
 
     public function getTrenersString()
@@ -101,7 +101,20 @@ class Couple extends \yii\db\ActiveRecord
         $c1 = $this->dancerId1->club0;
         $c2 = $this->dancerId2->club0;
 
-        return $c1->id == $c2->id ? $c1->name : $c1->name . ', ' . $c2->name;
+        if (!$c1)
+        {
+            if(!$c2)
+            {
+                return 'Не указан';
+            } else {
+                return $c2->name;
+            }
+        } else {
+            return $c1->id == $c2->id ? $c1->name : $c1->name . ', ' . $c2->name;
+        }
+         
+
+        
     }
 
 

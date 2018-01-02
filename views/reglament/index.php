@@ -104,6 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'dances',
+            'value' => function($model){
+                return $model->getDanceToString($model->dances);
+            },
             'width' => '100px',
         ],
         [

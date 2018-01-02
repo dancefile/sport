@@ -42,7 +42,7 @@ class Dancer extends \yii\db\ActiveRecord
         return [
             [['date'], 'safe'],
             [['clas_id_st', 'clas_id_la', 'gender', 'club'], 'integer'],
-            [['club'], 'required'],
+            // [['club'], 'required'],
             [['name', 'sname', 'booknumber'], 'string', 'max' => 250],
             [['clas_id_st'], 'exist', 'skipOnError' => true, 'targetClass' => Clas::className(), 'targetAttribute' => ['clas_id_st' => 'id']],
             [['clas_id_la'], 'exist', 'skipOnError' => true, 'targetClass' => Clas::className(), 'targetAttribute' => ['clas_id_la' => 'id']],
@@ -138,7 +138,10 @@ class Dancer extends \yii\db\ActiveRecord
 
     public function getClasses()
     {
-        return $this->clasIdSt->name . '(St), ' . $this->clasIdLa->name . '(La)';
+        $cSt = $this->clasIdSt;
+        $cLa = $this->clasIdLa;
+        
+        return  ($cSt ? $cSt->name . '(St)': '') . '  ' . ($cLa ? $cLa->name . '(La)': '');
     }
 
 
