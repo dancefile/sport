@@ -7,13 +7,13 @@ use app\models\Otd;
 use app\models\Judge;
  
 
-$this->registerJsFile('sport/web/js/jquery-ui.min.js',
+$this->registerJsFile('@web/js/jquery-ui.min.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-$this->registerJsFile('sport/web/js/main.js',
+$this->registerJsFile('@web/js/main.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-$this->registerCssFile('css/jquery-ui.css');
+$this->registerCssFile('@web/css/jquery-ui.css');
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Category */

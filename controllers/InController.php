@@ -9,6 +9,8 @@ use app\models\Dancer;
 use app\models\Couple;
 use app\models\Tur;
 use app\models\Category;
+use app\models\Setings;
+
 
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -81,7 +83,7 @@ class InController extends Controller
     {
         $in = new In();
         $couple = new Couple();
-        $number = In::find()->max('nomer');
+        // $regNumberType = Setings::
         
         $query = Tur::find()
             ->joinWith('category')
@@ -90,15 +92,14 @@ class InController extends Controller
             ->where(min(['tur.nomer']))
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
 
-        // print_r($query);
-        // exit;
         $turDataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         
 
-       if ($in->load(Yii::$app->request->post()) ) 
-       {    
+        if ($in->load(Yii::$app->request->post()) ) 
+        {    
+            
             $dancer = new Dancer;
             $dancer->attributes = $in->dancer1;
             $dancer->save();
@@ -110,14 +111,19 @@ class InController extends Controller
             $dancer->save();
             
             $couple->dancer_id_2 = $dancer->id;
-
             $couple->save();
 
-            $in->couple_id = $couple->id;
-            $in->nomer = ++$number;
-            $in->tur_id = 7;
-            $in->save();
+            $turList = Yii::$app->request->post('selection');
 
+            foreach ($turList as $t) {
+                $in = new In();
+                $number = In::find()->max('nomer');
+                $in->couple_id = $couple->id;
+                $in->nomer = ++$number;
+                $in->tur_id = $t;
+                $in->save();
+            }
+  
             return $this->redirect(['index']);
 
         } else {

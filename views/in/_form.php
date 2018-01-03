@@ -57,45 +57,32 @@ use kartik\grid\GridView;
 	
 	<?php 
 		echo GridView::widget([
-        'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
-        'pjax' => true,
-        'condensed' => true,
-        // 'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
-        
-        'columns' => [
-            [
-                'attribute'=>'otd_id', 
-                'value'=>function ($model, $key, $index, $widget) { 
-                    return 'Отделение ' . $model->category->otd->name;
-                },
-                'group'=>true,
-                'groupedRow' => true,
-            ],
-            [
-                'class' => '\kartik\grid\CheckboxColumn'
-            ],
-            'id',
-
-        ],
-         
-        // 'toolbar' =>  [
-        //     ['content' => 
-        //         Html::a('<i class="glyphicon glyphicon-plus"></i>', ['category/create'], ['class' => 'btn btn-default']) 
-        //     ],
-        //     '{export}',
-        //     '{toggleData}',
-        // ],
-        // // set export properties
-        // 'export' => [
-        //     'fontAwesome' => true
-        // ],
-        
-    ]);
+            'id' => 'grid-reg',
+            'dataProvider' => $dataProvider,
+            'pjax' => true,
+            'condensed' => true,
+            'columns' => [
+                [
+                    'attribute'=>'otd_id', 
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return 'Отделение ' . $model->category->otd->name;
+                    },
+                    'group'=>true,
+                    'groupedRow' => true,
+                ],
+                [
+                    'class' => '\kartik\grid\CheckboxColumn'
+                ],
+                'id',
+                'category.name',
+            ], 
+        ]);
 	?>
 
     <div class="form-group">
-        <?= Html::submitButton($in->isNewRecord ? 'Create' : 'Update', ['class' => $in->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($in->isNewRecord ? 'Create' : 'Update', 
+            ['class' => $in->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) 
+        ?>
     </div>
 
     <?php ActiveForm::end(); ?>
