@@ -7,6 +7,9 @@ use app\models\In;
 use app\models\InSearch;
 use app\models\Dancer;
 use app\models\Couple;
+use app\models\Tur;
+use app\models\Category;
+
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -77,10 +80,21 @@ class InController extends Controller
     public function actionCreate()
     {
         $in = new In();
-        // $category_list = Category::find()->joinWith(['otd', 'turs'])
         $couple = new Couple();
         $number = In::find()->max('nomer');
+        
+        $query = Tur::find()
+            ->joinWith('category')
+            ->select(['tur.id', 'tur.nomer', 'tur.category_id', 'category.otd_id'])
+            ->groupBy('tur.category_id')
+            ->where(min(['tur.nomer']))
+            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
 
+        // print_r($query);
+        // exit;
+        $turDataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
         
 
        if ($in->load(Yii::$app->request->post()) ) 
@@ -110,6 +124,7 @@ class InController extends Controller
             return $this->render('create', [
                 'in' => $in,
                 'couple' => $couple,
+                'dataProvider' => $turDataProvider,
 
             ]);
         }

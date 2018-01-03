@@ -12,6 +12,7 @@ use app\models\In;
 use app\models\Couple;
 use app\models\Clas;
 use yii\widgets\Pjax;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\In */
@@ -55,8 +56,42 @@ use yii\widgets\Pjax;
     <?= $form->field($in, 'common[country]')->textInput(['placeholder' => 'Страна'])->label(false) ?>
 	
 	<?php 
-		print_r($in->categoryList);
-		exit;
+		echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        // 'filterModel' => $searchModel,
+        'pjax' => true,
+        'condensed' => true,
+        // 'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
+        
+        'columns' => [
+            [
+                'attribute'=>'otd_id', 
+                'value'=>function ($model, $key, $index, $widget) { 
+                    return 'Отделение ' . $model->category->otd->name;
+                },
+                'group'=>true,
+                'groupedRow' => true,
+            ],
+            [
+                'class' => '\kartik\grid\CheckboxColumn'
+            ],
+            'id',
+
+        ],
+         
+        // 'toolbar' =>  [
+        //     ['content' => 
+        //         Html::a('<i class="glyphicon glyphicon-plus"></i>', ['category/create'], ['class' => 'btn btn-default']) 
+        //     ],
+        //     '{export}',
+        //     '{toggleData}',
+        // ],
+        // // set export properties
+        // 'export' => [
+        //     'fontAwesome' => true
+        // ],
+        
+    ]);
 	?>
 
     <div class="form-group">

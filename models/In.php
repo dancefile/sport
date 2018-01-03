@@ -91,12 +91,6 @@ class In extends \yii\db\ActiveRecord
         return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
     }
 
-    public function getCategoryList()
-    {
-        $a = Tur::find()->select(['id', 'nomer'])->all();
-// ArrayHelper::map($a, 'turs.id', 'name')
-        return $a;
-    }
 
     /**
      * @inheritdoc
