@@ -39,18 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'dancerId1',
                 'value' => function($model){
-                    return $model->couple->dancerId1->dancerFullName;
+                    return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
                 }
             ],
             'couple.dancerId1.classes',
             [
                 'attribute' => 'dancerId2',
                 'value' => function($model){
-                    return $model->couple->dancerId2->dancerFullName;
+                    return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
                 }
             ],
             'couple.dancerId2.classes',
-            'couple.dancerId1.club0.city.name',
+            'city',
             'couple.club',
             'couple.trenersString',            
 

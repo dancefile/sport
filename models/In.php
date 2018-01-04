@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 use app\models\Clas;
+use app\models\Dancer;
+use app\models\Club;
+use app\models\City;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -91,6 +94,59 @@ class In extends \yii\db\ActiveRecord
         return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
     }
 
+    public function getDancerList()
+    {
+        return Dancer::find()->select('sname')->all();
+    }
+
+    public function getClubList()
+    {
+        return ArrayHelper::map(Club::find()->all(), 'id', 'name');
+    }
+
+    public function getCityList()
+    {
+        return City::find()->select('name')->column();
+    }
+
+    public function getCity()
+    {
+        $city1 = isset($this->couple->dancerId1->club0->city) ? $this->couple->dancerId1->club0->city : false;
+        $city2 = isset($this->couple->dancerId2->club0->city) ? $this->couple->dancerId2->club0->city : false;
+        if (!$city1 && !$city2) {
+            return '-';
+        } elseif (!$city2) {
+            return $city1->name;
+        } elseif (!$city1) {
+            return $city2->name;
+        } elseif ($city1->id == $city2->id) {
+            return $city1->name;
+        } else {
+            return $city1->name . ', ' . $city2->name;
+        } 
+    }
+
+    public function getCountry()
+    {
+        
+        
+        if (!$country1 && !$country2) {
+            return false;
+        } elseif ($country1 == $country2) {
+            return $country1->name;
+        } elseif ($country1 <> $country2) {
+
+        }
+    }   
+    // public function getCurrentClub()
+    // {
+    //     if ($this->couple->dancerId1->club0->id){
+    //         return $this->couple->dancerId1->club0->id;
+    //     } else {
+    //         return '';
+    //     }
+        
+    // }
 
     /**
      * @inheritdoc

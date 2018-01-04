@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 use yii\widgets\ActiveForm;
+use kartik\widgets\TypeaheadBasic;
 use kartik\widgets\Select2;
 
 use yii\web\JsExpression;
@@ -20,6 +21,8 @@ use kartik\grid\GridView;
 ?>
 
 <div class="in-form">
+
+    
 
     <?php $form = ActiveForm::begin(); ?>
 	
@@ -51,8 +54,30 @@ use kartik\grid\GridView;
     <?= $form->field($in, 'dancer2[booknumber]')->textInput(['placeholder' => 'Номер книжки'])->label(false) ?>
 
     <br><br>
- 	<?= $form->field($in, 'common[club]')->textInput(['placeholder' => 'Клуб'])->label(false) ?>
-    <?= $form->field($in, 'common[city]')->textInput(['placeholder' => 'Город'])->label(false) ?>
+ 	
+    
+    <?= $form->field($in, 'common[club]')->widget(Select2::classname(), [
+            // 'name' => 'color_3',
+            // 'value' => $in->currentClub, // initial value
+            'data' => $in->clubList,
+            'options' => ['placeholder' => 'Клуб'],
+            'pluginOptions' => [
+                'tags' => true,
+                // 'tokenSeparators' => [',', ' '],
+                // 'maximumInputLength' => 10
+            ],
+        ]);
+    ?>
+
+
+    <?= $form->field($in, 'common[city]')->widget(TypeaheadBasic::classname(), [
+        'data' => $in->cityList,
+        'options' => ['placeholder' => 'Город'],
+        'pluginOptions' => ['highlight'=>true],
+    ]);?>
+
+
+
     <?= $form->field($in, 'common[country]')->textInput(['placeholder' => 'Страна'])->label(false) ?>
 	
 	<?php 

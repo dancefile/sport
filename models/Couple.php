@@ -34,7 +34,7 @@ class Couple extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['dancer_id_1', 'dancer_id_2', 'nomer'], 'integer'],
+            [['dancer_id_1', 'dancer_id_2'], 'integer'],
             [['dancer_id_1'], 'exist', 'skipOnError' => true, 'targetClass' => Dancer::className(), 'targetAttribute' => ['dancer_id_1' => 'id']],
             [['dancer_id_2'], 'exist', 'skipOnError' => true, 'targetClass' => Dancer::className(), 'targetAttribute' => ['dancer_id_2' => 'id']],
         ];
@@ -49,7 +49,6 @@ class Couple extends \yii\db\ActiveRecord
             'id' => 'ID',
             'dancer_id_1' => 'Dancer Id 1',
             'dancer_id_2' => 'Dancer Id 2',
-            'nomer' => 'Номер',
             'club' => 'Клуб',
             'trenersString' => 'Тренер',
             'age' => 'Возраст',
@@ -82,39 +81,40 @@ class Couple extends \yii\db\ActiveRecord
 
     public function getAge()
     {
-        $a1 = $this->dancerId1->date;
-        $a2 = $this->dancerId2->date;
+        $a1 = $this->dancerId1 ? $this->dancerId1->date : NULL;
+        $a2 = $this->dancerId2 ? $this->dancerId2->date : NULL;
         $d = (int)date('Y') - (int)($a1 < $a2 ? $a1 : $a2);
-        return $d==(int)date('Y') ? '': $d;
+        return $d==(int)date('Y') ? '-': $d;
     }
 
     public function getTrenersString()
     {
-        $t1=$this->dancerId1->trenersList;
-        $t2=$this->dancerId2->trenersList;  
-
-        return implode(', ', array_merge($t1, array_diff($t2,$t1)));
+        if ($this->dancerId1 && $this->dancerId2) {
+            return implode(', ', array_merge($this->dancerId1->trenersList, array_diff($this->dancerId2->trenersList,$this->dancerId1->trenersList)));
+        } elseif (!$this->dancerId1) {
+            return implode(', ', $this->dancerId2->trenersList);
+        } else {
+            return implode(', ', $this->dancerId1->trenersList);
+        }
     }
 
     public function getClub()
     {
-        $c1 = $this->dancerId1->club0;
-        $c2 = $this->dancerId2->club0;
+        $c1 = $this->dancerId1 ? $this->dancerId1->club0 : NULL;
+        $c2 = $this->dancerId2 ? $this->dancerId2->club0 : NULL;
 
-        if (!$c1)
+        if (!$c1 && !$c2)
         {
-            if(!$c2)
-            {
-                return 'Не указан';
-            } else {
-                return $c2->name;
-            }
+            return 'Не указан';
+        } elseif (!$c1) {
+            return $c2->name;
+        } elseif (!$c2) {
+            return $c1->name; 
+        } elseif ($c1->id == $c2->id) {
+            return $c1->name;
         } else {
-            return $c1->id == $c2->id ? $c1->name : $c1->name . ', ' . $c2->name;
-        }
-         
-
-        
+            return $c1->name . ', ' . $c2->name;
+        }    
     }
 
 
