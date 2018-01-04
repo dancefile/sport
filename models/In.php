@@ -126,28 +126,6 @@ class In extends \yii\db\ActiveRecord
         } 
     }
 
-    public function getCountry()
-    {
-        
-        
-        if (!$country1 && !$country2) {
-            return false;
-        } elseif ($country1 == $country2) {
-            return $country1->name;
-        } elseif ($country1 <> $country2) {
-
-        }
-    }   
-    // public function getCurrentClub()
-    // {
-    //     if ($this->couple->dancerId1->club0->id){
-    //         return $this->couple->dancerId1->club0->id;
-    //     } else {
-    //         return '';
-    //     }
-        
-    // }
-
     /**
      * @inheritdoc
      * @return InQuery the active query used by this AR class.
