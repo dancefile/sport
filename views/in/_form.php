@@ -82,8 +82,8 @@ use kartik\grid\GridView;
 	
 	<?php 
 		echo GridView::widget([
-            'id' => 'grid-reg',
-            'dataProvider' => $dataProvider,
+            'id' => 'grid-reg-couple',
+            'dataProvider' => $pairDataProvider,
             'pjax' => true,
             'condensed' => true,
             'columns' => [
@@ -103,6 +103,36 @@ use kartik\grid\GridView;
             ], 
         ]);
 	?>
+
+    <?php 
+        echo GridView::widget([
+            'id' => 'grid-reg-solo',
+            'dataProvider' => $soloDataProvider,
+            'pjax' => true,
+            'condensed' => true,
+            'columns' => [
+                [
+                    'attribute'=>'otd_id', 
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return 'Отделение ' . $model->category->otd->name;
+                    },
+                    'group'=>true,
+                    'groupedRow' => true,
+                ],
+                [
+                    'class' => '\kartik\grid\CheckboxColumn'
+                ],
+
+                [
+                    'class' => '\kartik\grid\CheckboxColumn'
+                ],
+
+
+                'id',
+                'category.name',
+            ], 
+        ]);
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($in->isNewRecord ? 'Create' : 'Update', 

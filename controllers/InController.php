@@ -91,12 +91,25 @@ class InController extends Controller
         $query = Tur::find()
             ->joinWith('category')
             ->select(['tur.id', 'tur.nomer', 'tur.category_id', 'category.otd_id'])
+            ->where(['category.solo' => 1])
             ->groupBy('tur.category_id')
-            ->where(min(['tur.nomer']))
+            ->andWhere(min(['tur.nomer']))
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
 
-        $turDataProvider = new ActiveDataProvider([
+        $pairDataProvider = new ActiveDataProvider([
             'query' => $query,
+        ]);
+
+        $query2 = Tur::find()
+            ->joinWith('category')
+            ->select(['tur.id', 'tur.nomer', 'tur.category_id', 'category.otd_id'])
+            ->where(['category.solo' => 2])
+            ->groupBy('tur.category_id')
+            ->andWhere(min(['tur.nomer']))
+            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
+
+        $soloDataProvider = new ActiveDataProvider([
+            'query' => $query2,
         ]);
 
         
@@ -164,7 +177,8 @@ class InController extends Controller
             return $this->render('create', [
                 'in' => $in,
                 'couple' => $couple,
-                'dataProvider' => $turDataProvider,
+                'pairDataProvider' => $pairDataProvider,
+                'soloDataProvider' => $soloDataProvider,
 
             ]);
         }
