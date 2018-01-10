@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\models\Clas;
+use app\models\Tur;
 use app\models\Dancer;
 use app\models\Club;
 use app\models\City;
@@ -34,8 +35,9 @@ class In extends \yii\db\ActiveRecord
     public $dancer1=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
     public $dancer2=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
     public $common=['club'=>'', 'city'=>'', 'country'=>'', 'dancer_trener'=>[]];
-    // public $reg_list=['tur_id'=>'', 'number'=>'', 'dancer_id_1'=>'', 'dancer_id_2'=>''];
-
+    public $turPair;
+    public $turSolo_M;
+    public $turSolo_W;
 
 
 
@@ -49,7 +51,7 @@ class In extends \yii\db\ActiveRecord
             [['couple_id', 'tur_id'], 'integer'],
             [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
-            [['dancer1', 'dancer2', 'common'], 'safe'],
+            [['dancer1', 'dancer2', 'common', 'turPair', 'turSolo_M', 'turSolo_W'], 'safe'],
         ];
     }
 
@@ -124,6 +126,30 @@ class In extends \yii\db\ActiveRecord
         } else {
             return $city1->name . ', ' . $city2->name;
         } 
+    }
+
+    public function turListPair()
+    {
+        return Tur::find()
+            ->joinWith(['category', 'category.otd', 'ins'])
+            ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd'])
+            ->where(['category.solo' => 1])
+            ->groupBy('tur.category_id')
+            ->andWhere(min(['tur.nomer']))
+            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])
+            ->asArray()->all();
+    }
+
+    public function turListSolo()
+    {
+        return Tur::find()
+            ->joinWith(['category', 'category.otd', 'ins'])
+            ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd'])
+            ->where(['category.solo' => 2])
+            ->groupBy('tur.category_id')
+            ->andWhere(min(['tur.nomer']))
+            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])
+            ->asArray()->all();
     }
 
     /**

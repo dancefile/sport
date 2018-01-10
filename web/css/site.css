@@ -180,10 +180,80 @@ label{
     width: 90px;
 }
 
-/*#category-chesses_list label:first-child{
-    background: red;
+table.turs {
+    border-spacing: 0px 5px;
+    border-collapse: separate;
+    width: 400px;
+}
+
+table .colaps {
+    background: gray;
     color: #fff;
-    font-weight: bold;
+}
+
+.colaps td {
+    padding: 10px;
+}
+
+.turRow {
+    display: none;
+}
+
+.turRow input {
+    width: 50px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+td.number {
+    width: 50px;
+}
+
+/*.leftBlock {
+    width: 450px;
+    float: left;
+    margin-right: 30px;
 }*/
 
+.field-in-dancer1-date,
+.field-in-dancer2-date,
+.field-in-dancer1-clas_id_st,
+.field-in-dancer2-clas_id_st,
+.field-in-dancer1-clas_id_la,
+.field-in-dancer2-clas_id_la
+{
+    width: 140px;
+    float:left;
+    margin-right: 15px;
+}
 
+.field-in-dancer1-clas_id_la,
+.field-in-dancer2-clas_id_la
+{
+    margin-right: 0;
+}
+
+.flex-container {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.one {
+    background: #508694;
+    flex: 0 2 100%;
+    padding: 30px;  
+}
+.two {
+    background: #BB844C;
+    flex: 0 2 100%;
+    padding: 30px;
+}
+
+.three {
+    text-align: center;
+}
+
+.three button {
+    width: 150px;
+    height: 40px;
+}

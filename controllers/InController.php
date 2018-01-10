@@ -20,6 +20,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
+use kartik\grid\EditableColumnAction;
 
 
 /**
@@ -85,48 +87,63 @@ class InController extends Controller
     public function actionCreate()
     {
         $in = new In();
-        $couple = new Couple();
-        // $regNumberType = Setings::
-        
-        $query = Tur::find()
-            ->joinWith('category')
-            ->select(['tur.id', 'tur.nomer', 'tur.category_id', 'category.otd_id'])
-            ->where(['category.solo' => 1])
-            ->groupBy('tur.category_id')
-            ->andWhere(min(['tur.nomer']))
-            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
-
-        $pairDataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $query2 = Tur::find()
-            ->joinWith('category')
-            ->select(['tur.id', 'tur.nomer', 'tur.category_id', 'category.otd_id'])
-            ->where(['category.solo' => 2])
-            ->groupBy('tur.category_id')
-            ->andWhere(min(['tur.nomer']))
-            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
-
-        $soloDataProvider = new ActiveDataProvider([
-            'query' => $query2,
-        ]);
-
-        
+        $couple = new Couple();        
 
         if ($in->load(Yii::$app->request->post()) ) 
         {   
-            
-
             if (!$in->dancer1['sname'] && !$in->dancer2['sname']){
                 Yii::$app->session->setFlash('error', "Укажите хотя бы одного танцора!");
                 return $this->redirect(['create']);
+            }                   
+
+            if (!array_filter($in->turSolo_M) && !array_filter($in->turSolo_W) && !array_filter($in->turPair)) {
+                Yii::$app->session->setFlash('error', "Не указано ни одной категории для регистрации!");
+                return $this->redirect(['create']);
+            }
+
+            if (array_filter($in->turSolo_M)) {
+                if ($d1 = $this->dancerSave($in->dancer1, 1)) {
+                    $couple = new Couple();
+                    $couple->dancer_id_1 = $d1->id;
+                    $couple->dancer_id_2 = NULL;
+                    $couple->save();
+                    $this->inSave($in->turSolo_M, $couple->id);
+                } else {
+                    Yii::$app->session->setFlash('error', "Укажите данные танцора M!");
+                    return $this->redirect(['create']);
+                }
+            }
+
+            if (array_filter($in->turSolo_W)) {
+                if ($d2 = $this->dancerSave($in->dancer2, 0)) {
+                    $couple = new Couple();
+                    $couple->dancer_id_2 = $d2->id;
+                    $couple->dancer_id_1 = NULL;
+                    $couple->save();
+                    $this->inSave($in->turSolo_W, $couple->id);
+                } else {
+                    Yii::$app->session->setFlash('error', "Укажите данные танцора W!");
+                    return $this->redirect(['create']);
+                }
             }
             
-            $turList = Yii::$app->request->post('selection');
-            if (!$turList){
-                Yii::$app->session->setFlash('error', "Укажите хотя бы одну категорию!");
-                return $this->redirect(['create']);
+            if (array_filter($in->turPair)) {           // Проверяем наличие регистраций в парах
+                if ($d1 && $d1) {                       // и наличие двух танцоров
+                    $couple = new Couple();
+                    $couple->dancer_id_2 = $d2->id;
+                    $couple->dancer_id_1 = $d1->id;
+                    $couple->save();
+                    $this->inSave($in->turPair, $couple->id);
+                } elseif ($d1 = $this->dancerSave($in->dancer1, 1) && $d2 = $this->dancerSave($in->dancer2, 0)) {
+                    $couple = new Couple();
+                    $couple->dancer_id_2 = $d2->id;
+                    $couple->dancer_id_1 = $d1->id;
+                    $couple->save();
+                    $this->inSave($in->turPair, $couple->id);
+                } else {
+                    Yii::$app->session->setFlash('error', "Укажите второго танцора!");
+                    return $this->redirect(['create']);
+                }   
             }
             
             $country = $this->countrySave($in->common['country']);
@@ -143,9 +160,6 @@ class InController extends Controller
                 $club = $this->clubSave($in->common['club'], NULL);
             }
 
-            $d1 = $this->dancerSave($in->dancer1);
-            $d2 = $this->dancerSave($in->dancer2);
-
             if ($club) {
                 if ($d1) {
                     $d1->club = $club;
@@ -156,33 +170,44 @@ class InController extends Controller
                     $d2->update();
                 }
             }
-                   
-            $couple->dancer_id_1 = $d1 ? $d1->id : NULL;
-            $couple->dancer_id_2 = $d2 ? $d2->id : NULL;
-            $couple->save();
-            
-            
-            foreach ($turList as $t) {
-                $in = new In();
-                // $number = In::find()->max('nomer');
-                $in->couple_id = $couple->id;
-                $in->nomer = '55';
-                $in->tur_id = $t;
-                $in->save();
-            }
-  
+
             return $this->redirect(['index']);
 
         } else {
+
             return $this->render('create', [
                 'in' => $in,
                 'couple' => $couple,
-                'pairDataProvider' => $pairDataProvider,
-                'soloDataProvider' => $soloDataProvider,
+                // 'pairDataProvider' => $pairDataProvider,
+                // 'soloDataProvider' => $soloDataProvider,
 
             ]);
         }
     }
+
+    public function actions()
+    {
+        return ArrayHelper::merge(parent::actions(), [
+            'editNumber' => [                                       // identifier for your editable action
+                'class' => EditableColumnAction::className(),     // action class name
+                'modelClass' => Tur::className(),                // the update model class
+            ]
+        ]);
+    }
+
+    private function inSave($tur, $coupleId)
+    {
+        foreach ($tur as $key => $value) {
+            if ($value) {
+                $in = new In();
+                $in->couple_id = $coupleId;
+                $in->nomer = $value;
+                $in->tur_id = $key;
+                $in->save();                
+            } 
+        }
+    }
+
 
     private function countrySave($country)
     {
@@ -232,11 +257,12 @@ class InController extends Controller
         return $c->id;
     }
 
-    private function dancerSave($dancer)
+    private function dancerSave($dancer, $gender)
     {
         if ($dancer['sname']) {
             $d = new Dancer;
             $d->attributes = $dancer;
+            $d->gender = $gender;
             $d->save();
             return $d;
         } else {

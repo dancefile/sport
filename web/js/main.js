@@ -26,3 +26,7 @@ $(function(){
 //     });
 
 // });
+
+$('.colaps').click(function(){
+    $(this).nextUntil('tr.colaps').slideToggle(100);
+});

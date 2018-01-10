@@ -25,8 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'in' => $in,
         'couple' => $couple,
-        'pairDataProvider' => $pairDataProvider,
-        'soloDataProvider' => $soloDataProvider,
+        // 'pairDataProvider' => $pairDataProvider,
+        // 'soloDataProvider' => $soloDataProvider,
 	]) ?>
  	
  	

@@ -14,6 +14,7 @@ use app\models\Couple;
 use app\models\Clas;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
+use kartik\widgets\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\In */
@@ -21,125 +22,164 @@ use kartik\grid\GridView;
 ?>
 
 <div class="in-form">
-
-    
-
     <?php $form = ActiveForm::begin(); ?>
-	
-	<?= $form->field($in, 'dancer1[sname]')->textInput(['placeholder' => 'фамилия'])->label(false) ?>
-    <?= $form->field($in, 'dancer1[name]')->textInput(['placeholder' => 'Имя'])->label(false) ?>
-    <?= $form->field($in, 'dancer1[date]')->textInput(['placeholder' => 'ДР'])->label(false) ?>
-    <?= $form->field($in, 'dancer1[clas_id_st]')
-    	->dropDownList($in->classList,['prompt' => 'Класс St'])
-    	->label(false) 
-    ?>
-    <?= $form->field($in, 'dancer1[clas_id_la]')
-    	->dropDownList($in->classList,['prompt' => 'Класс La'])
-    	->label(false) 
-    ?>
-    <?= $form->field($in, 'dancer1[booknumber]')->textInput(['placeholder' => 'Номер книжки'])->label(false) ?>
+    	<div class=" flex-container">
+            <div class="leftBlock flex-item one">
+            	<?= $form
+                    ->field($in, 'dancer1[sname]')
+                    ->textInput(['placeholder' => 'фамилия'])
+                    ->label(false) 
+                ?>
+                <?= $form
+                    ->field($in, 'dancer1[name]')
+                    ->textInput(['placeholder' => 'Имя'])
+                    ->label(false) 
+                ?>
+                <?= $form
+                    ->field($in, 'dancer1[date]')
+                    ->widget(DatePicker::classname(), [
+                        'type' => DatePicker::TYPE_INPUT,
+                        'value' => '',
+                        'options' => ['placeholder' => 'ДР'],
+                        'pluginOptions' => [
+                            'autoclose'=>true,
+                            'format' => 'dd-M-yyyy'
+                        ]
+                    ])
+                    ->label(false);
+                ?>
+                <?= $form
+                    ->field($in, 'dancer1[clas_id_st]')
+                	->dropDownList($in->classList,['prompt' => 'Класс St'])
+                	->label(false) 
+                ?>
+                <?= $form->field($in, 'dancer1[clas_id_la]')
+                	->dropDownList($in->classList,['prompt' => 'Класс La'])
+                	->label(false) 
+                ?>
+                <?= $form
+                    ->field($in, 'dancer1[booknumber]')
+                    ->textInput(['placeholder' => 'Номер книжки'])
+                    ->label(false) 
+                ?>
 
-	<br><br>
-	<?= $form->field($in, 'dancer2[sname]')->textInput(['placeholder' => 'фамилия'])->label(false) ?>
-    <?= $form->field($in, 'dancer2[name]')->textInput(['placeholder' => 'Имя'])->label(false) ?>
-    <?= $form->field($in, 'dancer2[date]')->textInput(['placeholder' => 'ДР'])->label(false) ?>
-    <?= $form->field($in, 'dancer2[clas_id_st]')
-    	->dropDownList($in->classList,['prompt' => 'Класс St'])
-    	->label(false) 
-    ?>
-    <?= $form->field($in, 'dancer2[clas_id_la]')
-    	->dropDownList($in->classList,['prompt' => 'Класс La'])
-    	->label(false) 
-    ?>
-    <?= $form->field($in, 'dancer2[booknumber]')->textInput(['placeholder' => 'Номер книжки'])->label(false) ?>
+            	<br><br>
 
-    <br><br>
- 	
-    
-    <?= $form->field($in, 'common[club]')->widget(Select2::classname(), [
-            // 'name' => 'color_3',
-            // 'value' => $in->currentClub, // initial value
-            'data' => $in->clubList,
-            'options' => ['placeholder' => 'Клуб'],
-            'pluginOptions' => [
-                'tags' => true,
-                // 'tokenSeparators' => [',', ' '],
-                // 'maximumInputLength' => 10
-            ],
-        ]);
-    ?>
+            	<?= $form
+                    ->field($in, 'dancer2[sname]')
+                    ->textInput(['placeholder' => 'фамилия'])
+                    ->label(false)
+                ?>
+                <?= $form
+                    ->field($in, 'dancer2[name]')
+                    ->textInput(['placeholder' => 'Имя'])
+                    ->label(false) 
+                ?>
+                <?= $form
+                    ->field($in, 'dancer2[date]')
+                    ->widget(DatePicker::classname(), [
+                        'type' => DatePicker::TYPE_INPUT,
+                        'value' => '',
+                        'options' => ['placeholder' => 'ДР'],
+                        'pluginOptions' => [
+                            'autoclose'=>true,
+                            'format' => 'dd-M-yyyy'
+                        ]
+                    ])
+                    ->label(false);
+                ?>
+                <?= $form->field($in, 'dancer2[clas_id_st]')
+                	->dropDownList($in->classList,['prompt' => 'Класс St'])
+                	->label(false) 
+                ?>
+                <?= $form
+                    ->field($in, 'dancer2[clas_id_la]')
+                	->dropDownList($in->classList,['prompt' => 'Класс La'])
+                	->label(false) 
+                ?>
+                <?= $form
+                    ->field($in, 'dancer2[booknumber]')
+                    ->textInput(['placeholder' => 'Номер книжки'])
+                    ->label(false)
+                ?>
 
+                <br><br>
+             	
+                <?= $form
+                    ->field($in, 'common[club]')
+                    ->widget(Select2::classname(), [
+                        'data' => $in->clubList,
+                        'options' => ['placeholder' => 'Клуб'],
+                        'pluginOptions' => [
+                        'tags' => true,
+                    ],
+                    ])
+                    ->label(false);
+                ?>
 
-    <?= $form->field($in, 'common[city]')->widget(TypeaheadBasic::classname(), [
-        'data' => $in->cityList,
-        'options' => ['placeholder' => 'Город'],
-        'pluginOptions' => ['highlight'=>true],
-    ]);?>
+                <?= $form
+                    ->field($in, 'common[city]')
+                    ->widget(TypeaheadBasic::classname(), [
+                        'data' => $in->cityList,
+                        'options' => ['placeholder' => 'Город'],
+                        'pluginOptions' => ['highlight'=>true],
+                    ])
+                    ->label(false);
+                ?>
 
+                <?= $form
+                    ->field($in, 'common[country]')
+                    ->textInput(['placeholder' => 'Страна'])
+                    ->label(false) 
+                ?>
+        	
+            </div>
 
+            <div class="rightBlock flex-item two">
 
-    <?= $form->field($in, 'common[country]')->textInput(['placeholder' => 'Страна'])->label(false) ?>
-	
-	<?php 
-		echo GridView::widget([
-            'id' => 'grid-reg-couple',
-            'dataProvider' => $pairDataProvider,
-            'pjax' => true,
-            'condensed' => true,
-            'columns' => [
-                [
-                    'attribute'=>'otd_id', 
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return 'Отделение ' . $model->category->otd->name;
-                    },
-                    'group'=>true,
-                    'groupedRow' => true,
-                ],
-                [
-                    'class' => '\kartik\grid\CheckboxColumn'
-                ],
-                'id',
-                'category.name',
-            ], 
-        ]);
-	?>
+                <h3>Пары</h3>
+                <table class="turs">
+            	<?php          //Вывод таблицы с категориями для пар
+                    $otd = 0;
+                    foreach (In::turListPair() as $tur) {
+                        if ($otd <> $tur['otd']) {
+                            $otd = $tur['otd'];    
+                            printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
+                        }
+                        echo ('<tr class="turRow"><td class="number">');
+                        echo Html::input('text', 'In[turPair][' . $tur['id'] . ']', '', ['class' => '']);
+                        printf("</td> <td> %s</td> </tr>", $tur['name']);            
+                    }
+            	
+                ?>
+                </table>
 
-    <?php 
-        echo GridView::widget([
-            'id' => 'grid-reg-solo',
-            'dataProvider' => $soloDataProvider,
-            'pjax' => true,
-            'condensed' => true,
-            'columns' => [
-                [
-                    'attribute'=>'otd_id', 
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return 'Отделение ' . $model->category->otd->name;
-                    },
-                    'group'=>true,
-                    'groupedRow' => true,
-                ],
-                [
-                    'class' => '\kartik\grid\CheckboxColumn'
-                ],
+                <br><br>
+                <h3>Соло</h3>
 
-                [
-                    'class' => '\kartik\grid\CheckboxColumn'
-                ],
-
-
-                'id',
-                'category.name',
-            ], 
-        ]);
-    ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($in->isNewRecord ? 'Create' : 'Update', 
-            ['class' => $in->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) 
-        ?>
-    </div>
-
+                <table class="turs">
+                <?php          //Вывод таблицы с категориями для соло
+                    $otd = 0;
+                    foreach (In::turListSolo() as $tur) {
+                        if ($otd <> $tur['otd']) {
+                            $otd = $tur['otd'];    
+                            printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
+                        }
+                        echo '<tr class="turRow"> <td class="number">';
+                        echo Html::input('text', 'In[turSolo_M][' . $tur['id'] . ']', '', ['class' => '']);
+                        echo '</td><td class="number">';
+                        echo Html::input('text', 'In[turSolo_W][' . $tur['id'] . ']', '', ['class' => '']);
+                        printf("</td> <td> %s</td> </tr>", $tur['name']);
+                    }
+                
+                ?>
+                </table>
+            </div>
+        </div>
+        <div class="form-group three">
+            <?= Html::submitButton($in->isNewRecord ? 'Create' : 'Update', 
+                ['class' => $in->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) 
+            ?>
+        </div>
     <?php ActiveForm::end(); ?>
-
 </div>
