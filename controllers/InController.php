@@ -78,6 +78,10 @@ class InController extends Controller
         ]);
     }
     
+    private function reload()
+    {
+        return $this->redirect(['create']);
+    }
 
     /**
      * Creates a new In model.
@@ -93,7 +97,7 @@ class InController extends Controller
         {   
             if (!$in->dancer1['sname'] && !$in->dancer2['sname']){
                 Yii::$app->session->setFlash('error', "Укажите хотя бы одного танцора!");
-                return $this->redirect(['create']);
+                return $this->reload();
             }                   
 
             if (!array_filter($in->turSolo_M) && !array_filter($in->turSolo_W) && !array_filter($in->turPair)) {
@@ -128,22 +132,26 @@ class InController extends Controller
             }
             
             if (array_filter($in->turPair)) {           // Проверяем наличие регистраций в парах
-                if ($d1 && $d1) {                       // и наличие двух танцоров
-                    $couple = new Couple();
-                    $couple->dancer_id_2 = $d2->id;
-                    $couple->dancer_id_1 = $d1->id;
-                    $couple->save();
-                    $this->inSave($in->turPair, $couple->id);
-                } elseif ($d1 = $this->dancerSave($in->dancer1, 1) && $d2 = $this->dancerSave($in->dancer2, 0)) {
+                if (isset($d1) && isset($d1)) {                       // и наличие двух танцоров
                     $couple = new Couple();
                     $couple->dancer_id_2 = $d2->id;
                     $couple->dancer_id_1 = $d1->id;
                     $couple->save();
                     $this->inSave($in->turPair, $couple->id);
                 } else {
-                    Yii::$app->session->setFlash('error', "Укажите второго танцора!");
-                    return $this->redirect(['create']);
-                }   
+                    $d1 = $this->dancerSave($in->dancer1, 1);
+                    $d2 = $this->dancerSave($in->dancer2, 0);
+                    if ($d1 && $d2) {
+                        $couple = new Couple();
+                        $couple->dancer_id_1 = $d1->id;
+                        $couple->dancer_id_2 = $d2->id;
+                        $couple->save();
+                        $this->inSave($in->turPair, $couple->id);
+                    } else {
+                        Yii::$app->session->setFlash('error', "Укажите второго танцора!");
+                        return $this->redirect(['create']);
+                    }   
+                }
             }
             
             $country = $this->countrySave($in->common['country']);
@@ -183,16 +191,6 @@ class InController extends Controller
 
             ]);
         }
-    }
-
-    public function actions()
-    {
-        return ArrayHelper::merge(parent::actions(), [
-            'editNumber' => [                                       // identifier for your editable action
-                'class' => EditableColumnAction::className(),     // action class name
-                'modelClass' => Tur::className(),                // the update model class
-            ]
-        ]);
     }
 
     private function inSave($tur, $coupleId)

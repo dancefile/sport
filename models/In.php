@@ -34,10 +34,11 @@ class In extends \yii\db\ActiveRecord
 
     public $dancer1=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
     public $dancer2=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
-    public $common=['club'=>'', 'city'=>'', 'country'=>'', 'dancer_trener'=>[]];
+    public $common=['club'=>'', 'city'=>'', 'country'=>''];
     public $turPair;
     public $turSolo_M;
     public $turSolo_W;
+    public $dancer_trener=['name', 'sname'];
 
 
 
@@ -51,7 +52,7 @@ class In extends \yii\db\ActiveRecord
             [['couple_id', 'tur_id'], 'integer'],
             [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
-            [['dancer1', 'dancer2', 'common', 'turPair', 'turSolo_M', 'turSolo_W'], 'safe'],
+            [['dancer1', 'dancer2', 'common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
         ];
     }
 
@@ -111,6 +112,11 @@ class In extends \yii\db\ActiveRecord
         return City::find()->select('name')->column();
     }
 
+    public function getCountryList()
+    {
+        return Country::find()->select('name')->column();
+    }
+
     public function getCity()
     {
         $city1 = isset($this->couple->dancerId1->club0->city) ? $this->couple->dancerId1->club0->city : false;
@@ -126,6 +132,18 @@ class In extends \yii\db\ActiveRecord
         } else {
             return $city1->name . ', ' . $city2->name;
         } 
+    }
+
+    public function getFullName()
+    {
+        return $this->name.' '.$this->sname;
+    }
+
+
+    public function getTrenerList()
+    {
+        return ArrayHelper::map(Trener::find()->asArray()->all(), 'sname', 'fullName');
+        
     }
 
     public function turListPair()

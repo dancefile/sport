@@ -46,6 +46,7 @@ class ComposerStaticInit25ba17e0a224fd67f157f8399794f215
             'kartik\\plugins\\popover\\' => 23,
             'kartik\\plugins\\fileinput\\' => 25,
             'kartik\\plugins\\depdrop\\' => 23,
+            'kartik\\plugins\\dateformatter\\' => 29,
             'kartik\\growl\\' => 13,
             'kartik\\grid\\' => 12,
             'kartik\\form\\' => 12,
@@ -54,6 +55,7 @@ class ComposerStaticInit25ba17e0a224fd67f157f8399794f215
             'kartik\\dialog\\' => 14,
             'kartik\\depdrop\\' => 15,
             'kartik\\datetime\\' => 16,
+            'kartik\\datecontrol\\' => 19,
             'kartik\\date\\' => 12,
             'kartik\\color\\' => 13,
             'kartik\\base\\' => 12,
@@ -194,6 +196,10 @@ class ComposerStaticInit25ba17e0a224fd67f157f8399794f215
         array (
             0 => __DIR__ . '/..' . '/kartik-v/dependent-dropdown',
         ),
+        'kartik\\plugins\\dateformatter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/php-date-formatter',
+        ),
         'kartik\\growl\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-growl',
@@ -225,6 +231,10 @@ class ComposerStaticInit25ba17e0a224fd67f157f8399794f215
         'kartik\\datetime\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datetimepicker',
+        ),
+        'kartik\\datecontrol\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-datecontrol',
         ),
         'kartik\\date\\' => 
         array (

@@ -27,9 +27,6 @@ use Yii;
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @since  1.0
  */
-
-
-
 class Module extends \kartik\base\Module
 {
     /**

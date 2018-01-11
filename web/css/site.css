@@ -216,13 +216,19 @@ td.number {
 }*/
 
 .field-in-dancer1-date,
-.field-in-dancer2-date,
+.field-in-dancer2-date
+{
+    width: 240px;
+    float:left;
+    margin-right: 15px;
+}
+
 .field-in-dancer1-clas_id_st,
 .field-in-dancer2-clas_id_st,
 .field-in-dancer1-clas_id_la,
 .field-in-dancer2-clas_id_la
 {
-    width: 140px;
+    width: 120px;
     float:left;
     margin-right: 15px;
 }

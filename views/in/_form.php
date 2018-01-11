@@ -15,6 +15,8 @@ use app\models\Clas;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use kartik\widgets\DatePicker;
+use kartik\datecontrol\DateControl;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\In */
@@ -37,8 +39,8 @@ use kartik\widgets\DatePicker;
                 ?>
                 <?= $form
                     ->field($in, 'dancer1[date]')
-                    ->widget(DatePicker::classname(), [
-                        'type' => DatePicker::TYPE_INPUT,
+                    ->widget(DateControl::classname(), [
+                        // 'type' => DatePicker::TYPE_INPUT,
                         'value' => '',
                         'options' => ['placeholder' => 'ДР'],
                         'pluginOptions' => [
@@ -77,8 +79,8 @@ use kartik\widgets\DatePicker;
                 ?>
                 <?= $form
                     ->field($in, 'dancer2[date]')
-                    ->widget(DatePicker::classname(), [
-                        'type' => DatePicker::TYPE_INPUT,
+                    ->widget(DateControl::classname(), [
+                        // 'type' => DatePicker::TYPE_INPUT,
                         'value' => '',
                         'options' => ['placeholder' => 'ДР'],
                         'pluginOptions' => [
@@ -107,12 +109,10 @@ use kartik\widgets\DatePicker;
              	
                 <?= $form
                     ->field($in, 'common[club]')
-                    ->widget(Select2::classname(), [
+                    ->widget(TypeaheadBasic::classname(), [
                         'data' => $in->clubList,
                         'options' => ['placeholder' => 'Клуб'],
-                        'pluginOptions' => [
-                        'tags' => true,
-                    ],
+                        'pluginOptions' => ['highlight'=>true],
                     ])
                     ->label(false);
                 ?>
@@ -129,9 +129,27 @@ use kartik\widgets\DatePicker;
 
                 <?= $form
                     ->field($in, 'common[country]')
-                    ->textInput(['placeholder' => 'Страна'])
-                    ->label(false) 
+                    ->widget(TypeaheadBasic::classname(), [
+                        'data' => $in->countryList,
+                        'options' => ['placeholder' => 'Страна'],
+                        'pluginOptions' => ['highlight'=>true],
+                    ])
+                    ->label(false); 
                 ?>
+
+                <br><br>
+
+                <?= $form
+                    ->field($in, 'dancer_trener[sname]')
+                    ->widget(TypeaheadBasic::classname(), [
+                        'data' => $in->trenerList,
+
+                        'options' => ['placeholder' => 'Фамилия тренера'],
+                        'pluginOptions' => ['highlight'=>true],
+                    ])
+                    ->label(false); 
+                ?>
+
         	
             </div>
 
