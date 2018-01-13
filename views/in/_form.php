@@ -158,8 +158,114 @@ use kartik\datecontrol\DateControl;
                             ])
                             ->label(false); 
                         ?>
-                        <div onclick="addField();"><i class="glyphicon glyphicon-plus"></i></div> 
+                        
                     </div>
+                    <div class="showTrener trener_1"><i class="glyphicon glyphicon-minus"></i></div> 
+                    <div id="trener_2">
+                        <?= $form
+                        ->field($in, 'dancer_trener[1][sname]')
+                        ->widget(TypeaheadBasic::classname(), [
+                            'data' => $in->trenerSnameList,
+                            'options' => ['placeholder' => 'Фамилия тренера'],
+                            'pluginOptions' => ['highlight'=>true],
+                        ])
+                        ->label(false); 
+                        ?>
+                        <?= $form
+                            ->field($in, 'dancer_trener[1][name]')
+                            ->widget(TypeaheadBasic::classname(), [
+                                'data' => $in->trenerNameList,
+                                'options' => ['placeholder' => 'Имя тренера'],
+                                'pluginOptions' => ['highlight'=>true],
+                            ])
+                            ->label(false); 
+                        ?>
+                    </div>
+                    <div class="showTrener trener_2"><i class="glyphicon glyphicon-plus"></i></div> 
+                    <div id="trener_3">
+                        <?= $form
+                        ->field($in, 'dancer_trener[2][sname]')
+                        ->widget(TypeaheadBasic::classname(), [
+                            'data' => $in->trenerSnameList,
+                            'options' => ['placeholder' => 'Фамилия тренера'],
+                            'pluginOptions' => ['highlight'=>true],
+                        ])
+                        ->label(false); 
+                        ?>
+                        <?= $form
+                            ->field($in, 'dancer_trener[2][name]')
+                            ->widget(TypeaheadBasic::classname(), [
+                                'data' => $in->trenerNameList,
+                                'options' => ['placeholder' => 'Имя тренера'],
+                                'pluginOptions' => ['highlight'=>true],
+                            ])
+                            ->label(false); 
+                        ?>
+                    </div>
+                    <div class="showTrener trener_3"><i class="glyphicon glyphicon-plus"></i></div> 
+                    <div id="trener_4">
+                        <?= $form
+                        ->field($in, 'dancer_trener[3][sname]')
+                        ->widget(TypeaheadBasic::classname(), [
+                            'data' => $in->trenerSnameList,
+                            'options' => ['placeholder' => 'Фамилия тренера'],
+                            'pluginOptions' => ['highlight'=>true],
+                        ])
+                        ->label(false); 
+                        ?>
+                        <?= $form
+                            ->field($in, 'dancer_trener[3][name]')
+                            ->widget(TypeaheadBasic::classname(), [
+                                'data' => $in->trenerNameList,
+                                'options' => ['placeholder' => 'Имя тренера'],
+                                'pluginOptions' => ['highlight'=>true],
+                            ])
+                            ->label(false); 
+                        ?>
+                    </div>
+                    <div class="showTrener trener_4"><i class="glyphicon glyphicon-plus"></i></div> 
+                    <div id="trener_5">
+                        <?= $form
+                        ->field($in, 'dancer_trener[4][sname]')
+                        ->widget(TypeaheadBasic::classname(), [
+                            'data' => $in->trenerSnameList,
+                            'options' => ['placeholder' => 'Фамилия тренера'],
+                            'pluginOptions' => ['highlight'=>true],
+                        ])
+                        ->label(false); 
+                        ?>
+                        <?= $form
+                            ->field($in, 'dancer_trener[4][name]')
+                            ->widget(TypeaheadBasic::classname(), [
+                                'data' => $in->trenerNameList,
+                                'options' => ['placeholder' => 'Имя тренера'],
+                                'pluginOptions' => ['highlight'=>true],
+                            ])
+                            ->label(false); 
+                        ?>
+                    </div>
+                    <div class="showTrener trener_5"><i class="glyphicon glyphicon-plus"></i></div> 
+                    <div id="trener_6">
+                        <?= $form
+                        ->field($in, 'dancer_trener[5][sname]')
+                        ->widget(TypeaheadBasic::classname(), [
+                            'data' => $in->trenerSnameList,
+                            'options' => ['placeholder' => 'Фамилия тренера'],
+                            'pluginOptions' => ['highlight'=>true],
+                        ])
+                        ->label(false); 
+                        ?>
+                        <?= $form
+                            ->field($in, 'dancer_trener[5][name]')
+                            ->widget(TypeaheadBasic::classname(), [
+                                'data' => $in->trenerNameList,
+                                'options' => ['placeholder' => 'Имя тренера'],
+                                'pluginOptions' => ['highlight'=>true],
+                            ])
+                            ->label(false); 
+                        ?>
+                    </div>
+                    <div class="showTrener trener_6"><i class="glyphicon glyphicon-plus"></i></div> 
                 </div>     	
             </div>
 

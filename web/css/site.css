@@ -263,3 +263,12 @@ td.number {
     width: 150px;
     height: 40px;
 }
+
+#trener_2,
+#trener_3,
+#trener_4,
+#trener_5,
+#trener_6
+{
+    display: none;
+}

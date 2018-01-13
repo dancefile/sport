@@ -39,7 +39,7 @@ class In extends \yii\db\ActiveRecord
     public $turPair;
     public $turSolo_M;
     public $turSolo_W;
-    public $dancer_trener=['name', 'sname'];
+    public $dancer_trener;
 
 
 
@@ -49,11 +49,11 @@ class In extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // [['couple_id', 'tur_id'], 'required'],
-            // [['couple_id', 'tur_id'], 'integer'],
-            // [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
-            // [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
-            // [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
+             [['couple_id', 'tur_id'], 'required'],
+             [['couple_id', 'tur_id'], 'integer'],
+             [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
+             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
+             [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
 
             [['dancer1', 'dancer2'], 'checkDancer'],
 
