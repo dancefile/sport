@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+
 use Yii;
 use app\models\Clas;
 use app\models\Tur;
@@ -48,12 +49,39 @@ class In extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['couple_id', 'tur_id'], 'required'],
-            [['couple_id', 'tur_id'], 'integer'],
-            [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
-            [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
-            [['dancer1', 'dancer2', 'common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
+            // [['couple_id', 'tur_id'], 'required'],
+            // [['couple_id', 'tur_id'], 'integer'],
+            // [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
+            // [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
+            // [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
+
+            [['dancer1', 'dancer2'], 'checkDancer'],
+
+            // ['dancer1[]', 'required', 'when' => function ($model) {
+            // return $model->field_2 == '';
+            // }, 
+            //     'whenClient' => 'function (attribute, value) {
+            //         return $("#field_2").val() == "";
+            //     }', 'message' => 'Заполните field 1 либо field 2'],
+
+            // ['field_2', 'required', 'when' => function ($model) {
+            //     return $model->field_1 == '';
+            // }, 'whenClient' => 'function (attribute, value) {
+            //     return $("#field_1").val() == "";
+            // }', 'message' => 'Заполните field 1 либо field 2']
+
         ];
+    }
+
+
+    public function checkDancer($attr)
+    {
+        if (!$this->dancer1['sname'] && !$this->dancer2['sname']) {  
+            $this->addError($attr, 'Error');
+            return false;
+        }
+        
+        return true;
     }
 
     /**
