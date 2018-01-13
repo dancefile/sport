@@ -13,6 +13,7 @@ use app\models\Setings;
 use app\models\Club;
 use app\models\City;
 use app\models\Country;
+use app\models\Trener;
 
 
 use yii\data\ActiveDataProvider;
@@ -95,19 +96,22 @@ class InController extends Controller
 
         if ($in->load(Yii::$app->request->post()) ) 
         {   
-            if (!$in->validate()) {
-                Yii::$app->session->setFlash('error', "Ошибка в форме!");
+//            if (!$in->validate()) {
+//                Yii::$app->session->setFlash('error', "Ошибка в форме!");
+//                return $this->refresh();
+//            }
+            if (!$in->dancer1['sname'] && !$in->dancer2['sname']){
+                Yii::$app->session->setFlash('error', "Укажите хотя бы одного танцора!");
+                return $this->refresh();
+            }                   
+
+            if (!array_filter($in->turSolo_M) && !array_filter($in->turSolo_W) && !array_filter($in->turPair)) {
+                Yii::$app->session->setFlash('error', "Не указано ни одной категории для регистрации!");
                 return $this->refresh();
             }
-            // if (!$in->dancer1['sname'] && !$in->dancer2['sname']){
-            //     Yii::$app->session->setFlash('error', "Укажите хотя бы одного танцора!");
-            //     return $this->refresh();
-            // }                   
-
-            // if (!array_filter($in->turSolo_M) && !array_filter($in->turSolo_W) && !array_filter($in->turPair)) {
-            //     Yii::$app->session->setFlash('error', "Не указано ни одной категории для регистрации!");
-            //     return $this->refresh();
-            // }
+            
+            
+             
 
             if (array_filter($in->turSolo_M)) {
                 if ($d1 = $this->dancerSave($in->dancer1, 1)) {
@@ -136,7 +140,7 @@ class InController extends Controller
             }
             
             if (array_filter($in->turPair)) {           // Проверяем наличие регистраций в парах
-                if (isset($d1) && isset($d1)) {                       // и наличие двух танцоров
+                if (isset($d1) && isset($d2)) {                       // и наличие двух танцоров
                     $couple = new Couple();
                     $couple->dancer_id_2 = $d2->id;
                     $couple->dancer_id_1 = $d1->id;
@@ -157,7 +161,24 @@ class InController extends Controller
                     }   
                 }
             }
-            
+            if (isset($in->dancer_trener)) {
+                foreach ($in->dancer_trener as $t) {
+                    if ($t['sname'] || $t['name']) {
+                        $trener = new Trener();
+                        $trener->sname = $t['sname'];
+                        $trener->name = $t['name'];
+                        $trener->save();
+                        $dt = new \app\models\DancerTrener;
+                        $dt->trener_id = $trener->id;
+                        $dt->dancer_id = $d1->id;
+                        $dt->save();
+                        $dt = new \app\models\DancerTrener;
+                        $dt->trener_id = $trener->id;
+                        $dt->dancer_id = $d2->id;
+                        $dt->save(); 
+                    }
+                }
+            }
             $country = $this->countrySave($in->common['country']);
 
             if ($country) {
@@ -201,11 +222,17 @@ class InController extends Controller
     {
         foreach ($tur as $key => $value) {
             if ($value) {
-                $in = new In();
-                $in->couple_id = $coupleId;
-                $in->nomer = $value;
-                $in->tur_id = $key;
-                $in->save();                
+                $i = new In();
+                
+                $i->couple_id = $coupleId;
+                $i->nomer = $value;
+                $i->tur_id = $key;
+                
+//                print_r($i);
+//                exit;
+                $i->save(false);  
+                
+                
             } 
         }
     }
