@@ -162,16 +162,14 @@ class In extends \yii\db\ActiveRecord
         } 
     }
 
-    public function getFullName()
+    public function getTrenerSnameList()
     {
-        return $this->name.' '.$this->sname;
+        return ArrayHelper::map(Trener::find()->asArray()->all(), 'id', 'sname');   
     }
-
-
-    public function getTrenerList()
+    
+    public function getTrenerNameList()
     {
-        return ArrayHelper::map(Trener::find()->asArray()->all(), 'sname', 'fullName');
-        
+        return ArrayHelper::map(Trener::find()->asArray()->all(), 'id', 'name');   
     }
 
     public function turListPair()
