@@ -138,19 +138,29 @@ use kartik\datecontrol\DateControl;
                 ?>
 
                 <br><br>
-
-                <?= $form
-                    ->field($in, 'dancer_trener[sname]')
-                    ->widget(TypeaheadBasic::classname(), [
-                        'data' => $in->trenerList,
-
-                        'options' => ['placeholder' => 'Фамилия тренера'],
-                        'pluginOptions' => ['highlight'=>true],
-                    ])
-                    ->label(false); 
-                ?>
-
-        	
+                <div id="trener_list">
+                    <div id="trener_1">
+                        <?= $form
+                        ->field($in, 'dancer_trener[0][sname]')
+                        ->widget(TypeaheadBasic::classname(), [
+                            'data' => $in->trenerSnameList,
+                            'options' => ['placeholder' => 'Фамилия тренера'],
+                            'pluginOptions' => ['highlight'=>true],
+                        ])
+                        ->label(false); 
+                        ?>
+                        <?= $form
+                            ->field($in, 'dancer_trener[0][name]')
+                            ->widget(TypeaheadBasic::classname(), [
+                                'data' => $in->trenerNameList,
+                                'options' => ['placeholder' => 'Имя тренера'],
+                                'pluginOptions' => ['highlight'=>true],
+                            ])
+                            ->label(false); 
+                        ?>
+                        <div onclick="addField();"><i class="glyphicon glyphicon-plus"></i></div> 
+                    </div>
+                </div>     	
             </div>
 
             <div class="rightBlock flex-item two">
