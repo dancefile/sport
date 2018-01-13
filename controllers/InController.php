@@ -95,15 +95,19 @@ class InController extends Controller
 
         if ($in->load(Yii::$app->request->post()) ) 
         {   
-            if (!$in->dancer1['sname'] && !$in->dancer2['sname']){
-                Yii::$app->session->setFlash('error', "Укажите хотя бы одного танцора!");
-                return $this->reload();
-            }                   
-
-            if (!array_filter($in->turSolo_M) && !array_filter($in->turSolo_W) && !array_filter($in->turPair)) {
-                Yii::$app->session->setFlash('error', "Не указано ни одной категории для регистрации!");
-                return $this->redirect(['create']);
+            if (!$in->validate()) {
+                Yii::$app->session->setFlash('error', "Ошибка в форме!");
+                return $this->refresh();
             }
+            // if (!$in->dancer1['sname'] && !$in->dancer2['sname']){
+            //     Yii::$app->session->setFlash('error', "Укажите хотя бы одного танцора!");
+            //     return $this->refresh();
+            // }                   
+
+            // if (!array_filter($in->turSolo_M) && !array_filter($in->turSolo_W) && !array_filter($in->turPair)) {
+            //     Yii::$app->session->setFlash('error', "Не указано ни одной категории для регистрации!");
+            //     return $this->refresh();
+            // }
 
             if (array_filter($in->turSolo_M)) {
                 if ($d1 = $this->dancerSave($in->dancer1, 1)) {
