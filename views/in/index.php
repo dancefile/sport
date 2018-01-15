@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],         
         'toolbar' =>  [
             ['content' => 
-                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['in/create'], ['class' => 'btn btn-success']) 
+                Html::a('<i class="glyphicon glyphicon-plus"></i>', ['registration/create'], ['class' => 'btn btn-success']) 
             ],
             '{export}',
             '{toggleData}',

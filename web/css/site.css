@@ -183,12 +183,12 @@ label{
 table.turs {
     border-spacing: 0px 5px;
     border-collapse: separate;
-    width: 400px;
+    width: 100%;
 }
 
 table .colaps {
-    background: gray;
-    color: #fff;
+    background: #d6d6d6;
+    color: #505050;
 }
 
 .colaps td {
@@ -209,50 +209,98 @@ td.number {
     width: 50px;
 }
 
+
+/**************************/
+/******  Регистрация  *****/
+/**************************/
+
+.registration-create .rightBlock h3
+{
+    margin-top: 0px;
+    /* background: #337AB7; */
+    /*padding: 10px;*/
+    color: #616161;
+}
 /*.leftBlock {
     width: 450px;
     float: left;
     margin-right: 30px;
 }*/
+#trener_list{
+    margin-top: 40px;
+}
 
-.field-in-dancer1-date,
-.field-in-dancer2-date
+.form-group {
+    margin-bottom: 0px;
+}
+
+.field-registration-d1_sname,
+.field-registration-d2_sname,
+.field-registration-city,
+.field-registration-d_trener1_sname,
+.field-registration-d_trener2_sname,
+.field-registration-d_trener3_sname,
+.field-registration-d_trener4_sname,
+.field-registration-d_trener5_sname,
+.field-registration-d_trener6_sname
+{
+    width: 300px;
+    float: left;
+    margin-right: 17px;
+}
+
+.field-registration-d1_name,
+.field-registration-d2_name,
+.field-registration-country,
+.field-registration-d_trener1_name,
+.field-registration-d_trener2_name,
+.field-registration-d_trener3_name,
+.field-registration-d_trener4_name,
+.field-registration-d_trener5_name,
+.field-registration-d_trener6_name
+{
+    width: 200px;
+    float: right;
+}
+
+.field-registration-d1_date,
+.field-registration-d2_date
 {
     width: 240px;
     float:left;
-    margin-right: 15px;
+    margin-right: 22px;
 }
 
-.field-in-dancer1-clas_id_st,
-.field-in-dancer2-clas_id_st,
-.field-in-dancer1-clas_id_la,
-.field-in-dancer2-clas_id_la
+.field-registration-d1_class_st,
+.field-registration-d1_class_la,
+.field-registration-d2_class_st,
+.field-registration-d2_class_la
 {
     width: 120px;
     float:left;
     margin-right: 15px;
 }
 
-.field-in-dancer1-clas_id_la,
-.field-in-dancer2-clas_id_la
+.field-registration-d1_class_la,
+.field-registration-d2_class_la
 {
     margin-right: 0;
 }
 
 .flex-container {
     display: flex;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 
 .one {
-    background: #508694;
+/*    background: #337AB7;*/
     flex: 0 2 100%;
     padding: 30px;  
 }
 .two {
-    background: #BB844C;
+    /*background: #ffffff;*/
     flex: 0 2 100%;
-    padding: 30px;
+    padding: 30px 30px 30px 0px;
 }
 
 .three {
@@ -260,8 +308,11 @@ td.number {
 }
 
 .three button {
-    width: 150px;
-    height: 40px;
+    background: #4CAF50;
+    border-color: #4CAF50;
+    border-radius: 0;
+    padding: 10px 30px;
+    font-size: 18px;
 }
 
 #trener_2,
@@ -271,4 +322,19 @@ td.number {
 #trener_6
 {
     display: none;
+}
+
+.trenerItem {
+    float: left;
+}
+
+.showTrener {
+    float: left;
+    color: #D6D6D6;
+    margin-right: 5px;
+}
+
+.in-form {
+    background: #f1f1f1;
+    padding-bottom: 30px;
 }

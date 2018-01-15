@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'couple_id',
             'tur_id',
+            'dancer1[sname]' => 'd1[sname]',
         ],
     ]) ?>
 
