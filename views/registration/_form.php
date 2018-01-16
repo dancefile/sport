@@ -10,6 +10,7 @@ use kartik\widgets\Select2;
 use yii\web\JsExpression;
 
 use app\models\In;
+use app\models\Registration;
 use app\models\Couple;
 use app\models\Clas;
 use yii\widgets\Pjax;
@@ -275,17 +276,15 @@ use kartik\datecontrol\DateControl;
                 <table class="turs">
             	<?php          //Вывод таблицы с категориями для пар
                     $otd = 0;
-                    foreach (In::turListPair() as $tur) {
+                    foreach (Registration::turListPair() as $tur) {
                         if ($otd <> $tur['otd']) {
                             $otd = $tur['otd'];    
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
                         }
                         echo ('<tr class="turRow"><td class="number">');
-//                        echo Html::input('text', 'registration['turPair'][' . $tur['id'] . ']', '', ['class' => '']);
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), '', ['class' => '']);
                         printf("</td> <td> %s</td> </tr>", $tur['name']);            
                     }
-            	
                 ?>
                 </table>
 
@@ -295,7 +294,7 @@ use kartik\datecontrol\DateControl;
                 <table class="turs">
                 <?php          //Вывод таблицы с категориями для соло
                     $otd = 0;
-                    foreach (In::turListSolo() as $tur) {
+                    foreach (Registration::turListSolo() as $tur) {
                         if ($otd <> $tur['otd']) {
                             $otd = $tur['otd'];    
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
@@ -306,7 +305,6 @@ use kartik\datecontrol\DateControl;
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), '', ['class' => '']);
                         printf("</td> <td> %s</td> </tr>", $tur['name']);
                     }
-                
                 ?>
                 </table>
             </div>

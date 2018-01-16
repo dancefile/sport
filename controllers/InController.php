@@ -287,26 +287,20 @@ class InController extends Controller
     public function actionUpdate($id)
     {
         $in = $this->findModel($id);
-
-        $query = Tur::find()
-            ->joinWith('category')
-            ->select(['tur.id', 'tur.nomer', 'tur.category_id', 'category.otd_id'])
-            ->groupBy('tur.category_id')
-            ->where(min(['tur.nomer']))
-            ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC]);
-
-        $turDataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        if ($in->load(Yii::$app->request->post()) && $in->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('update', [
-                'in' => $in,
-                'dataProvider' => $turDataProvider,
-            ]);
-        }
+        $model = new \app\models\Registration();
+        $model->loadFromRecord($in);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+             
+             RegService::regSave($model);
+             
+             Yii::$app->session->setFlash('success', "Успешно!");
+             return $this->redirect(['create']);
+         } else {
+             return $this->render('update', [
+                 'in' => $model,
+             ]);
+         }
     }
 
     /**

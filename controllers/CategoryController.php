@@ -125,11 +125,6 @@ class CategoryController extends AppController
 
         $judge_list = Judge::find()->select(['sname'])->indexBy('id')->column();
 
-        // $judge_list = Judge::find()->with('chesses')->all();
-        
-        // print_r($judge_list);
-        // exit;
-
         $model->chesses_list = Chess::find()->select(['judge_id'])->indexBy('judge_id')->where(['category_id' => $model->id])->column();    
 
 

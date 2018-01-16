@@ -55,7 +55,7 @@ class Registration extends \yii\base\Model
     public function rules()
     {
         return [
-            [['d1_name', 'd1_name'], 'safe'],
+            [['d1_name', 'd2_name'], 'safe'],
             [['d1_class_st', 'd1_class_la', 'd2_class_st', 'd2_class_la'], 'safe'],
             [['d1_booknumber', 'd2_booknumber'], 'safe'],
             [['club', 'city', 'country'], 'safe'],
@@ -177,4 +177,44 @@ class Registration extends \yii\base\Model
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])
             ->asArray()->all();
     }
+    
+    /**
+     * 
+     * @param \app\models\app\models\In $model
+     */
+    public function loadFromRecord($model)
+    {
+        $couple = $model->couple;
+        $dancer1 = $couple->dancerId1;
+        $dancer2 = $couple->dancerId2;
+        
+        $this->city = $dancer1->club0->city->name;
+        $this->country = $dancer1->club0->city->country->name;
+        
+        $this->turPair = [$model->tur_id => $model->nomer];
+        
+        $this->loadDancerAttr($dancer1 , $dancer2);
+        
+    }
+
+    private function loadDancerAttr($dancer1, $dancer2)
+    {   
+        $this->d1_sname = $dancer1->sname;
+        $this->d1_name = $dancer1->name;
+        $this->d1_date = $dancer1->date;
+        $this->d1_class_st = $dancer1->clas_id_st;
+        $this->d1_class_la = $dancer1->clas_id_la;
+        $this->d1_booknumber = $dancer1->booknumber;
+        $this->d2_sname = $dancer2->sname;
+        $this->d2_name = $dancer2->name;
+        $this->d2_date = $dancer2->date;
+        $this->d2_class_st = $dancer2->clas_id_st;
+        $this->d2_class_la = $dancer2->clas_id_la;
+        $this->d2_booknumber = $dancer2->booknumber;
+        $this->club = $dancer2->club0->name;
+        
+        
+    }
+    
+//    private function loadCommonAttr()
 }
