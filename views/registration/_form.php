@@ -285,6 +285,8 @@ exit;
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
                         }
                         echo ('<tr class="turRow"><td class="number">');
+						if (!isset($tur['nomer'])) $tur['nomer']='';
+
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), $tur['nomer'], ['class' => '']);
                         printf("</td> <td>%s, %s</td> </tr>", $tur['id'], $tur['name']);            
                     }
@@ -304,6 +306,8 @@ exit;
                             $otd = $tur['otd'];    
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
                         }
+												if (!isset($tur['nomer_M'])) $tur['nomer_M']='';
+						if (!isset($tur['nomer_W'])) $tur['nomer_W']='';
                         echo '<tr class="turRow"> <td class="number">';
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), $tur['nomer_M'], ['class' => '']);
                         echo '</td><td class="number">';
