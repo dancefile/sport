@@ -25,6 +25,10 @@ use Yii;
  * @property Timetable[] $timetables
  * @property Category $category
  */
+
+
+
+
 class Tur extends \yii\db\ActiveRecord
 {
     /**
