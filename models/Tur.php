@@ -50,7 +50,7 @@ class Tur extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 250],
             // [['dances'], 'string', 'max' => 200],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['dances'], 'safe'],
+            [['dances', 'turTime'], 'safe'],
         ];
     }
 
@@ -70,6 +70,7 @@ class Tur extends \yii\db\ActiveRecord
             'ParNextTur' => 'Пар в след. тур',
             'typeSkating' => 'Система подсчета',
             'status' => 'Статус',
+            'turTime' => 'Время',
         ];
     }
 

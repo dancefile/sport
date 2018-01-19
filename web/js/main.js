@@ -3,6 +3,29 @@ $(function(){
     $('#category-dances').sortable();
     $('#tur-dances').sortable();
     $('#category-chesses_list').sortable();
+    
+    var fixHelper = function(e, ui) {
+        ui.children().each(function() {
+            $(this).width($(this).width());
+        });
+        return ui;
+    };    
+
+    $('.sortable-table tbody').sortable({
+        helper: fixHelper,
+        stop: function() {
+            console.log(this);
+            $.ajax({
+                url: '/save.php',
+                method: 'post',
+                data: $('.sortable-ul input').serialize()
+            });
+        }
+    });
+    
+    $('.sortable-table tbody').sortable({
+        cancel: '.disabled'
+    });
 });
 
 $('.showTrener').click(function(){

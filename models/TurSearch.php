@@ -41,7 +41,7 @@ class TurSearch extends Tur
      */
     public function search($params)
     {
-        $query = Tur::find();
+        $query = Tur::find()->innerJoinWith('category');
 
         // add conditions that should always apply here
 
@@ -71,7 +71,9 @@ class TurSearch extends Tur
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'dances', $this->dances]);
-
+        
+        $query->orderBy('category.otd_id');
+        
         return $dataProvider;
     }
 }

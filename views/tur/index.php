@@ -3,6 +3,15 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+
+$this->registerJsFile('@web/js/jquery-ui.min.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerJsFile('@web/js/main.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerCssFile('@web/css/jquery-ui.css');
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TurSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,8 +26,26 @@ $this->params['breadcrumbs'][] = $this->title;
     
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'sortable-table'
+        ],
+       
         'columns' => [
+            [
+                'attribute'=>'otd_id', 
+                'value'=>function ($model, $key, $index, $widget) { 
+                    return 'Отделение ' . $model->category->otd->name;
+                },
+                'group'=>true,
+                'groupedRow' => true,                
+                'contentOptions' => ['class'=>'disabled'],
+            ],
+            [
+                'attribute' => 'turTime',
+            ],
+            
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'nomer',

@@ -219,8 +219,7 @@ class RegService
         foreach ($newRecors as $tur => $nomer){
             foreach ($existRecors as $oldRecord) {
                 if ($oldRecord['tur_id'] == $tur && !$nomer && $oldRecord['who'] == $who){
-                    $zz = In::find()->where(['id'=>$oldRecord['id']])->one();
-                    $zz->delete();
+                    In::deleteAll(['id'=>$oldRecord['id']]);
                 }
             }
         }
