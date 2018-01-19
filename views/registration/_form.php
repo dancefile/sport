@@ -276,14 +276,16 @@ use kartik\datecontrol\DateControl;
                 <table class="turs">
             	<?php          //Вывод таблицы с категориями для пар
                     $otd = 0;
-                    foreach (Registration::turListPair() as $tur) {
+                    $inPair = $model->inPair? $model->inPair:$model->turListPair();
+                    
+                    foreach ($inPair as $tur) {
                         if ($otd <> $tur['otd']) {
                             $otd = $tur['otd'];    
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
                         }
                         echo ('<tr class="turRow"><td class="number">');
-                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), '', ['class' => '']);
-                        printf("</td> <td> %s</td> </tr>", $tur['name']);            
+                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), $tur['nomer'], ['class' => '']);
+                        printf("</td> <td>%s, %s</td> </tr>", $tur['id'], $tur['name']);            
                     }
                 ?>
                 </table>
@@ -294,17 +296,26 @@ use kartik\datecontrol\DateControl;
                 <table class="turs">
                 <?php          //Вывод таблицы с категориями для соло
                     $otd = 0;
-                    foreach (Registration::turListSolo() as $tur) {
+                    $inSolo = $model->inSolo? $model->inSolo:$model->turListSolo();
+//                    echo '<pre>', print_r($inSolo), '</pre>';
+//                    exit;
+                    foreach ($inSolo as $tur) {
+                        
+                        
+                        
                         if ($otd <> $tur['otd']) {
                             $otd = $tur['otd'];    
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
                         }
                         echo '<tr class="turRow"> <td class="number">';
-                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), '', ['class' => '']);
+                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), $tur['nomer_M'], ['class' => '']);
                         echo '</td><td class="number">';
-                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), '', ['class' => '']);
-                        printf("</td> <td> %s</td> </tr>", $tur['name']);
+                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), $tur['nomer_W'], ['class' => '']);
+                        printf("</td> <td>%s, %s</td> </tr>", $tur['id'], $tur['name']);
+                        
+                        
                     }
+                    
                 ?>
                 </table>
             </div>

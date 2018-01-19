@@ -33,13 +33,13 @@ class In extends \yii\db\ActiveRecord
     }
 
 
-    public $dancer1=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
-    public $dancer2=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
-    public $common=['club'=>'', 'city'=>'', 'country'=>''];
-    public $turPair;
-    public $turSolo_M;
-    public $turSolo_W;
-    public $dancer_trener;
+//    public $dancer1=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
+//    public $dancer2=['name'=>'', 'sname'=>'', 'date'=>'', 'clas_id_st'=>'', 'clas_id_la'=>'', 'booknumber'=>''];
+//    public $common=['club'=>'', 'city'=>'', 'country'=>''];
+//    public $turPair;
+//    public $turSolo_M;
+//    public $turSolo_W;
+//    public $dancer_trener;
 
 
 

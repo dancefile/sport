@@ -20,12 +20,14 @@ use yii\helpers\ArrayHelper;
  */
 class Registration extends \yii\base\Model
 {
+    public $d1_id;
     public $d1_sname;
     public $d1_name;
     public $d1_date;
     public $d1_class_st;
     public $d1_class_la;
     public $d1_booknumber;
+    public $d2_id;
     public $d2_sname;
     public $d2_name;
     public $d2_date;
@@ -47,10 +49,14 @@ class Registration extends \yii\base\Model
     public $d_trener5_sname;
     public $d_trener6_name;
     public $d_trener6_sname;
+    public $coupleId;
     public $turPair;
     public $turSolo_M;
     public $turSolo_W;
- 
+    public $inPair;
+    public $inSolo;
+    
+   
     
     public function rules()
     {
@@ -154,22 +160,36 @@ class Registration extends \yii\base\Model
         return ArrayHelper::map(Trener::find()->asArray()->all(), 'id', 'name');   
     }
 
+    public function turInPair($couple)
+    {
+        return In::find()
+            ->where(['couple_id' => $couple])
+            ->asArray()->all();
+    }
+    
     public function turListPair()
     {
         return Tur::find()
             ->joinWith(['category', 'category.otd', 'ins'])
-            ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd'])
+            ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd', 'in.couple_id couple'])
             ->where(['category.solo' => 1])
             ->groupBy('tur.category_id')
             ->andWhere(min(['tur.nomer']))
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])
             ->asArray()->all();
     }
-
+    
+    public function turInSolo($couple)
+    {
+        return In::find()
+            ->where(['couple_id' => $couple])
+            ->asArray()->all();
+    }
+    
     public function turListSolo()
     {
         return Tur::find()
-            ->joinWith(['category', 'category.otd', 'ins'])
+            ->joinWith(['category.otd'])
             ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd'])
             ->where(['category.solo' => 2])
             ->groupBy('tur.category_id')
@@ -185,26 +205,71 @@ class Registration extends \yii\base\Model
     public function loadFromRecord($model)
     {
         $couple = $model->couple;
+        $this->coupleId = $couple->id;
         $dancer1 = $couple->dancerId1;
         $dancer2 = $couple->dancerId2;
         
         $this->city = $dancer1->club0->city->name;
         $this->country = $dancer1->club0->city->country->name;
         
-        $this->turPair = [$model->tur_id => $model->nomer];
-        
         $this->loadDancerAttr($dancer1 , $dancer2);
+        
+        foreach ($this->turListPair() as $key => $tur) {
+            $this->inPair[$key] = $tur;
+            
+            foreach ($this->turInPair($model->couple_id) as $coupleIn) {
+                if ($this->inPair[$key]['id'] == $coupleIn['tur_id']){
+                    $this->inPair[$key]['nomer'] = $coupleIn['nomer'];
+                    break;
+                } else {
+                    $this->inPair[$key]['nomer'] = NULL;
+                }
+            }         
+        }
+        
+        foreach ($this->turListSolo() as $key => $tur) {
+            $this->inSolo[$key] = $tur;
+            
+            foreach ($this->turInSolo($model->couple_id) as $coupleIn) {
+//                echo '<pre>', print_r(' | '. $this->inSolo[$key]['id'] .' - ' . $coupleIn['tur_id']. ' | '), '</pre>';
+                if ($this->inSolo[$key]['id'] == $coupleIn['tur_id']){
+                    
+                  
+                    if ($coupleIn['who'] == 1) {
+                        $this->inSolo[$key]['nomer_M'] = $coupleIn['nomer'];
+//                        break 1;
+                    } 
+                    if ($coupleIn['who'] ==2){
+                        
+                        $this->inSolo[$key]['nomer_W'] = $coupleIn['nomer'];
+//                        break 1;
+                    }
+//                    echo '<pre>', print_r($this->inSolo[$key]['nomer_M']), '</pre>';
+//                    echo '<pre>', print_r($this->inSolo[$key]['nomer_W']), '</pre>';
+                } else {
+                    $this->inSolo[$key]['nomer_M'] = NULL;
+                    $this->inSolo[$key]['nomer_W'] = NULL;
+                }
+            }
+//            echo '<pre>', print_r($this->inSolo[$key]['nomer_M']), '</pre>';
+//            echo '<pre>', print_r($this->inSolo[$key]['nomer_W']), '</pre>';
+            
+        }
+//        echo '<pre>', print_r($this->inSolo[2]), '</pre>';
+//        exit;
         
     }
 
     private function loadDancerAttr($dancer1, $dancer2)
     {   
+        $this->d1_id = $dancer1->id;
         $this->d1_sname = $dancer1->sname;
         $this->d1_name = $dancer1->name;
         $this->d1_date = $dancer1->date;
         $this->d1_class_st = $dancer1->clas_id_st;
         $this->d1_class_la = $dancer1->clas_id_la;
         $this->d1_booknumber = $dancer1->booknumber;
+        $this->d2_id = $dancer2->id;
         $this->d2_sname = $dancer2->sname;
         $this->d2_name = $dancer2->name;
         $this->d2_date = $dancer2->date;
@@ -215,6 +280,4 @@ class Registration extends \yii\base\Model
         
         
     }
-    
-//    private function loadCommonAttr()
 }

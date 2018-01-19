@@ -18,7 +18,7 @@ class RegistrationController extends AppController
 
          if ($model->load(Yii::$app->request->post()) && $model->validate()) {
              
-             RegService::regSave($model);
+             RegService::regSave($model, false);
              
              Yii::$app->session->setFlash('success', "Успешно!");
              return $this->redirect(['create']);
@@ -37,7 +37,7 @@ class RegistrationController extends AppController
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
              
-             RegService::regView($model);
+             RegService::regSave($model, true);
              
              Yii::$app->session->setFlash('success', "Успешно!");
              return $this->redirect(['create']);
