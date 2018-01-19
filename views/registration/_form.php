@@ -297,12 +297,8 @@ use kartik\datecontrol\DateControl;
                 <?php          //Вывод таблицы с категориями для соло
                     $otd = 0;
                     $inSolo = $model->inSolo? $model->inSolo:$model->turListSolo();
-//                    echo '<pre>', print_r($inSolo), '</pre>';
-//                    exit;
+
                     foreach ($inSolo as $tur) {
-                        
-                        
-                        
                         if ($otd <> $tur['otd']) {
                             $otd = $tur['otd'];    
                             printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
@@ -312,8 +308,6 @@ use kartik\datecontrol\DateControl;
                         echo '</td><td class="number">';
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), $tur['nomer_W'], ['class' => '']);
                         printf("</td> <td>%s, %s</td> </tr>", $tur['id'], $tur['name']);
-                        
-                        
                     }
                     
                 ?>

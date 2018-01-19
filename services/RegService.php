@@ -18,8 +18,8 @@ class RegService
     public static function regSave($model, $update)
     {
         $ds = self::dancerSave($model, $update);
-        $existInPairRecors = $model->inPair;
-        $existInSoloRecors = $model->inSolo;
+        $existInPairRecors = $model->turInPair($model->coupleId);
+        $existInSoloRecors = $model->turInSolo($model->coupleId);
         
         if(!$update){
             $cp = self::coupleSave($ds[0], $ds[1]);
@@ -30,19 +30,23 @@ class RegService
         if (array_filter($model->turSolo_M)) {
             self::inSave($model->turSolo_M, $cp, 1);
         }
-        self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_M);
+        if ($update){
+            self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_M, 1);
+        }
         
         if (array_filter($model->turSolo_W)) {
-            $cp = self::coupleSave(NULL, $ds[1]->id);
-            self::inSave($model->turSolo_W, $cp->id, $update);
+            self::inSave($model->turSolo_W, $cp, 2);
         }
-        self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_W);
+        if ($update){
+            self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_W, 2);
+        }
 
         if (array_filter($model->turPair)) {
-            $cp = self::coupleSave($ds[0]->id, $ds[1]->id);
-            self::inSave($model->turPair, $cp->id, $update);
+            self::inSave($model->turPair, $cp, 3);
         }
-        self::deleteInSaveRecord($existInSoloRecors, $model->turPair);
+        if ($update){
+            self::deleteInSaveRecord($existInPairRecors, $model->turPair, 3);
+        }
         
         for ($i=1; $i<=6; $i++) {
             $name = $model->{'d_trener'.$i.'_name'};
@@ -196,7 +200,7 @@ class RegService
     {
         foreach ($tur as $key => $value) {
             if ($value) {
-                if ($i = In::findOne(['and', 'couple_id' => $coupleId, 'tur_id'=> $key, 'who'=>$who])){
+                if ($i = In::find()->where(['couple_id' => $coupleId, 'tur_id'=> $key, 'who'=>$who])->one()){
                     $i->nomer = $value;
                 } else {
                     $i = new In();
@@ -212,30 +216,17 @@ class RegService
     
     private static function deleteInSaveRecord($existRecors, $newRecors, $who)
     {
-        echo '<pre>', print_r($existRecors), '</pre>';
-        exit;
         foreach ($newRecors as $tur => $nomer){
             foreach ($existRecors as $oldRecord) {
-                if ($oldRecord['id'] == $tur && !$nomer){
-                    if ($i = In::find()
-                            ->where(['and', 'id' => $oldRecord['ins'][0]['id'], 'who'=>$who])
-                            
-                            {
-                        $i->delete();
-                    }
+                if ($oldRecord['tur_id'] == $tur && !$nomer && $oldRecord['who'] == $who){
+                    $zz = In::find()->where(['id'=>$oldRecord['id']])->one();
+                    $zz->delete();
                 }
-                    
             }
         }
-    }
+    } 
     
-    private static function parseTur($tur, $existData)
-    {
-        print_r($tur);
-        print_r($existData);
-        exit;
-    }
-
+    
     
     
     

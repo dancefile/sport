@@ -189,7 +189,7 @@ class Registration extends \yii\base\Model
     public function turListSolo()
     {
         return Tur::find()
-            ->joinWith(['category.otd'])
+            ->joinWith(['category', 'category.otd', 'ins'])
             ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd'])
             ->where(['category.solo' => 2])
             ->groupBy('tur.category_id')
@@ -227,39 +227,26 @@ class Registration extends \yii\base\Model
             }         
         }
         
+        $arr=$this->turInSolo($model->couple_id);
         foreach ($this->turListSolo() as $key => $tur) {
             $this->inSolo[$key] = $tur;
-            
-            foreach ($this->turInSolo($model->couple_id) as $coupleIn) {
-//                echo '<pre>', print_r(' | '. $this->inSolo[$key]['id'] .' - ' . $coupleIn['tur_id']. ' | '), '</pre>';
-                if ($this->inSolo[$key]['id'] == $coupleIn['tur_id']){
-                    
-                  
+
+            foreach ($arr as $coupleIn) { 
+                if ($this->inSolo[$key]['id'] == $coupleIn['tur_id']){     
                     if ($coupleIn['who'] == 1) {
                         $this->inSolo[$key]['nomer_M'] = $coupleIn['nomer'];
-//                        break 1;
-                    } 
-                    if ($coupleIn['who'] ==2){
-                        
+                    } ;
+                    if ($coupleIn['who'] == 2){
                         $this->inSolo[$key]['nomer_W'] = $coupleIn['nomer'];
-//                        break 1;
-                    }
-//                    echo '<pre>', print_r($this->inSolo[$key]['nomer_M']), '</pre>';
-//                    echo '<pre>', print_r($this->inSolo[$key]['nomer_W']), '</pre>';
+                    };
                 } else {
-                    $this->inSolo[$key]['nomer_M'] = NULL;
-                    $this->inSolo[$key]['nomer_W'] = NULL;
+                 if (!isset($this->inSolo[$key]['nomer_M']))   $this->inSolo[$key]['nomer_M'] = NULL;
+                 if (!isset($this->inSolo[$key]['nomer_W']))   $this->inSolo[$key]['nomer_W'] = NULL;
                 }
-            }
-//            echo '<pre>', print_r($this->inSolo[$key]['nomer_M']), '</pre>';
-//            echo '<pre>', print_r($this->inSolo[$key]['nomer_W']), '</pre>';
-            
+            } 
         }
-//        echo '<pre>', print_r($this->inSolo[2]), '</pre>';
-//        exit;
-        
     }
-
+    
     private function loadDancerAttr($dancer1, $dancer2)
     {   
         $this->d1_id = $dancer1->id;

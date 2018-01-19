@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'tur.category.name',
             [
                 'attribute' => 'couple_nomer',
+                'options' => ['width' => '50'],
                 'value' => function($model){
                     return $model->nomer;
                 }
@@ -57,6 +58,15 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}&nbsp;&nbsp;{delete}',
+                'headerOptions' => ['width' => '60'],
+                'buttons' => [
+                   'update' => function ($url, $model, $key){
+                      return Html::a('', ['registration/update', 'id'=>$model->id], ['class' => 'glyphicon glyphicon-pencil']);
+                   },
+//                   'delete' => function ($url, $model, $key){
+//                      return Html::a('', ['delete'], ['class' => 'glyphicon glyphicon-cancel']);
+//                   }
+                ]
             ],
         ],
     ]); ?>

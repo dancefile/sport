@@ -20,8 +20,7 @@ class RegistrationController extends AppController
              
              RegService::regSave($model, false);
              
-             Yii::$app->session->setFlash('success', "Успешно!");
-             return $this->redirect(['create']);
+             return $this->redirect(['in/index']);
          } else {
              return $this->render('create', [
                  'model' => $model,
@@ -38,9 +37,8 @@ class RegistrationController extends AppController
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
              
              RegService::regSave($model, true);
-             
-             Yii::$app->session->setFlash('success', "Успешно!");
-             return $this->redirect(['create']);
+
+             return $this->redirect(['in/index']);
          } else {
              return $this->render('create', [
                  'model' => $model,

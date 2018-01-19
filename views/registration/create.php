@@ -15,7 +15,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
 /* @var $model app\models\In */
 
 //$this->title = 'Create In';
-$this->params['breadcrumbs'][] = ['label' => 'Ins', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Ins', 'url' => ['in/index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="registration-create">
