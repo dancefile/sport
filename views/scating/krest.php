@@ -6,16 +6,16 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 
-$this->title = 'Балы '.$name;
+$this->title = 'Подсчет результатов '.$tur['name'].' '.$tur['turname'];
 //$this->params['breadcrumbs'][] = ['label' => 'Список Отделений', 'url' => ['shaxmat']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="setings-index">
-
 <h1><?= Html::encode($this->title) ?></h1>
 
 <?php 
+
  $columns[]=['class' => 'yii\grid\SerialColumn'];
     $columns[]=[
            	    'header' => 'пары',
@@ -35,8 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	$GLOBALS['prohodBal']=0;
     
     foreach ($krestArr as $key => $krest): //заполняем строки таблицы и вычисляем проходной бал 
-    	$data[$i] = ['id0' => $inArr[$key],'id1' => $krest];
-		if ($ParNextTur==$i) {$GLOBALS['prohodBal']=$data[$i]['id1'];}
+    	$data[$i] = ['id0' => $key,'id1' => $krest];
+		if ($tur['ParNextTur']==$i) {$GLOBALS['prohodBal']=$data[$i]['id1'];}
 		$i++;
     endforeach;
 	
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'allModels' => $data,
         'pagination' => 
         	[
-            	'pageSize' => 10,
+            	'pageSize' => 20,
         	],
 
     ]);
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                          },
 ]);
 
-if (count($broad)==1) {echo Html::a('Выводим '.$broad[0], ['krestgo','idT'=>$idT,'count'=>$broad[0]], ['class' => 'btn btn-success']);} 
+if (count($broad)==1) {echo Html::a('Выводим '.$broad[0], ['krest','idT'=>$idT,'count'=>$broad[0]], ['class' => 'btn btn-success']);} 
 else 
 {
 	$min=$broad[0]-1;

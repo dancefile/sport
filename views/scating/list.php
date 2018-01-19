@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 
-$this->title = 'Балы '.$name;
+$this->title = 'Оценки судей '.$tur['name'].' '.$tur['turname'];
 //$this->params['breadcrumbs'][] = ['label' => 'Список Отделений', 'url' => ['shaxmat']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

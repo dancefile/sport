@@ -13,22 +13,14 @@ class ScatingController extends \yii\web\Controller
 	
 	public function actionKrest($idT=0,$count=0) //подсчет результатов тура
 	{
-	
-		$tur = (new \yii\db\Query()) //получаем инфу о данном туре
-	    ->select(['category_id','name','typeSkating','ParNextTur','nomer'])
+		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
+		->select(['tur.category_id','turname'=>'tur.name','tur.ParNextTur','tur.nomer','category.name','tur.typeSkating'])
 	    ->from('tur')
-	    ->where(['id' => $idT])
+		->innerJoin('category','tur.category_id=category.id')
+		->where(['tur.id'=>$idT])
 		->one();
 		
-		if (!isset($tur["typeSkating"])) return $this->error('Не наден тур или не задан способ подсчета результатов');	
-		
-		$category = (new \yii\db\Query()) //получаем название категории данного тура
-	    ->select(['name'])
-	    ->from('category')
-	    ->where(['id' => $tur["category_id"]])
-		->one();
-		
-		if (!isset($category['name'])) return $this->error('Не найдена категория');
+		if (!isset($tur['name'])) return $this->error('Не найден тур или категория');
 	
 		$nexttur = (new \yii\db\Query()) //получаем инфу о данном туре
 	    ->select(['id','name','nomer'])
@@ -41,48 +33,53 @@ class ScatingController extends \yii\web\Controller
 		if (!isset($nexttur['id'])) return $this->error('Не найден следующий тур');	
 		
 		$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
-    	->select(['dance_id','in_id','ball'])
+    	->select(['dance_id','nomer','ball'])
     	->from('krest')
     	->where(['tur_id' => $idT]);	
 		
 		$krestArr=[];
 		
 		foreach ($krest->each() as $row) {
-			if (isset($krestArr[$row['in_id']])) $krestArr[$row['in_id']]++;
-			else $krestArr[$row['in_id']]=1;
+			if (isset($krestArr[$row['nomer']])) $krestArr[$row['nomer']]++;
+			else $krestArr[$row['nomer']]=1;
 		}
 	
 		$in = (new \yii\db\Query()) //получаем список пар  за текущей тур
-    	->select(['couple_id','nomer','who'])
+    	->select(['nomer','couple_id','who'])
     	->from('in')
     	->where(['tur_id' => $idT]);	
 		
 		foreach ($in->each() as $row) {
-			$inArr[$row['couple_id']]=$row['who'];	
+			$inArr[]=$row['nomer'];	
+			$couple_idArr[$row['nomer']]=$row['couple_id'];
+			$whoArr[$row['nomer']]=$row['who'];		
 		}	
 
-		$innext = (new \yii\db\Query()) //получаем список пар  за текущей тур
-    	->select(['id','couple_id','nomer','who'])
+		$innext = (new \yii\db\Query()) //получаем список пар  за след тур
+    	->select(['nomer','id'])
     	->from('in')
     	->where(['tur_id' => $nexttur['id']]);
 		$delIn=[];
 		foreach ($innext->each() as $row) {
-		 if (isset($inArr[$row['couple_id']]) && $inArr[$row['couple_id']]==$row['who']) {$delIn[]=$row['id'];}	
+		 if (isset($inArr[$row['nomer']])) {$delIn[]=$row['id'];}	
 		}		
 
 		if (count($delIn)) Yii::$app->db->createCommand()->delete('in', ['in','id',$delIn])->execute();
 
 		arsort($krestArr);
-		var_dump($krestArr);
-		//Yii::$app->db->createCommand()->batchInsert('in', ['judge_id', 'tur_id', 'dance_id', 'in_id', 'ball'], $insetArr)->execute();
+		$i=0;
+		$insetArr=[];
+		foreach($krestArr as $nomer => $krest){
+    	$i++;
+		$insetArr[]=[$couple_idArr[$nomer], $nexttur['id'], $nomer, $whoArr[$nomer]];	
+		if ($count==$i) {break;}		
+    	}
 		
+		Yii::$app->db->createCommand()->batchInsert('in', ['couple_id', 'tur_id', 'nomer', 'who'], $insetArr)->execute();
+		
+		return $this->actionInput($nexttur['id']);	
+	}//actionKrest
 
-				
-		
-		
-		
-//return $this->error('-');	
-	}
     private function error($message) //вывод критических ошибок
 	{
 		return $this->render('about', ['message' => '<pre> Ошибка! ' .$message. '</pre>']);	
@@ -90,57 +87,63 @@ class ScatingController extends \yii\web\Controller
 
 	public function actionCalc($idT=0) //подсчет результатов тура
 	{
-		$tur = (new \yii\db\Query()) //получаем инфу о данном туре
-	    ->select(['category_id','name','typeSkating','ParNextTur','nomer'])
+		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
+		->select(['tur.category_id','turname'=>'tur.name','tur.ParNextTur','tur.dances','tur.nomer','category.name','tur.typeSkating'])
 	    ->from('tur')
-	    ->where(['id' => $idT])
+		->innerJoin('category','tur.category_id=category.id')
+		->where(['tur.id'=>$idT])
 		->one();
 		
-		if (!isset($tur["typeSkating"])) return $this->error('Не найден тур или не задан способ подсчета результатов');	
-		
-		$category = (new \yii\db\Query()) //получаем название категории данного тура
-	    ->select(['name'])
-	    ->from('category')
-	    ->where(['id' => $tur["category_id"]])
-		->one();
-		
-		if (!isset($category['name'])) return $this->error('Не найдена категория');	
+		if (!isset($tur['name'])) return $this->error('Не найден тур или категория');
 	
-
 		switch ($tur["typeSkating"]) { //подсчет результатов тура в зависимости от способа подсчета
 			case '2'://подсчет крестов
 				$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
-    			->select(['dance_id','in_id','ball'])
+    			->select(['dance_id','nomer','ball'])
     			->from('krest')
     			->where(['tur_id' => $idT]);	
 		
 				$krestArr=[];
 				foreach ($krest->each() as $row) {
-					if (isset($krestArr[$row['in_id']])) $krestArr[$row['in_id']]++;
-					else $krestArr[$row['in_id']]=1;
+					if (isset($krestArr[$row['nomer']])) $krestArr[$row['nomer']]++;
+					else $krestArr[$row['nomer']]=1;
 				}
-	
+				$inArr=[];
 				$in = (new \yii\db\Query()) //получаем список пар  за текущей тур
-    			->select(['couple_id','nomer'])
+    			->select(['nomer'])
     			->from('in')
     			->where(['tur_id' => $idT]);	
 		
 				foreach ($in->each() as $row) {
-					$inArr[$row['couple_id']]=$row['nomer'];	
+					$inArr[]=$row['nomer'];	
 				}	
 				
 				arsort($krestArr);
 				
 				return $this->render('krest', [
-								'ParNextTur' => $tur['ParNextTur'],
+								'tur' => $tur,
 								'inArr' => $inArr,
 								'krestArr' => $krestArr,
-								'name' => $tur['name'].' '.$category['name'],
 								'idT' => $idT]);		
-			break;
+				break;
 			
+			case '3'://скайтинг
+				
+				$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
+    			->select(['dance_id','nomer','ball','judge_id'])
+    			->from('krest')
+    			->where(['tur_id' => $idT]);
+				
+				$JudicialPlaces=[];
+				foreach ($krest->each() as $row) {
+					$JudicialPlaces[$row['dance_id']][$row['nomer']][$row['judge_id']]=$row['ball'];	
+				}
+
+				$scating = new Scating($JudicialPlaces);//расчет мест			
+				return $this->render('about', ['message' => '<pre>' . $scating->log. '</pre>']);
+				break;
 			default:
-				$this->error('не задан способ подсчета результатов');	
+				return $this->error('не задан способ подсчета результатов');	
 				break;
 		}
 
@@ -150,25 +153,14 @@ class ScatingController extends \yii\web\Controller
 
 	public function actionForm($idT=0,$idD=0) //ввод оченок судей парам за танец
 	{
-		$tur = (new \yii\db\Query()) //получаем номер категории данного тура
-	    ->select(['category_id','name','typeSkating'])
+		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
+		->select(['tur.category_id','turname'=>'tur.name','tur.dances','category.name','tur.typeSkating'])
 	    ->from('tur')
-	    ->where(['id' => $idT])
-		->one();
-	
-	
-		if (!isset($tur["category_id"])) return $this->error('Не найден тур');		
-	
-	
-		$category = (new \yii\db\Query()) //получаем название категории данного тура
-	    ->select(['name'])
-	    ->from('category')
-	    ->where(['id' => $tur["category_id"]])
+		->innerJoin('category','tur.category_id=category.id')
+		->where(['tur.id'=>$idT])
 		->one();
 		
-		if (!isset($category['name'])) return $this->error('Не найдена категория');	
-	
-	
+		if (!isset($tur['name'])) return $this->error('Не найден тур или категория');
 		
 		$judges = (new \yii\db\Query()) //получаем список судей данной категории
 	    ->select(['judge.id','judge.name','judge.sname'])
@@ -181,22 +173,22 @@ class ScatingController extends \yii\web\Controller
 		}
 	
 		$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей танец за текущей тур
-    	->select(['judge_id','dance_id','in_id','ball'])
+    	->select(['judge_id','dance_id','nomer','ball'])
     	->from('krest')
     	->where(['tur_id' => $idT, 'dance_id' => $idD]);	
 		
 		$krestArr=[];
 		foreach ($krest->each() as $row) {
-			$krestArr[$row['judge_id']][$row['in_id']]=$row['ball'];	
+			$krestArr[$row['judge_id']][$row['nomer']]=$row['ball'];	
 		}
 	
 		$in = (new \yii\db\Query()) //получаем список пар в текущем танеце за текущей тур
-    	->select(['couple_id','nomer'])
+    	->select(['nomer'])
     	->from('in')
     	->where(['tur_id' => $idT]);	
-		
+		$inArr=[];
 		foreach ($in->each() as $row) {
-			$inArr[$row['couple_id']]=$row['nomer'];	
+			$inArr[]=$row['nomer'];	
 		}
 		
 		$dance = (new \yii\db\Query()) //получаем имя текущего танца тура
@@ -208,8 +200,7 @@ class ScatingController extends \yii\web\Controller
 	return $this->render('form', ['inArr' => $inArr,
 								 'krestArr' => $krestArr,
 								 'judgesArr' => $judgesArr,
-								 'typeSkating'=>$tur['typeSkating'], 
-								 'name' => $tur['name'].' '.$category['name'],
+								 'tur' => $tur,
 								 'dance' => $dance,
 								 'idT' => $idT,
 								 'idD' => $idD]);		
@@ -234,29 +225,22 @@ class ScatingController extends \yii\web\Controller
 		
 		Yii::$app->db->createCommand()->delete('krest', 'tur_id = :idT AND dance_id = :idD ',[':idT' => $idT, ':idD'=>$idD])->execute();
 		
-		Yii::$app->db->createCommand()->batchInsert('krest', ['judge_id', 'tur_id', 'dance_id', 'in_id', 'ball'], $insetArr)->execute();
-	//var_dump(Yii::$app->request->post());
-	return self::actionInput($idT);
+		Yii::$app->db->createCommand()->batchInsert('krest', ['judge_id', 'tur_id', 'dance_id', 'nomer', 'ball'], $insetArr)->execute();
+
+		return self::actionInput($idT);
 	}//actionEntry
 	
 	
-	public function actionInput($id=0) //ввывод количестава оценок судей за каждый танец
+	public function actionInput($idT=0) //ввывод количестава оценок судей за каждый танец
 	{
-		$tur = (new \yii\db\Query()) //получаем информацию о данном туре
-	    ->select(['category_id','dances','name'])
+		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
+		->select(['tur.category_id','turname'=>'tur.name','tur.dances','category.name'])
 	    ->from('tur')
-	    ->where(['id' => $id])
-		->one();
-	
-		if (!isset($tur["category_id"])) return $this->error('Не наден тур');
-	
-		$category = (new \yii\db\Query()) //получаем название категории данного тура
-	    ->select(['name'])
-	    ->from('category')
-	    ->where(['id' => $tur["category_id"]])
+		->innerJoin('category','tur.category_id=category.id')
+		->where(['tur.id'=>$idT])
 		->one();
 		
-		if (!isset($category['name'])) return $this->error('Не надена категория');	
+		if (!isset($tur['name'])) return $this->error('Не найден тур или категория');	
 	
 		$judges = (new \yii\db\Query()) //получаем список судей данной категории
 	    ->select(['judge.id','judge.name','judge.sname'])
@@ -269,27 +253,24 @@ class ScatingController extends \yii\web\Controller
 		}
 	
 		$krest = (new \yii\db\Query()) //получаем оценки всех судей за все танцы за текущей тур
-    	->select(['judge_id','dance_id','in_id','ball'])
+    	->select(['judge_id','dance_id','nomer','ball'])
     	->from('krest')
-    	->where(['tur_id' => $id]);	
+    	->where(['tur_id' => $idT]);	
 		
 		$krestArr=[];
 		foreach ($krest->each() as $row) {
-			$krestArr[$row['judge_id']][$row['dance_id']][$row['in_id']]=$row['ball'];	
+			$krestArr[$row['judge_id']][$row['dance_id']][$row['nomer']]=$row['ball'];	
 		}
 	
-		$danceid=explode(",",str_replace(' ','',$tur['dances']));
-	
-		$dances = (new \yii\db\Query()) //получаем имя и id танцев тура
-    	->select(['name','id'])
+		$dancesArr = array_fill_keys(explode(',',str_replace(' ','',$tur['dances'])), '');;
+		$Dance = (new \yii\db\Query()) //получаем заходы для пар в текущем туре
     	->from('dance')
-    	->where(['id' => $danceid]);	
-		
-		foreach ($dances->each() as $row) {
-			$dancesArr[$row['id']]=$row['name'];	
+    	->where(['in', 'id',array_keys($dancesArr)]);	
+		foreach ($Dance->each() as $row) {
+			if (isset($dancesArr[$row['id']])) $dancesArr[$row['id']]=$row['name']; 
 		}
 	
-	return $this->render('list', ['dancesArr' => $dancesArr, 'krestArr' => $krestArr, 'judgesArr' => $judgesArr, 'name' => $tur['name'].' '.$category['name'], 'idT' => $id]);	
+	return $this->render('list', ['dancesArr' => $dancesArr, 'krestArr' => $krestArr, 'judgesArr' => $judgesArr, 'tur' => $tur, 'idT' => $idT]);	
 	} //actionInput
 
 	public function actionIndex()
