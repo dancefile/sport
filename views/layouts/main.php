@@ -44,19 +44,24 @@ AppAsset::register($this);
                                 ['label' => 'Регистрация', 'url' => ['/in/create']],
                                 ],
                         ],
+                       ['label' => 'Регламент', 'items' => [
+                                ['label' => 'Регламент', 'url' => ['/reglament/index']],
+                                ['label' => 'Расписание', 'url' => ['/tur/index']],
+                                ],
+                        ],
 		                ['label' => 'Судьи', 'items' => [
                                 ['label' => 'Список', 'url' => ['/judges/list']],
                                 ['label' => 'Шахматка', 'url' => ['/judges/shaxmat']],
 
                                 ],
                         ],
-                        ['label' => 'Справочники', 'items' => [
-                                ['label' => 'Регламент', 'url' => ['/reglament/index']],
-                                ['label' => 'Турниры', 'url' => ['/setting/index']],
-                                ['label' => 'Scating', 'url' => ['/scating/index']],
-                                ['label' => 'Расписание', 'url' => ['/tur/index']],
+                        ['label' => 'Печать', 'items' => [
+                                ['label' => 'Заходы', 'url' => ['/print/list']],
+                                ['label' => 'Результаты', 'url' => ['/judges/shaxmat']],
+								['label' => 'Дипломы', 'url' => ['/print/list']],
                                 ],
                         ],
+
 
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -86,7 +91,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Dancefile <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
