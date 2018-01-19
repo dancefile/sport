@@ -58,7 +58,7 @@ class Tur extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'category_id' => 'Категория',
-            'nomer' => '#',
+            'nomer' => '№',
             'name' => 'Название тура',
             'zahodcount' => 'Кол-во заходов',
             'typezahod' => 'Форм. заходов',

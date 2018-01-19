@@ -54,6 +54,7 @@ AppAsset::register($this);
                                 ['label' => 'Регламент', 'url' => ['/reglament/index']],
                                 ['label' => 'Турниры', 'url' => ['/setting/index']],
                                 ['label' => 'Scating', 'url' => ['/scating/index']],
+                                ['label' => 'Расписание', 'url' => ['/tur/index']],
                                 ],
                         ],
 
