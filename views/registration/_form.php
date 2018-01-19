@@ -277,8 +277,7 @@ use kartik\datecontrol\DateControl;
             	<?php          //Вывод таблицы с категориями для пар
                     $otd = 0;
                     $inPair = $model->inPair? $model->inPair:$model->turListPair();
-                    echo '<pre>', print_r($inPair), '</pre>';
-exit;
+                  
                     foreach ($inPair as $tur) {
                         if ($otd <> $tur['otd']) {
                             $otd = $tur['otd'];    
