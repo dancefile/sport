@@ -35,7 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'regPairs',
                 'width' => '70px',
-                'value' => $model->regPairs,
+                'value' => function ($model, $key, $index, $widget) { 
+                return $model->regPairs;
+				}
             ],
             [
                 'attribute' => 'category.program',
