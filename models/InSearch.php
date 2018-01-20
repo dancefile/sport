@@ -75,7 +75,8 @@ class InSearch extends In
             ->andFilterWhere(['like', 'c1.sname', $this->dancerId1])
             ->andFilterWhere(['like', 'c2.sname', $this->dancerId2]);    
         
-
+        $query->orderBy('category_id');
+        
         return $dataProvider;
     }
 }

@@ -3,6 +3,14 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
+$this->registerJsFile('@web/js/jquery-ui.min.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerJsFile('@web/js/main.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerCssFile('@web/css/jquery-ui.css');
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -16,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],         
+        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
         'toolbar' =>  [
             ['content' => 
                 Html::a('<i class="glyphicon glyphicon-plus"></i>', ['registration/create'], ['class' => 'btn btn-success']) 
@@ -28,7 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'fontAwesome' => true
         ],
         'columns' => [
-            'tur.category.name',
+            [
+                'attribute'=>'tur.category.name', 
+                'group'=>true,
+                'groupedRow' => true,
+                'groupOddCssClass'=>'kv-grouped-row',  // configure odd group cell css class
+                'groupEvenCssClass'=>'kv-grouped-row', // configure even group cell css class
+            ],
+            
             [
                 'attribute' => 'couple_nomer',
                 'options' => ['width' => '50'],
