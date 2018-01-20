@@ -41,6 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'group'=>true,
                 'groupedRow' => true,                
                 'contentOptions' => ['class'=>'disabled'],
+                'groupOddCssClass'=>'kv-grouped-row',  // configure odd group cell css class
+                'groupEvenCssClass'=>'kv-grouped-row', // configure even group cell css class
             ],
             [
                 'attribute' => 'turTime',
