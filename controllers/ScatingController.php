@@ -61,9 +61,9 @@ class ScatingController extends \yii\web\Controller
     	->where(['tur_id' => $nexttur['id']]);
 		$delIn=[];
 		foreach ($innext->each() as $row) {
-		 if (isset($inArr[$row['nomer']])) {$delIn[]=$row['id'];}	
-		}		
-
+		 if (in_array ($row['nomer'],$inArr)) {$delIn[]=$row['id'];}	
+		}
+				
 		if (count($delIn)) Yii::$app->db->createCommand()->delete('in', ['in','id',$delIn])->execute();
 
 		arsort($krestArr);
@@ -97,6 +97,51 @@ class ScatingController extends \yii\web\Controller
 		if (!isset($tur['name'])) return $this->error('Не найден тур или категория');
 	
 		switch ($tur["typeSkating"]) { //подсчет результатов тура в зависимости от способа подсчета
+			case '1'://подсчет балов
+				$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
+    			->select(['dance_id','nomer','ball'])
+    			->from('krest')
+    			->where(['tur_id' => $idT]);	
+		
+				$krestArr=[];
+				foreach ($krest->each() as $row) {
+					if (isset($krestArr[$row['nomer']])) $krestArr[$row['nomer']]=$krestArr[$row['nomer']]+$row['ball'];
+					else $krestArr[$row['nomer']]=$row['ball'];
+				}
+				
+				$inArr=[];
+				$in = (new \yii\db\Query()) //получаем список пар  за текущей тур
+    			->select(['nomer'])
+    			->from('in')
+    			->where(['tur_id' => $idT]);	
+		
+				foreach ($in->each() as $row) {
+					$inArr[]=$row['nomer'];	
+				}	
+				
+				arsort($krestArr);
+				$judgesArr=[];
+				$judges = (new \yii\db\Query()) //получаем список судей данной категории
+	    		->select(['judge.id','judge.name','judge.sname'])
+	    		->from('chess,judge')
+	    		->where(['chess.category_id' => $tur['category_id']])
+				->andWhere('`judge`.`id`=`chess`.`judge_id`');
+	
+				foreach ($judges->each() as $row) {
+					$judgesArr[$row['id']]=$row['sname'].' '.$row['name']; 
+				}
+				
+				$dancesArr = explode(',',str_replace(' ','',$tur['dances']));
+				$count=count($dancesArr)*count($judgesArr);
+				return $this->render('ball', [
+								'count' => $count,
+								'tur' => $tur,
+								'inArr' => $inArr,
+								'krestArr' => $krestArr,
+								'idT' => $idT]);
+								
+				break;
+			
 			case '2'://подсчет крестов
 				$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
     			->select(['dance_id','nomer','ball'])
@@ -262,7 +307,7 @@ class ScatingController extends \yii\web\Controller
 			$krestArr[$row['judge_id']][$row['dance_id']][$row['nomer']]=$row['ball'];	
 		}
 	
-		$dancesArr = array_fill_keys(explode(',',str_replace(' ','',$tur['dances'])), '');;
+		$dancesArr = array_fill_keys(explode(',',str_replace(' ','',$tur['dances'])), '');
 		$Dance = (new \yii\db\Query()) //получаем заходы для пар в текущем туре
     	->from('dance')
     	->where(['in', 'id',array_keys($dancesArr)]);	
