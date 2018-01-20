@@ -175,6 +175,11 @@ label{
     margin-right: 20px;
 }
 
+.field-tur-turtime{
+    display: inline-table;
+    vertical-align: -webkit-baseline-middle;
+}
+
 .field-category-agemin, 
 .field-category-agemax{
     width: 90px;

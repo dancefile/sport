@@ -65,12 +65,20 @@ use yii\helpers\ArrayHelper;
                 'noWrap' => true,
                 'mergeHeader' => false,
                 'vAlign' => GridView::ALIGN_TOP,
-                'width' => '50px',
-                'template' => '{update}&nbsp;&nbsp;{delete}',
+                'width' => '70px',
+                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
                 'urlCreator'=>function($action, $model, $key, $index){
                     return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
                 },
                 'header' => false,
+                'buttons' => [
+                   'heats' => function ($url, $model, $key){
+                      return Html::a('', ['/heats', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-star']);
+                   },
+                   'scating' => function ($url, $model, $key){
+                      return Html::a('', ['/scating/input', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-flag']);
+                   },
+                ]
             ],
         ],
         'toolbar' =>  [

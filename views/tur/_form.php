@@ -4,15 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Category;
+use kartik\datecontrol\DateControl;
  
 
-$this->registerJsFile('sport/web/js/jquery-ui.min.js',
+$this->registerJsFile('@web/js/jquery-ui.min.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-$this->registerJsFile('sport/web/js/main.js',
+$this->registerJsFile('@web/js/main.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-$this->registerCssFile('css/jquery-ui.css');
+$this->registerCssFile('@web/css/jquery-ui.css');
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tur */
@@ -36,6 +37,15 @@ $this->registerCssFile('css/jquery-ui.css');
     <?= $form->field($model, 'zahodcount')->textInput() ?>
 
     <?= $form->field($model, 'ParNextTur')->textInput() ?>
+    
+    <?= $form
+        ->field($model, 'turTime')
+        ->widget(DateControl::classname(), [
+            'type'=>DateControl::FORMAT_TIME
+        ])
+        ->label(false);
+    ?>
+    
 
 <div> </div>
 
