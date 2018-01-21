@@ -36,8 +36,20 @@ $this->params['breadcrumbs'][] = $this->title;
     ];
     $gridColumns = [
         [
-            'class' => 'kartik\grid\ExpandRowColumn',
+            'class' => 'kartik\grid\ActionColumn',
+            'noWrap' => true,
+            'mergeHeader' => false,
+            'vAlign' => GridView::ALIGN_TOP,
             'width' => '50px',
+            'template' => '{update}&nbsp;&nbsp;{delete}',
+            'urlCreator'=>function($action, $model, $key, $index){
+                return \yii\helpers\Url::to(['category/'.$action,'id'=>$model->id]);
+            },
+            'header' => false,
+        ],
+                    
+        [
+            'class' => 'kartik\grid\ExpandRowColumn',
             'value' => function ($model, $key, $index, $column) {
                 return GridView::ROW_COLLAPSED;
             },
@@ -52,7 +64,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
             },
             'headerOptions' => ['class' => 'kartik-sheet-style'], 
-            'expandOneOnly' => true
+            'expandOneOnly' => true,
+            'detailAnimationDuration' => 0,
         ],
 
         [
@@ -127,19 +140,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
 
-        [
-            'class' => 'kartik\grid\ActionColumn',
-            'noWrap' => true,
-            'mergeHeader' => false,
-            'vAlign' => GridView::ALIGN_TOP,
-            'width' => '50px',
-            'template' => '{update}&nbsp;&nbsp;{delete}',
-            'urlCreator'=>function($action, $model, $key, $index){
-                return \yii\helpers\Url::to(['category/'.$action,'id'=>$model->id]);
-            },
-            'header' => false,
-        ],
-
     
     ];
 
@@ -150,6 +150,8 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'filterModel' => $searchModel,
         'pjax' => true,
         'condensed' => true,
+        'hover' => true,
+        
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
         
         'columns' => $gridColumns,

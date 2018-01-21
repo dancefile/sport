@@ -191,7 +191,7 @@ class Registration extends \yii\base\Model
         return Tur::find()
             ->joinWith(['category', 'category.otd', 'ins'])
             ->select(['tur.id', 'category.name', 'tur.category_id', 'otd.name otd'])
-            ->where(['category.solo' => 2])
+            ->where(['category.solo' => 0])
             ->groupBy('tur.category_id')
             ->andWhere(min(['tur.nomer']))
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])

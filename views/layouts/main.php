@@ -61,6 +61,11 @@ AppAsset::register($this);
 								['label' => 'Дипломы', 'url' => ['/print/list']],
                                 ],
                         ],
+                        ['label' => 'Справочники', 'items' => [
+                                ['label' => 'Список танцев', 'url' => ['/dance']],
+                                
+                                ],
+                        ],
 
 
             Yii::$app->user->isGuest ? (

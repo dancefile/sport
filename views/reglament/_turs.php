@@ -23,8 +23,28 @@ use yii\helpers\ArrayHelper;
         // 'filterModel' => $searchModel,
         'condensed' => true,
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
-
+        'hover' => true,
         'columns' => [
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                'noWrap' => true,
+                'mergeHeader' => false,
+                'vAlign' => GridView::ALIGN_TOP,
+                'width' => '70px',
+                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                'urlCreator'=>function($action, $model, $key, $index){
+                    return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
+                },
+                'header' => false,
+                'buttons' => [
+                   'heats' => function ($url, $model, $key){
+                      return Html::a('', ['/heats', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-star']);
+                   },
+                   'scating' => function ($url, $model, $key){
+                      return Html::a('', ['/scating/input', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-flag']);
+                   },
+                ]
+            ],
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
@@ -60,32 +80,14 @@ use yii\helpers\ArrayHelper;
 
             'status',
 
-             [
-                'class' => 'kartik\grid\ActionColumn',
-                'noWrap' => true,
-                'mergeHeader' => false,
-                'vAlign' => GridView::ALIGN_TOP,
-                'width' => '70px',
-                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
-                'urlCreator'=>function($action, $model, $key, $index){
-                    return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
-                },
-                'header' => false,
-                'buttons' => [
-                   'heats' => function ($url, $model, $key){
-                      return Html::a('', ['/heats', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-star']);
-                   },
-                   'scating' => function ($url, $model, $key){
-                      return Html::a('', ['/scating/input', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-flag']);
-                   },
-                ]
-            ],
+             
         ],
         'toolbar' =>  [
             ['content' => 
                 Html::a('<i class="glyphicon glyphicon-plus"></i>', ['tur/create', 'category_id'=>$searchModel->category_id, 'dances' => $searchModel->category->dances], ['title' => 'Добавить тур', 'class' => 'btn btn-success']) . ' '.
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
             ],
+            
             '{export}',
             '{toggleData}',
         ],
