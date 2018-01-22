@@ -132,10 +132,14 @@ class Category extends \yii\db\ActiveRecord
 
     public function getCatRegPairs($id)
     { 
-        return Tur::find()
+        if ($c = Tur::find()
                 ->where(['category_id' => $id])
                 ->orderBy(['id'=> SORT_ASC])
-                ->one()->getIns()->count();        
+                ->one()){
+            return $c->getIns()->count();
+        } else {
+            return 0;
+        }
     }
 
     public static function getSoloList(){
