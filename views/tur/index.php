@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => [
             'class' => 'sortable-table'
         ],
-       
+        
         'columns' => [
             [
                 'attribute'=>'otd_id', 
@@ -65,14 +65,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'regPairs',
                 'width' => '70px',
                 'value' => function ($model, $key, $index, $widget) { 
-                return $model->regPairs;
-				}
+                                return $model->regPairs;
+                            }
             ],
             [
                 'attribute' => 'category.program',
                 'width' => '80px',
                 'value' => function ($model, $key, $index, $widget) { 
-                    return $model->category->program == '1' ? 'Latina' : ($model->category->program == '2' ? 'Standart' : '10 dances') ;
+                    return $model->category->programmList[$model->category->program] ;
                 }
             ],
             [

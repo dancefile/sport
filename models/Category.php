@@ -26,6 +26,38 @@ use yii\helpers\ArrayHelper;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    public $programmList = [
+        '1' => 'La',
+        '2' => 'St',
+        '3' => '10 D',
+        '4' => '10 D разд.',
+    ];
+    
+    public $soloList = [
+        '0'=>'Соло', 
+        '1'=>'Пары',
+    ];
+    
+    public $skayList = [
+        '1' => 'Баллы',
+        '2' => 'Кресты',
+        '3' => 'Скей тинг',
+    ];
+    
+    public $classList = [
+        'N' => 'N',
+        'A' => 'A',
+        'B' => 'B',
+        'C' => 'C',
+        'D' => 'D',
+        'E' => 'E',
+    ];
+    
+    public $chesses_list;
+    
+    
+    
+    
     /**
      * @inheritdoc
      */
@@ -68,7 +100,7 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-    public $chesses_list;
+
 
 
     public function beforeSave($insert)
@@ -134,16 +166,12 @@ class Category extends \yii\db\ActiveRecord
     { 
         if ($c = Tur::find()
                 ->where(['category_id' => $id])
-                ->orderBy(['id'=> SORT_ASC])
+                ->orderBy(['nomer'=> SORT_ASC])
                 ->one()){
             return $c->getIns()->count();
         } else {
             return 0;
         }
-    }
-
-    public static function getSoloList(){
-        return ['0'=>'Соло', '1'=>'Пары'];
     }
 
     public function getDanceList()
@@ -155,14 +183,4 @@ class Category extends \yii\db\ActiveRecord
     {
         return implode(", ", Dance::find()->asArray()->select('name')->where(['id' => explode(", ", $dances)])->column());
     }
-
-    public static function getProgrammList(){
-        return ['1' => 'Latina',
-                '2' => 'Standart',
-                '3' => '10 dances',
-                ];
-    }
-
 }
-
-

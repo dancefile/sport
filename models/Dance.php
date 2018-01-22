@@ -15,6 +15,13 @@ use Yii;
  */
 class Dance extends \yii\db\ActiveRecord
 {
+    public $progList =  [
+                            '1' => 'St',
+                            '2' => 'La'
+                        ];
+    
+    
+    
     /**
      * @inheritdoc
      */
@@ -31,6 +38,8 @@ class Dance extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 50],
+            [['fullName'], 'safe'],
+            [['prog'], 'integer'],
         ];
     }
 
@@ -41,7 +50,9 @@ class Dance extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Сокр. наимен.',
+            'prog' => 'Программа',
+            'fullName' => 'Полн. наимен.',
         ];
     }
 
@@ -69,4 +80,6 @@ class Dance extends \yii\db\ActiveRecord
     {
         return new DanceQuery(get_called_class());
     }
+    
+    
 }

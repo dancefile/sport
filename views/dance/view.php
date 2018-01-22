@@ -29,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'prog',
+                'width' => '80px',
+                'value' => $model->progList[$model->prog],
+            ],
             'name',
+            'fullName',
         ],
     ]) ?>
 

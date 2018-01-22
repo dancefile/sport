@@ -82,27 +82,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
         [
             'attribute' => 'clas',
-            'width' => '50px',
+            'width' => '70px',
         ],
         [
             'attribute' => 'program',
             'width' => '80px',
             'value' => function ($model, $key, $index, $widget) { 
-                return $model->program == '1' ? 'Latina' : ($model->program == '2' ? 'Standart' : '10 dances') ;
+                return $model->programmList[$model->program];
             }
         ],
         [
             'attribute' => 'skay',
             'width' => '80px',
             'value' => function ($model, $key, $index, $widget) { 
-                return $model->skay == '1' ? 'Баллы' : ($model->skay == '2' ? 'Кресты' : 'Скейтинг') ;
+                return $model->skayList[$model->skay];
             }
         ],
         [
             'attribute' => 'solo', 
             'width' => '80px',
             'value' => function ($model, $key, $index, $widget) { 
-                return $model->solo == '1' ? 'Пары' : 'Соло' ;
+                return $model->soloList[$model->solo];
             }
 
         ],        

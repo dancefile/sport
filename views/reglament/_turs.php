@@ -65,7 +65,7 @@ use yii\helpers\ArrayHelper;
                 'attribute' => 'typezahod',
                 'width' => '80px',
                 'value' => function ($model, $key, $index, $widget) { 
-                    return $model->typezahod == '1' ? 'Постоянный' : ($model->typezahod == '2' ? 'Переменный' : 'Чередование') ;
+                    return $model->typezahodList[$model->typezahod];
                 }
             ],
 
@@ -74,7 +74,7 @@ use yii\helpers\ArrayHelper;
                 'attribute' => 'typeSkating',
                 'width' => '80px',
                 'value' => function ($model, $key, $index, $widget) { 
-                    return $model->typeSkating == '1' ? 'Баллы' : ($model->typeSkating == '2' ? 'Кресты' : 'Скейтинг') ;
+                    return $model->category->skayList[$model->typeSkating];
                 }
             ],
 

@@ -38,7 +38,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
         
         <?= $form->field($model, 'solo')
             ->radioList(
-                $model->getSoloList(),
+                $model->soloList,
             [
                 'enableLabel' => false,
             ]);
@@ -47,34 +47,19 @@ $this->registerCssFile('@web/css/jquery-ui.css');
         
 
         <?= $form->field($model, 'program')
-            ->radioList($model->getProgrammList()); 
+            ->radioList($model->programmList); 
         ?>
 
         <?= $form->field($model, 'skay')
-            ->radioList([
-                '1' => 'Баллы',
-                '2' => 'Кресты',
-                '3' => 'Скейтинг'
-            ]); 
+            ->radioList($model->skayList); 
         ?>
         
         <?= $form->field($model, 'dances')
             ->checkboxList($model->danceList);
         ?> 
-        
-        <!--<input type="submit" id="save" value="ok">-->
-
-        
-
+       
         <?= $form->field($model, 'clas')
-            ->checkboxList([
-                'N' => 'N',
-                'A' => 'A',
-                'B' => 'B',
-                'C' => 'C',
-                'D' => 'D',
-                'E' => 'E',
-            ]);
+            ->checkboxList($model->classList);
         ?>
         
         <?= $form->field($model, 'chesses_list')

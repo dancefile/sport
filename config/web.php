@@ -74,7 +74,7 @@ $config = [
                 // format settings for displaying each date attribute (ICU format example)
                 'displaySettings' => [
                     Module::FORMAT_DATE => 'dd-MM-yyyy',
-                    Module::FORMAT_TIME => 'hh:mm:ss a',
+                    Module::FORMAT_TIME => 'HH:mm',
                     Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a', 
                 ],
                 

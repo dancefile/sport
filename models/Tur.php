@@ -31,6 +31,13 @@ use Yii;
 
 class Tur extends \yii\db\ActiveRecord
 {
+    public $typezahodList = [
+                                '1' => 'Постоянный',
+                                '2' => 'Переменный',
+                                '3' => 'Чередование',
+                            ];
+            
+            
     /**
      * @inheritdoc
      */

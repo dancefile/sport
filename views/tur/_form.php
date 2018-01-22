@@ -50,19 +50,11 @@ $this->registerCssFile('@web/css/jquery-ui.css');
 <div> </div>
 
     <?= $form->field($model, 'typezahod')
-        ->radioList([
-            '1' => 'Постоянный',
-            '2' => 'Переменный',
-            '3' => 'Чередование'
-        ]); 
+        ->radioList($model->typezahodList); 
     ?>
 
     <?= $form->field($model, 'typeSkating')
-        ->radioList([
-            '1' => 'Баллы',
-            '2' => 'Кресты',
-            '3' => 'Скейтинг'
-        ]); 
+        ->radioList($model->category->skayList); 
     ?>
 
     <?= $form->field($model, 'dances')

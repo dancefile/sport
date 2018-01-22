@@ -343,3 +343,9 @@ td.number {
     background: #f1f1f1;
     padding-bottom: 30px;
 }
+
+#category-solo label, #category-program label, #category-skay label{
+    background: #dddddd;
+    padding: 5px 5px;
+    margin: 0 4px;
+}
