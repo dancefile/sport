@@ -63,6 +63,7 @@ AppAsset::register($this);
                         ],
                         ['label' => 'Справочники', 'items' => [
                                 ['label' => 'Список танцев', 'url' => ['/dance']],
+                                ['label' => 'Список отделений', 'url' => ['/otd']],
                                 
                                 ],
                         ],
