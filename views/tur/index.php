@@ -31,6 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => [
             'class' => 'sortable-table'
         ],
+//        'afterRow' => function($model, $key, $index, $grid){
+//            if ($model->category->program == 4){
+//                return '<tr><td colspan="6">' . '$model->email' . '<td></tr>';
+//            }
+//            
+//        },
         
         'columns' => [
             [

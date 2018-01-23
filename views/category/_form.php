@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Otd;
 use app\models\Judge;
+use yii\widgets\Pjax;
  
 
 $this->registerJsFile('@web/js/jquery-ui.min.js',
@@ -21,7 +22,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
 ?>
 
 <div class="category-form">
-
+<?php Pjax::begin(); ?>
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -77,5 +78,5 @@ $this->registerCssFile('@web/css/jquery-ui.css');
         </div>
 
     <?php ActiveForm::end(); ?>
-
+<?php Pjax::end(); ?>
 </div>

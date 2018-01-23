@@ -31,11 +31,12 @@ class Timetable extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['time'], 'required'],
-            [['time'], 'safe'],
-            [['otd', 'tur_id'], 'integer'],
-            [['name'], 'string', 'max' => 250],
+//            [['time'], 'required'],
+            [['time', 'tur_name'], 'safe'],
+            [['otd_id', 'tur_id'], 'integer'],
+//            [['name'], 'string', 'max' => 250],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
+            [['category_name', 'tur_number', 'reg_pairs', 'programm', 'dances', 'heats_count', 'dances_count'], 'safe'],
         ];
     }
 
@@ -46,10 +47,17 @@ class Timetable extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'time' => 'Time',
-            'otd' => 'Otd',
-            'tur_id' => 'Tur ID',
-            'name' => 'Name',
+            'time' => 'Время',
+            'otd_id' => 'Отделение',
+            'tur_id' => 'Тур',
+            'category_name' => 'Категория',
+            'tur_number' => 'Номер тура',
+            'reg_pairs' => 'Зарег. пар',
+            'programm' => 'Программа',
+            'dances' => 'Танцы',
+            'heats_count' => 'Заходов',
+            'dances_count' => 'Танцев',
+            'tur_name' => 'Тур',
         ];
     }
 
@@ -60,6 +68,8 @@ class Timetable extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tur::className(), ['id' => 'tur_id'])->inverseOf('timetables');
     }
+    
+    
 
     /**
      * @inheritdoc

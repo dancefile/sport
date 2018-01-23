@@ -46,7 +46,7 @@ AppAsset::register($this);
                         ],
                        ['label' => 'Регламент', 'items' => [
                                 ['label' => 'Регламент', 'url' => ['/reglament/index']],
-                                ['label' => 'Расписание', 'url' => ['/tur/index']],
+                                ['label' => 'Расписание', 'url' => ['/timetable/index']],
                                 ],
                         ],
 		                ['label' => 'Судьи', 'items' => [

@@ -150,6 +150,12 @@ class CategoryController extends AppController
 
         return $this->redirect(['reglament/index']);
     }
+    
+    public function actionFormUpdate()
+    {
+        
+    }
+    
 
     /**
      * Finds the Category model based on its primary key value.
