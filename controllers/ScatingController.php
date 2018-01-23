@@ -199,7 +199,7 @@ class ScatingController extends \yii\web\Controller
 	public function actionForm($idT=0,$idD=0) //ввод оченок судей парам за танец
 	{
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
-		->select(['tur.category_id','turname'=>'tur.name','tur.dances','category.name','tur.typeSkating'])
+		->select(['tur.zahodcount','tur.typezahod','tur.category_id','turname'=>'tur.name','tur.dances','category.name','tur.typeSkating'])
 	    ->from('tur')
 		->innerJoin('category','tur.category_id=category.id')
 		->where(['tur.id'=>$idT])
@@ -207,14 +207,16 @@ class ScatingController extends \yii\web\Controller
 		
 		if (!isset($tur['name'])) return $this->error('Не найден тур или категория');
 		
+		if ($tur['typezahod']==3) {$dance_id=$idD;} else {$dance_id=null;}
+		
 		$judges = (new \yii\db\Query()) //получаем список судей данной категории
-	    ->select(['judge.id','judge.name','judge.sname'])
+	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
 	    ->from('chess,judge')
 	    ->where(['chess.category_id' => $tur['category_id']])
 		->andWhere('`judge`.`id`=`chess`.`judge_id`');
 	
 		foreach ($judges->each() as $row) {
-			$judgesArr[$row['id']]=$row['sname'].' '.$row['name']; 
+			$judgesArr[$row['id']]=$row['nomer'].'. '.$row['sname'].' '.$row['name']; 
 		}
 	
 		$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей танец за текущей тур
@@ -228,12 +230,12 @@ class ScatingController extends \yii\web\Controller
 		}
 	
 		$in = (new \yii\db\Query()) //получаем список пар в текущем танеце за текущей тур
-    	->select(['nomer'])
+    	->select(['nomer','id'])
     	->from('in')
     	->where(['tur_id' => $idT]);	
 		$inArr=[];
 		foreach ($in->each() as $row) {
-			$inArr[]=$row['nomer'];	
+			$inArr[$row['id']]=$row['nomer'];	
 		}
 		
 		$dance = (new \yii\db\Query()) //получаем имя текущего танца тура
@@ -242,13 +244,23 @@ class ScatingController extends \yii\web\Controller
     	->where(['id' => $idD])
 		->one();
 		
-	return $this->render('form', ['inArr' => $inArr,
-								 'krestArr' => $krestArr,
-								 'judgesArr' => $judgesArr,
-								 'tur' => $tur,
-								 'dance' => $dance,
-								 'idT' => $idT,
-								 'idD' => $idD]);		
+		$heatsArr=[];
+        $heats = (new \yii\db\Query()) //получаем заходы для пар в текущем туре
+                ->from('in_dance')
+                ->where(['in', 'id_in',array_keys($inArr)])
+				->andWhere(['dance_id' => $dance_id]);	
+        foreach ($heats->each() as $row) {
+                $heatsArr[$row['id_in']]=$row['zahod'];	
+        }
+		
+	return $this->render('form', ['heatsArr' => $heatsArr,
+					 			  'inArr' => $inArr,
+								  'krestArr' => $krestArr,
+								  'judgesArr' => $judgesArr,
+								  'tur' => $tur,
+								  'dance' => $dance,
+								  'idT' => $idT,
+								  'idD' => $idD]);		
 		
 	}//actionForm
 
