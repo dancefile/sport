@@ -30,6 +30,7 @@ class HeatsController extends \yii\web\Controller
             }		
 		
             if (!isset($tur["typezahod"])) return $this->error('Не найден тур или не задан способ формирования заходов');
+			if (!isset($tur["zahodcount"])) return $this->error('Не верное кол. заходов');
             $couplePerHeat=ceil(count($inArr)/$tur['zahodcount']);
             $insetArr=[];
             switch ($tur["typezahod"]) {
