@@ -65,7 +65,10 @@ use yii\helpers\ArrayHelper;
                 'attribute' => 'typezahod',
                 'width' => '80px',
                 'value' => function ($model, $key, $index, $widget) { 
-                    return $model->typezahodList[$model->typezahod];
+                    if (isset($model->typezahod)){
+                        return $model->typezahodList[$model->typezahod];
+                        
+                    };
                 }
             ],
 

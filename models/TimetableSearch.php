@@ -12,6 +12,7 @@ use app\models\Timetable;
  */
 class TimetableSearch extends Timetable
 {
+    
     /**
      * @inheritdoc
      */
@@ -60,7 +61,6 @@ class TimetableSearch extends Timetable
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'otd_id' => $this->otd_id,
             'time' => $this->time,
             'tur_number' => $this->tur_number,
             'tur_id' => $this->tur_id,
@@ -68,6 +68,10 @@ class TimetableSearch extends Timetable
             'programm' => $this->programm,
             'heats_count' => $this->heats_count,
         ]);
+        $query->andFilterWhere([
+            'otd_id' => $this->otd_id,
+        ]);
+        
 
         $query->andFilterWhere(['like', 'category_name', $this->category_name])
             ->andFilterWhere(['like', 'dances', $this->dances]);

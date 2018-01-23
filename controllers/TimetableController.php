@@ -8,7 +8,6 @@ use app\models\TimetableSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ArrayDataProvider;
 
 /**
  * TimetableController implements the CRUD actions for Timetable model.
@@ -35,15 +34,28 @@ class TimetableController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
-//        Timetable::loadTurData(6);
-            
+    {            
+        $otds = \app\models\Otd::find()->all();
         $searchModel = new TimetableSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        foreach ($otds as $otd) {
+            $searchModel->otd_id =$otd['id'];
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $tabs[]=[
+                'label'     =>  'Отделение '.$otd['name'],
+                'content'   =>  $this->render(
+                    '_form', 
+                    [
+                        'dataProvider' =>  $dataProvider,
+                        'otd_id' => $otd['id'],
+                    ]
+                ),
+            ];
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'tabs' => $tabs,
         ]);
     }
 
@@ -117,7 +129,16 @@ class TimetableController extends Controller
         Timetable::deleteAll(['otd_id'=>$otd_id]);
         
         $turs = \app\models\Tur::find()->joinWith(['category', 'category.otd', 'ins'])->where(['category.otd_id'=>$otd_id])->asArray()->all();
-
+        
+//        $tt= array_filter($turs, function() {
+//            if ($this['category']['program']==4){
+//                return true;
+//            }
+//            
+//        });
+//        echo '<pre>', print_r($tt), '</pre>';
+//        exit;
+            
         foreach ($turs as $key=>$tur) {
             $tt = new Timetable();
             $tt->time = $tur['turTime'];

@@ -68,8 +68,6 @@ class Timetable extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tur::className(), ['id' => 'tur_id'])->inverseOf('timetables');
     }
-    
-    
 
     /**
      * @inheritdoc
