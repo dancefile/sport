@@ -2,6 +2,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\Tabs;
+$this->registerJsFile('@web/js/jquery-ui.min.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerJsFile('@web/js/main.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+$this->registerCssFile('@web/css/jquery-ui.css');
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TimetableSearch */

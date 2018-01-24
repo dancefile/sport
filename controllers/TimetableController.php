@@ -33,7 +33,7 @@ class TimetableController extends Controller
      * Lists all Timetable models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex()//$otd_id=null
     {            
         $otds = \app\models\Otd::find()->all();
         $searchModel = new TimetableSearch();
@@ -41,15 +41,21 @@ class TimetableController extends Controller
         foreach ($otds as $otd) {
             $searchModel->otd_id =$otd['id'];
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//            if ($otd['id']==$otd_id) {
+//                $active = true;
+//            } else {
+//                $active = null;
+//            }
             $tabs[]=[
                 'label'     =>  'Отделение '.$otd['name'],
                 'content'   =>  $this->render(
-                    '_form', 
+                    '_tab', 
                     [
                         'dataProvider' =>  $dataProvider,
                         'otd_id' => $otd['id'],
                     ]
                 ),
+//                'active' => $active,
             ];
         }
 
@@ -77,16 +83,17 @@ class TimetableController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($otd_id)
     {
         $model = new Timetable();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'otd_id' => $otd_id,
         ]);
     }
 
@@ -102,7 +109,7 @@ class TimetableController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -155,7 +162,7 @@ class TimetableController extends Controller
             $tt->save();
         } 
         
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'otd_id'=>$otd_id]);
     }
     /**
      * Finds the Timetable model based on its primary key value.
