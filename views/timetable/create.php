@@ -12,10 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="timetable-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
+    <?= $this->render('_form_create', [
         'model' => $model,
+        'otd_id' => $otd_id,
+        'otd_name' => $otd_name,
     ]) ?>
 
 </div>

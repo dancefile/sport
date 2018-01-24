@@ -47,12 +47,13 @@ $config = [
             ],
         ],
         'db' => $db,
-//        'urlManager' => [
-//            'enablePrettyUrl' => true,
-//            'showScriptName' => false,
-//            'rules' => [
-//            ],
-//        ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 'kvgrid' => [
@@ -74,7 +75,7 @@ $config = [
                 // format settings for displaying each date attribute (ICU format example)
                 'displaySettings' => [
                     Module::FORMAT_DATE => 'dd-MM-yyyy',
-                    Module::FORMAT_TIME => 'HH:mm',
+                    Module::FORMAT_TIME => 'HH:mm:ss',
                     Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a', 
                 ],
                 

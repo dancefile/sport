@@ -349,3 +349,7 @@ td.number {
     padding: 5px 5px;
     margin: 0 4px;
 }
+
+.tab-content p{
+    margin-top: 10px;
+}

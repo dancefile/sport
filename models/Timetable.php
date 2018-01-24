@@ -32,8 +32,8 @@ class Timetable extends \yii\db\ActiveRecord
     {
         return [
 //            [['time'], 'required'],
-            [['time', 'tur_name'], 'safe'],
-            [['otd_id', 'tur_id'], 'integer'],
+            [['time', 'tur_name', 'tur_time'], 'safe'],
+            [['otd_id', 'tur_id'], 'safe'],
 //            [['name'], 'string', 'max' => 250],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
             [['category_name', 'tur_number', 'reg_pairs', 'programm', 'dances', 'heats_count', 'dances_count'], 'safe'],
@@ -68,7 +68,57 @@ class Timetable extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tur::className(), ['id' => 'tur_id'])->inverseOf('timetables');
     }
-
+    
+    public function loadTurData($otd_id)
+    {
+        $turs = \app\models\Tur::find()->joinWith(['category', 'category.otd', 'ins'])->where(['category.otd_id'=>$otd_id])->asArray()->all();
+        
+//        $tt= array_filter($turs, function() {
+//            if ($this['category']['program']==4){
+//                return true;
+//            }
+//            
+//        });
+//        echo '<pre>', print_r($tt), '</pre>';
+//        exit;
+        $danceTime = Setings::find()->one();
+        $dt = $danceTime->danceTime;
+        
+        foreach ($turs as $key=>$tur) {
+            $tt = new Timetable();
+            
+            $tt->otd_id = $tur['category']['otd_id'];
+            $tt->tur_id = $tur['id'];
+            $tt->tur_name = $tur['name'];
+            $tt->category_name = $tur['category']['name'];
+            $tt->tur_number = $tur['nomer'];
+            $tt->reg_pairs = count($tur['ins']);
+            $tt->programm = $tur['category']['program'];
+            $tt->dances = $tur['dances'];
+            $tt->heats_count = $tur['zahodcount'];
+            $tt->dances_count = count(explode(',', $tur['dances']));
+            $tt->tur_time = date('H:i:s', StrToTime($dt) * $tur['zahodcount'] * count(explode(',', $tur['dances'])));
+            $tt->save();
+            
+            self::timeUpdate($otd_id);
+        } 
+    }
+    
+    public function timeUpdate($otd_id)
+    {
+        $otd = Otd::find()->where(['id'=>$otd_id])->one();
+        $startTime = $otd->startTime;
+        
+        $timeTable = Timetable::find()->where(['otd_id'=>$otd_id])->all();
+        
+        foreach ($timeTable as $record) {
+            $record->time = $startTime;
+            $record->save();
+            $startTime = date('H:i:s', StrToTime($record->time) + StrToTime($record->tur_time));
+        }
+    }
+    
+    
     /**
      * @inheritdoc
      * @return TimetableQuery the active query used by this AR class.

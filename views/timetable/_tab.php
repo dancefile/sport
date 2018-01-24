@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
+use richardfan\sortable\SortableGridView;
+use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Timetable */
@@ -11,21 +12,18 @@ use yii\grid\GridView;
 
 <p>
     <?= Html::a('Загрузить записи', ['load', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
-    <?= Html::a('Добавить строку', ['crete', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
-    <?= Html::a('Сохранить', ['load', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
+    <?= Html::a('Добавить строку', ['create', 'otd_id'=>$otd_id, 'otd_name'=>$otd_name ], ['class' => 'btn btn-success']); ?>
 </p>
 
+
 <?= 
-    GridView::widget([
+    SortableGridView::widget([
         'dataProvider' => $dataProvider,
-        'tableOptions' => [
-            'class' => 'sortable-table table table-striped table-bordered'
-        ],
+        'sortUrl' => Url::to(['sortItem']),
         'columns' => [
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}',
-                
             ],
             'time',
             ['class' => 'yii\grid\SerialColumn'],
@@ -36,6 +34,7 @@ use yii\grid\GridView;
             'programm',
             'dances',
             'heats_count',
+            'tur_time',
         ],
     ]);
 ?>

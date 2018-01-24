@@ -273,4 +273,22 @@ return array (
       '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid',
     ),
   ),
+  'yiisoft/yii2-jui' => 
+  array (
+    'name' => 'yiisoft/yii2-jui',
+    'version' => '2.0.7.0',
+    'alias' => 
+    array (
+      '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
+    ),
+  ),
+  'richardfan1126/yii2-sortable-gridview' => 
+  array (
+    'name' => 'richardfan1126/yii2-sortable-gridview',
+    'version' => '0.0.5.0',
+    'alias' => 
+    array (
+      '@richardfan/sortable' => $vendorDir . '/richardfan1126/yii2-sortable-gridview',
+    ),
+  ),
 );

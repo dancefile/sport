@@ -13,11 +13,11 @@ use kartik\datecontrol\DateControl;
 
     <?php $form = ActiveForm::begin(); ?>
         <?= $form
-            ->field($model, 'time')
+            ->field($model, 'tur_time')
             ->widget(DateControl::classname(), [
                 'type'=>DateControl::FORMAT_TIME
             ])
-            ->label(false);
+            ->label('Длительность');
         ?>
         <?= $form->field($model, 'category_name')->textInput() ?>
 
