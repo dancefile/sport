@@ -199,7 +199,7 @@ class ScatingController extends \yii\web\Controller
 	public function actionForm($idT=0,$idD=0) //ввод оченок судей парам за танец
 	{
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
-		->select(['tur.zahodcount','tur.typezahod','tur.category_id','turname'=>'tur.name','tur.dances','category.name','tur.typeSkating'])
+		->select(['tur.zahodcount','tur.typezahod','tur.category_id','turname'=>'tur.name','tur.dances','category.name','tur.typeSkating','tur.ParNextTur'])
 	    ->from('tur')
 		->innerJoin('category','tur.category_id=category.id')
 		->where(['tur.id'=>$idT])
