@@ -4,19 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Tabs;
 use app\models\TimetableSearch;
 
-//$this->registerJsFile('@web/js/jquery-ui.min.js',
-//    ['depends' => [\yii\web\JqueryAsset::className()]]
-//);
-//$this->registerJsFile('@web/js/main.js',
-//    ['depends' => [\yii\web\JqueryAsset::className()]]
-//);
-//$this->registerCssFile('@web/css/jquery-ui.css');
-
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\TimetableSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Timetables';
+$this->title = 'Расписание';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -28,6 +16,16 @@ $this->params['breadcrumbs'][] = $this->title;
     $searchModel = new TimetableSearch();
     $tabs=[];
     foreach ($otds as $otd) {
+        if (isset($otd_id)){
+            if($otd_id==$otd['id']){
+                $active = true;
+            } else {
+                $active = false;
+            }
+        } else {
+            $active = null;
+        }
+        
         $searchModel->otd_id =$otd['id'];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -41,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'otd_name' => $otd['name'],
                 ]
             ),
-//          'active' => $active,
+            'active' => $active,
         ];
     }
 

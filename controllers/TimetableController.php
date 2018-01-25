@@ -35,18 +35,12 @@ class TimetableController extends Controller
             'sortItem' => [
                 'class' => SortableAction::className(),
                 'activeRecordClassName' => Timetable::className(),
-                'orderColumn' => 'time',
+                'orderColumn' => 'sortItem',
+//                'on afterRun' => self::timeupdate(5),
             ],
-            'sortItem2' => [
-                'class' => SortableAction::className(),
-                'activeRecordClassName' => Timetable::className(),
-                'orderColumn' => 'time',
-            ],
-            
             // your other actions
         ];
     }
-    
     
     /**
      * Lists all Timetable models.
@@ -68,7 +62,7 @@ class TimetableController extends Controller
         $model->otd_id = $otd_id;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->render('index', ['otd_id'=>$otd_id]);
         }
 
         return $this->render('create', [
@@ -91,7 +85,7 @@ class TimetableController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Timetable::timeUpdate($model->otd_id);
-            return $this->redirect(['index']);
+            return $this->render('index', ['otd_id' => $model->otd_id]);
         }
 
         return $this->render('update', [
@@ -117,14 +111,13 @@ class TimetableController extends Controller
     {
         Timetable::deleteAll(['otd_id'=>$otd_id]);
         Timetable::loadTurData($otd_id);
-        return $this->redirect(['index', 'otd_id'=>$otd_id]);
+        return $this->render('index');
     }
     
     public function actionTimeupdate($otd_id)
     {
-        echo '<pre>', print_r($otd_id), '</pre>';
-        exit;
         Timetable::timeUpdate($otd_id);
+        return $this->render('index', ['otd_id'=>$otd_id]);
     }
 
     /**

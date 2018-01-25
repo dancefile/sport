@@ -9,10 +9,11 @@ use yii\helpers\Url;
 /* @var $model app\models\Timetable */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?php Pjax::begin(); ?>
 <p>
-    <?= Html::a('Загрузить записи', ['load', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
+    <?= Html::a('Загрузить записи', ['load', 'otd_id'=>$otd_id], ['class' => 'btn btn-danger']); ?>
     <?= Html::a('Добавить строку', ['create', 'otd_id'=>$otd_id, 'otd_name'=>$otd_name ], ['class' => 'btn btn-success']); ?>
+    <?= Html::a('Обновить время', ['timeupdate', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
 </p>
 
 
@@ -20,11 +21,8 @@ use yii\helpers\Url;
     SortableGridView::widget([
         'dataProvider' => $dataProvider,
         'sortUrl' => Url::to(['sortItem']),
+        'emptyCell'=>'-',
         'columns' => [
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}',
-            ],
             'time',
             ['class' => 'yii\grid\SerialColumn'],
             'category_name',
@@ -35,6 +33,12 @@ use yii\helpers\Url;
             'dances',
             'heats_count',
             'tur_time',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}&emsp;{delete}',
+                
+            ],
         ],
     ]);
 ?>
+<?php Pjax::end(); ?>

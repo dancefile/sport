@@ -20,7 +20,7 @@ class TimetableSearch extends Timetable
     {
         return [
             [['id', 'otd_id', 'tur_number', 'tur_id', 'reg_pairs', 'programm', 'heats_count'], 'integer'],
-            [['time', 'category_name', 'dances'], 'safe'],
+            [['sortItem', 'time', 'category_name', 'dances'], 'safe'],
         ];
     }
 
@@ -76,7 +76,7 @@ class TimetableSearch extends Timetable
         $query->andFilterWhere(['like', 'category_name', $this->category_name])
             ->andFilterWhere(['like', 'dances', $this->dances]);
         
-        $query->orderBy(['time' => SORT_ASC]);
+        $query->orderBy(['sortItem' => SORT_ASC]);
 
         return $dataProvider;
     }

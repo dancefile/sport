@@ -73,43 +73,58 @@ class Timetable extends \yii\db\ActiveRecord
     {
         $turs = \app\models\Tur::find()->joinWith(['category', 'category.otd', 'ins'])->where(['category.otd_id'=>$otd_id])->asArray()->all();
         
-//        $tt= array_filter($turs, function() {
-//            if ($this['category']['program']==4){
-//                return true;
-//            }
-//            
-//        });
-//        echo '<pre>', print_r($tt), '</pre>';
-//        exit;
         $danceTime = Setings::find()->one();
         $dt = $danceTime->danceTime;
         
-        foreach ($turs as $key=>$tur) {
-            $tt = new Timetable();
-            
-            $tt->otd_id = $tur['category']['otd_id'];
-            $tt->tur_id = $tur['id'];
-            $tt->tur_name = $tur['name'];
-            $tt->category_name = $tur['category']['name'];
-            $tt->tur_number = $tur['nomer'];
-            $tt->reg_pairs = count($tur['ins']);
-            $tt->programm = $tur['category']['program'];
-            $tt->dances = $tur['dances'];
-            $tt->heats_count = $tur['zahodcount'];
-            $tt->dances_count = count(explode(',', $tur['dances']));
-            $tt->tur_time = date('H:i:s', StrToTime($dt) * $tur['zahodcount'] * count(explode(',', $tur['dances'])));
-            $tt->save();
-            
-            self::timeUpdate($otd_id);
+        foreach ($turs as $tur) {
+            if ($tur['category']['program']==4){
+                self::timeTableSave($tur, '10 D La', $dt);
+                self::timeTableSave($tur, '10 D St', $dt);
+            } else {
+                switch ($tur['category']['program']) {
+                    case 1:
+                        $programm = "La";
+                        break;
+                    case 2:
+                        $programm = "St";
+                        break;
+                    case 3:
+                        $programm = "10 D";
+                        break;
+                }
+                self::timeTableSave($tur, $programm, $dt);
+            }
         } 
+        self::timeUpdate($otd_id);
     }
     
+    
+    private function timeTableSave($tur, $programm, $dt)
+    {
+        $tt = new Timetable();  
+        $tt->otd_id = $tur['category']['otd_id'];
+        $tt->tur_id = $tur['id'];
+        $tt->tur_name = $tur['name'];
+        $tt->category_name = $tur['category']['name'];
+        $tt->tur_number = $tur['nomer'];
+        $tt->reg_pairs = count($tur['ins']);
+        $tt->programm = $programm;
+        $tt->dances = $tur['dances'];
+        $tt->heats_count = $tur['zahodcount'];
+        $tt->dances_count = count(explode(',', $tur['dances']));
+        $tt->tur_time = date('H:i:s', StrToTime($dt) * $tur['zahodcount'] * count(explode(',', $tur['dances'])));
+        $tt->save();
+    }
+
+
+
+
     public function timeUpdate($otd_id)
     {
         $otd = Otd::find()->where(['id'=>$otd_id])->one();
         $startTime = $otd->startTime;
         
-        $timeTable = Timetable::find()->where(['otd_id'=>$otd_id])->all();
+        $timeTable = Timetable::find()->where(['otd_id'=>$otd_id])->orderBy(['sortItem' => SORT_ASC])->all();
         
         foreach ($timeTable as $record) {
             $record->time = $startTime;
