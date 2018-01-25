@@ -174,12 +174,13 @@ class Category extends \yii\db\ActiveRecord
         }
     }
 
-    public function getDanceList($prog)
+    public function getDanceList()
     {
-        if($prog <> 1 && $prog <> 2) {
-            $prog = [1, 2];
-        }
-        return ArrayHelper::map(Dance::find()->where(['prog'=>$prog])->all(), 'id', 'name');
+//        if($prog <> 1 && $prog <> 2) {
+//            $prog = [1, 2];
+//        }
+//        return ArrayHelper::map(Dance::find()->where(['prog'=>$prog])->all(), 'id', 'name');
+        return ArrayHelper::map(Dance::find()->all(), 'id', 'name');
     }
 
     public function getDanceToString($dances)

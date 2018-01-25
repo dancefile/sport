@@ -22,7 +22,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
 ?>
 
 <div class="category-form">
-<?php Pjax::begin(); ?>
+<?php Pjax::begin(['id' => 'notes']); ?>
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -49,20 +49,24 @@ $this->registerCssFile('@web/css/jquery-ui.css');
 
         <?= $form->field($model, 'program')
             ->radioList(
-                $model->programmList,
-                [
-                    'onclick' => '$.post("/category/getdances?prog=5");',
-                ]);
+                $model->programmList
+//                [
+//                    'onchange' => "alert($('#category-program input:radio:checked').val());",
+//                ]
+                    );
         ?>
     
     
-
         <?= $form->field($model, 'skay')
             ->radioList($model->skayList); 
         ?>
     
         <?= $form->field($model, 'dances')
-            ->checkboxList($model->getDanceList($model->program));
+            ->checkboxList($model->getDanceList($model->program)
+//                    [
+//                        'options' => ['data-prog'=>1],
+//                    ]
+                    );
         ?> 
        
         <?= $form->field($model, 'clas')

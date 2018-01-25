@@ -58,7 +58,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
     ?>
 
     <?= $form->field($model, 'dances')
-        ->checkboxList($model->danceList);
+        ->checkboxList($model->getDanceList($model->category_id));
     ?>  
 
     <?= $form->field($model, 'status')->checkbox() ?>

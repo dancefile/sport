@@ -135,9 +135,12 @@ class Tur extends \yii\db\ActiveRecord
         return $count;
     }
 
-    public function getDanceList()
+    public function getDanceList($category_id)
     {
-        return ArrayHelper::map(Dance::find()->all(), 'id', 'name');
+        $arr = Category::find()->select('dances')->where(['id'=>$category_id])->asArray()->one();
+        $category_dances = explode (', ', $arr['dances']);
+
+        return ArrayHelper::map(Dance::find()->where(['in','id',$category_dances])->all(), 'id', 'name');
     }
 
     public function getDanceToString($dances)

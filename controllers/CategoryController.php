@@ -135,11 +135,13 @@ class CategoryController extends AppController
         return $this->redirect(['reglament/index']);
     }
     
-    public function actionGetdances($prog)
-    {
-        echo '<pre>', print_r($prog), '</pre>';
-        exit;
-    }
+//    public function actionGetdances($prog)
+//    {
+////        echo '<pre>', print_r($prog), '</pre>';
+////        exit;
+//        Category::getDanceList($prog);
+//        return $this->renderAjax('update');
+//    }
     
 
     /**
