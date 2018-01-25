@@ -213,6 +213,7 @@ class Registration extends \yii\base\Model
         $this->country = $dancer1->club0->city->country->name;
         
         $this->loadDancerAttr($dancer1 , $dancer2);
+        $this->loadTrenersAttr($dancer1->id, $dancer2->id);
         
         foreach ($this->turListPair() as $key => $tur) {
             $this->inPair[$key] = $tur;
@@ -235,10 +236,10 @@ class Registration extends \yii\base\Model
                 if ($this->inSolo[$key]['id'] == $coupleIn['tur_id']){     
                     if ($coupleIn['who'] == 1) {
                         $this->inSolo[$key]['nomer_M'] = $coupleIn['nomer'];
-                    } ;
+                    }
                     if ($coupleIn['who'] == 2){
                         $this->inSolo[$key]['nomer_W'] = $coupleIn['nomer'];
-                    };
+                    }
                 } else {
                  if (!isset($this->inSolo[$key]['nomer_M']))   $this->inSolo[$key]['nomer_M'] = NULL;
                  if (!isset($this->inSolo[$key]['nomer_W']))   $this->inSolo[$key]['nomer_W'] = NULL;
@@ -264,7 +265,20 @@ class Registration extends \yii\base\Model
         $this->d2_class_la = $dancer2->clas_id_la;
         $this->d2_booknumber = $dancer2->booknumber;
         $this->club = $dancer2->club0->name;
-        
-        
+    }
+    
+    private function loadTrenersAttr($dancer1_id, $dancer2_id)
+    {
+        if (isset($dancer1_id)){
+            $treners = DancerTrener::find()->where(['dancer_id'=>$dancer1_id])->all();
+            $i=1;
+            foreach ($treners as $trener) {
+                $this->{'d_trener'.$i.'_sname'} = $trener->trener->sname;
+                $i ++;
+            
+            }
+            
+        }
+//        $this->d_trener1_sname = 
     }
 }
