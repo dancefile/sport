@@ -27,8 +27,8 @@ use yii\helpers\ArrayHelper;
 class Category extends \yii\db\ActiveRecord
 {
     public $programmList = [
-        '1' => 'La',
-        '2' => 'St',
+        '1' => 'St',
+        '2' => 'La',
         '3' => '10 D',
         '4' => '10 D разд.',
     ];
@@ -174,9 +174,12 @@ class Category extends \yii\db\ActiveRecord
         }
     }
 
-    public function getDanceList()
+    public function getDanceList($prog)
     {
-        return ArrayHelper::map(Dance::find()->all(), 'id', 'name');
+        if($prog <> 1 && $prog <> 2) {
+            $prog = [1, 2];
+        }
+        return ArrayHelper::map(Dance::find()->where(['prog'=>$prog])->all(), 'id', 'name');
     }
 
     public function getDanceToString($dances)

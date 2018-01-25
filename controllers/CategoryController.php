@@ -52,22 +52,6 @@ class CategoryController extends AppController
         ]);
     }
 
-
-    public function actions()
-       {
-           return ArrayHelper::merge(parent::actions(), [
-               'editCell' => [                                       // identifier for your editable column action
-                   'class' => EditableColumnAction::className(),     // action class name
-                   'modelClass' => Category::className(),                // the model for the record being edited
-                   'outputMessage' => function($model, $attribute, $key, $index) {
-                         return '';                                  // any custom error to return after model save
-                   },
-                   'showModelErrors' => true,                        // show model validation errors after save
-                   'errorOptions' => ['header' => '']                // error summary HTML options
-               ]
-           ]);
-       }    
-
     public $judge_list;
 
     /**
@@ -151,9 +135,10 @@ class CategoryController extends AppController
         return $this->redirect(['reglament/index']);
     }
     
-    public function actionFormUpdate()
+    public function actionGetdances($prog)
     {
-        
+        echo '<pre>', print_r($prog), '</pre>';
+        exit;
     }
     
 

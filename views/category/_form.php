@@ -48,15 +48,21 @@ $this->registerCssFile('@web/css/jquery-ui.css');
         
 
         <?= $form->field($model, 'program')
-            ->radioList($model->programmList); 
+            ->radioList(
+                $model->programmList,
+                [
+                    'onclick' => '$.post("/category/getdances?prog=5");',
+                ]);
         ?>
+    
+    
 
         <?= $form->field($model, 'skay')
             ->radioList($model->skayList); 
         ?>
-        
+    
         <?= $form->field($model, 'dances')
-            ->checkboxList($model->danceList);
+            ->checkboxList($model->getDanceList($model->program));
         ?> 
        
         <?= $form->field($model, 'clas')
