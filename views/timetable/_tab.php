@@ -5,6 +5,13 @@ use richardfan\sortable\SortableGridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 
+
+$this->registerCssFile("@web/css/print.css", [
+    'depends' => ['app\assets\AppAsset',],
+    'media' => 'print',
+], 'css-print-theme');
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Timetable */
 /* @var $form yii\widgets\ActiveForm */
@@ -14,6 +21,9 @@ use yii\helpers\Url;
     <?= Html::a('Загрузить записи', ['load', 'otd_id'=>$otd_id], ['class' => 'btn btn-danger']); ?>
     <?= Html::a('Добавить строку', ['create', 'otd_id'=>$otd_id, 'otd_name'=>$otd_name ], ['class' => 'btn btn-success']); ?>
     <?= Html::a('Обновить время', ['timeupdate', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
+    <?= Html::a('Печать', [' '], ['onclick'=>'print()','class' => 'btn btn-success']); ?>
+    
+
 </p>
 
 
@@ -36,7 +46,9 @@ use yii\helpers\Url;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}&emsp;{delete}',
-                
+                'contentOptions' =>[
+                    'class' => 'actionColumnCell'
+                ]
             ],
         ],
     ]);

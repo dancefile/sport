@@ -1,0 +1,40 @@
+
+/* 
+    Created on : 26.01.2018, 14:54:03
+    Author     : Михаилус
+*/
+
+@media print { 
+    /*@page { margin: 1cm; }*/
+    
+    section { page-break-before: always;}
+    
+    tr { widows: 4;}
+    
+    tr { orphans: 3;}
+
+    *,*:before,
+    *:after,
+    *:first-letter,
+    p:first-line,
+    div:first-line,
+    blockquote:first-line,
+    li:first-line 
+    { 
+        background: transparent !important; 
+        color: #000 !important; 
+        box-shadow: none !important; 
+        text-shadow: none !important;
+    }
+    
+    .btn,
+    .nav,
+    .breadcrumb,
+    .footer .pull-right,
+    .summary,
+    .action-column,
+    .actionColumnCell
+    {
+        display: none;
+    }
+}
