@@ -4,12 +4,19 @@ use yii\helpers\Html;
 use yii\bootstrap\Tabs;
 use app\models\TimetableSearch;
 
-$this->title = 'Расписание';
+$this->title = 'Расписание отделения № 1';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<h1><?= Html::encode($this->title) ?></h1>
+<h1 id="caption"><?= Html::encode($this->title) ?></h1>
+
+<?php $this->registerJs(
+   " $('#w5 li a').click(function(){
+        $('#caption').html('Расписание отделения № '+$(this).html().slice(10));
+    });"
+);
+?>
 
 <?php
     $otds = \app\models\Otd::find()->all();
