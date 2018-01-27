@@ -32,18 +32,8 @@ class ScatingController extends \yii\web\Controller
 	
 		if (!isset($nexttur['id'])) return $this->error('Не найден следующий тур');	
 		
-		$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
-    	->select(['dance_id','nomer','ball'])
-    	->from('krest')
-    	->where(['tur_id' => $idT]);	
 		
 		$krestArr=[];
-		
-		foreach ($krest->each() as $row) {
-			if (isset($krestArr[$row['nomer']])) $krestArr[$row['nomer']]++;
-			else $krestArr[$row['nomer']]=1;
-		}
-	
 		$in = (new \yii\db\Query()) //получаем список пар  за текущей тур
     	->select(['nomer','couple_id','who'])
     	->from('in')
@@ -52,8 +42,22 @@ class ScatingController extends \yii\web\Controller
 		foreach ($in->each() as $row) {
 			$inArr[]=$row['nomer'];	
 			$couple_idArr[$row['nomer']]=$row['couple_id'];
-			$whoArr[$row['nomer']]=$row['who'];		
-		}	
+			$whoArr[$row['nomer']]=$row['who'];
+			$krestArr[$row['nomer']]=0;		
+		}
+		
+		$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
+    	->select(['dance_id','nomer','ball'])
+    	->from('krest')
+    	->where(['tur_id' => $idT]);	
+		
+		
+		foreach ($krest->each() as $row) {
+			if (isset($krestArr[$row['nomer']])) $krestArr[$row['nomer']]++;
+			else $krestArr[$row['nomer']]=1;
+		}
+	
+	
 
 		$innext = (new \yii\db\Query()) //получаем список пар  за след тур
     	->select(['nomer','id'])
@@ -64,18 +68,34 @@ class ScatingController extends \yii\web\Controller
 		 if (in_array ($row['nomer'],$inArr)) {$delIn[]=$row['id'];}	
 		}
 				
-		if (count($delIn)) Yii::$app->db->createCommand()->delete('in', ['in','id',$delIn])->execute();
+		if (count($delIn)) {//tur_id
+			Yii::$app->db->createCommand()->delete('in_dance', ['in','id_in',$delIn])->execute();
+			Yii::$app->db->createCommand()->delete('in', ['in','id',$delIn])->execute();
+		}
+		Yii::$app->db->createCommand()->delete('results', ['tur_id' => $idT])->execute();
 
 		arsort($krestArr);
 		$i=0;
 		$insetArr=[];
+		$insetResultsArr=[];
+		$lastCountKrest=-1;
+		$lastPlace=-1;
+		$nextTur=1;
 		foreach($krestArr as $nomer => $krest){
     	$i++;
-		$insetArr[]=[$couple_idArr[$nomer], $nexttur['id'], $nomer, $whoArr[$nomer]];	
-		if ($count==$i) {break;}		
+		if ($krest!=$lastCountKrest) {$lastCountKrest=$krest;$lastPlace=$i;};
+		$insetResultsArr[]=[$idT, $nomer,$krest,$lastPlace,$nextTur];	
+		if ($nextTur) 
+		$insetArr[]=[
+		$couple_idArr[$nomer],
+		 $nexttur['id'],
+		  $nomer,
+		   $whoArr[$nomer]];	
+		if ($count==$i) {$nextTur=0;}		
     	}
 		
 		Yii::$app->db->createCommand()->batchInsert('in', ['couple_id', 'tur_id', 'nomer', 'who'], $insetArr)->execute();
+		Yii::$app->db->createCommand()->batchInsert('results', ['tur_id', 'nomer', 'result', 'place','nextTur'], $insetResultsArr)->execute();
 		
 		return $this->actionInput($nexttur['id']);	
 	}//actionKrest
@@ -133,11 +153,27 @@ class ScatingController extends \yii\web\Controller
 				
 				$dancesArr = explode(',',str_replace(' ','',$tur['dances']));
 				$count=count($dancesArr)*count($judgesArr);
+				$stepeni=[];
+				$sumArr=[];
+				$insetResultsArr=[];
+				foreach ($krestArr as $key => $krest): //заполняем строки таблицы и вычисляем проходной бал 
+					$krest=ceil($krest * 100/$count)/100; 
+					$sumArr[$key]=$krest;
+					$stepen=3;  
+					if ($krest>=3.5) {$stepen=2;}; 
+					if ($krest>=4.5) {$stepen=1;};
+					$stepeni[$key]=$stepen;  
+					$insetResultsArr[]=[$idT, $key, $stepen, $krest];
+    			endforeach;
+
+				Yii::$app->db->createCommand()->delete('results', ['tur_id' => $idT])->execute();
+				Yii::$app->db->createCommand()->batchInsert('results', ['tur_id', 'nomer', 'place', 'result'], $insetResultsArr)->execute();
+
 				return $this->render('ball', [
-								'count' => $count,
+								'stepeni' => $stepeni,
 								'tur' => $tur,
 								'inArr' => $inArr,
-								'krestArr' => $krestArr,
+								'sumArr' => $sumArr,
 								'idT' => $idT]);
 								
 				break;
@@ -184,12 +220,25 @@ class ScatingController extends \yii\web\Controller
 					$JudicialPlaces[$row['dance_id']][$row['nomer']][$row['judge_id']]=$row['ball'];	
 				}
 
-				$scating = new Scating($JudicialPlaces);//расчет мест			
+				$scating = new Scating($JudicialPlaces);//расчет мест
+				Yii::$app->db->createCommand()->delete('results', ['tur_id' => $idT])->execute();
+				$insetResultsArr=[];
+				foreach ($scating->rezults as $danceId => $rezultArr) {				//результаты
+					foreach ($rezultArr as $nomer => $plase) {
+						$insetResultsArr[]=	[$idT, $nomer, $danceId, $plase];
+					}
+				};
+				Yii::$app->db->createCommand()->batchInsert('results', ['tur_id', 'nomer', 'dance_id', 'place'], $insetResultsArr)->execute();
+				$insetResultsArr=[];
+				foreach ($scating->rezultsItog as $nomer => $plase) {//результаты итоговые	
+					$insetResultsArr[]=	[$idT, $nomer, $plase];
+				}		
+				Yii::$app->db->createCommand()->batchInsert('results', ['tur_id', 'nomer', 'place'], $insetResultsArr)->execute();
+				
+				
 				return $this->render('about', ['message' => '<pre>' . $scating->log. '</pre>']);
 				break;
-			default:
-				return $this->error('не задан способ подсчета результатов');	
-				break;
+			default: return $this->error('не задан способ подсчета результатов');	
 		}
 
 	}//actionCalc

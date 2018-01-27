@@ -51,6 +51,7 @@ input[type="text"]:focus {
 <? switch ($tur['typeSkating']) {
 	case '1': ?>
 	<script>
+
 window.onload=function(){
 $('input:text:first').focus();
 
@@ -75,6 +76,7 @@ return false;
 </script>
 	
 <?	
+	break;
 	case '2':
 ?>
 <script>

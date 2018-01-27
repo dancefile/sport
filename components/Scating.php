@@ -111,6 +111,8 @@ class Scating
     private $curentmark=1;//текущее место
     private $mark2=[];
     private $j=0;
+	public $rezults=[];//результаты
+	public $rezultsItog=[];//результаты итоговые
 	public $log='';//отладочная информация
 	
 	private function log($log)
@@ -200,16 +202,17 @@ class Scating
 		$this->log('<table><tr><td>Пары</td><td>Места</td></tr>');
 		foreach ($this->coupls as $key => $value) {
 			$this->log('<tr><td>'.$key.'</td><td>'.$this->coupleplase[$keyd][$value].'</td></tr>');
+			$this->rezults[$valued][$key]=$this->coupleplase[$keyd][$value];
 		}	
 		$this->log('</table><br>');
 	
 	}
 
-	$this->log('Итог:<br><table><tr><td>Пары</td>');
+	$this->log('Итог:<br><table border="1"><tr><td>Пары</td>');
 	$count_dance=0;
 	foreach ($this->dances as $key => $value) {
 		$count_dance++;
-$this->log('<td>'.$value.'</td>');
+$this->log('<td>танец #'.$value.'</td>');
 }	
 	$sum_mark_dance=array();
 	$this->log('<td>Сумма</td></tr>');
@@ -319,9 +322,10 @@ if ($this->coupleplase[0][$value3]!=0) {  unset($coupls2[$key3]);
 
 }
 }
-$this->log('<table><tr><td>Пары</td><td>Места</td></tr>');
+$this->log('<table><tr><td>Пары</td><td>Места по всем танцам</td></tr>');
 foreach ($this->coupls as $key => $value) {
 $this->log('<tr><td>'.$key.'</td><td>'.$this->coupleplase[0][$value].'</td></tr>');
+	$this->rezultsItog[$key]=$this->coupleplase[0][$value];
 }	
 $this->log('</table>');
 
