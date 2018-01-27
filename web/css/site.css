@@ -353,3 +353,36 @@ td.number {
 .tab-content p{
     margin-top: 10px;
 }
+
+/**********************************/
+/**********************************/
+/****** Список участников *********/
+/**********************************/
+/**********************************/
+
+.tab-content{
+    margin-top: 20px;
+}
+.left-panel{
+    width: 200px;
+    float: left;
+}
+
+.left-panel .btn{
+    width: 200px;
+    text-align: left;
+}
+
+.left-panel .btn span{
+    color: #d07a7a;
+}
+
+.grid-view{
+    width: 930px;
+    float: right;
+}
+
+.category-caption{
+    background: #337ab7;
+    color: #fff;
+}

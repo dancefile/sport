@@ -46,7 +46,7 @@ class InSearch extends In
     public function search($params)
     {
         $query = In::find()
-            ->joinWith(['couple', 'tur'])
+            ->joinWith(['couple', 'tur', 'tur.category'])
             ->joinWith(['couple.dancerId1'=> function($q){
                                 $q->from('dancer c1');
                             }])
@@ -75,7 +75,10 @@ class InSearch extends In
             ->andFilterWhere(['like', 'c1.sname', $this->dancerId1])
             ->andFilterWhere(['like', 'c2.sname', $this->dancerId2]);    
         
-        $query->orderBy('category_id');
+        $query->andFilterWhere(['category.otd_id' => $this->otd_id]);
+        $query->andFilterWhere(['category.id' => $this->category_id]);
+        
+        $query->orderBy('tur.id');
         
         return $dataProvider;
     }

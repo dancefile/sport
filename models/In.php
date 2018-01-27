@@ -24,6 +24,9 @@ use yii\helpers\ArrayHelper;
  */
 class In extends \yii\db\ActiveRecord
 {
+    public $otd_id;
+    public $category_id;
+    
     /**
      * @inheritdoc
      */
@@ -49,11 +52,11 @@ class In extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-             [['couple_id', 'tur_id'], 'required'],
-             [['couple_id', 'tur_id'], 'integer'],
-             [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
-             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
-             [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
+            [['couple_id', 'tur_id'], 'required'],
+            [['couple_id', 'tur_id'], 'integer'],
+            [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
+            [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
+            [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
 
             [['dancer1', 'dancer2'], 'checkDancer'],
 
@@ -111,7 +114,11 @@ class In extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tur::className(), ['id' => 'tur_id'])->inverseOf('ins');
     }
-
+    
+    public function getCategories($otd_id)
+    {
+        return Category::find()->where(['otd_id' => $otd_id])->all();
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

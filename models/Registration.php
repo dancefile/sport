@@ -208,9 +208,10 @@ class Registration extends \yii\base\Model
         $this->coupleId = $couple->id;
         $dancer1 = $couple->dancerId1;
         $dancer2 = $couple->dancerId2;
-        
-        $this->city = $dancer1->club0->city->name;
-        $this->country = $dancer1->club0->city->country->name;
+        if ($dancer1->club0){
+            $this->city = $dancer1->club0->city? $dancer1->club0->city->name:'';
+            $this->country = $dancer1->club0->city->country? $dancer1->club0->city->country->name:'';
+        }
         
         $this->loadDancerAttr($dancer1 , $dancer2);
         $this->loadTrenersAttr($dancer1->id, $dancer2->id);
@@ -264,7 +265,7 @@ class Registration extends \yii\base\Model
         $this->d2_class_st = $dancer2->clas_id_st;
         $this->d2_class_la = $dancer2->clas_id_la;
         $this->d2_booknumber = $dancer2->booknumber;
-        $this->club = $dancer2->club0->name;
+        $this->club = $dancer2->club0? $dancer2->club0->name:null;
     }
     
     private function loadTrenersAttr($dancer1_id, $dancer2_id)

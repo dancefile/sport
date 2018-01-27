@@ -52,18 +52,20 @@ class InController extends Controller
      * Lists all In models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($category_id=null)
     {
+        $otds = \app\models\Otd::find()->all();
         $searchModel = new InSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        // $dataProvider = new ActiveDataProvider([
-        //     'query' => In::find(),
-        // ]);
-
+        $searchModel->category_id =$category_id;
+//        if ($category_id){
+//            $searchModel->category_id =$category_id;
+//        } else {
+//            $searchModel->defaultOrder = ['tur_id' => SORT_ASC];
+//        }
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'otds' => $otds,
             'searchModel' => $searchModel,
+            'category_id' => $category_id,
         ]);
     }
 
