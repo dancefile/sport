@@ -364,12 +364,14 @@ td.number {
     margin-top: 20px;
 }
 .left-panel{
-    width: 200px;
+    width: 140px;
     float: left;
+    overflow: auto;
+    
 }
 
 .left-panel .btn{
-    width: 200px;
+    width: 140px;
     text-align: left;
 }
 
@@ -378,11 +380,49 @@ td.number {
 }
 
 .grid-view{
-    width: 930px;
+    width: 990px;
     float: right;
 }
 
 .category-caption{
     background: #337ab7;
+    border-color: #337ab7 !important;
     color: #fff;
+}
+
+.tur-caption{
+    background: #e4e4e4;
+    /*color: #fff;*/
+}
+
+tr.filters td {
+    padding: 0 !important;
+}
+
+.in-index .form-control {
+    border-radius: 0;
+    background: #fff;
+    height: 30px;
+    border-color: #337ab7;
+}
+
+.in-index thead{
+    background: #e0e0e0;
+}
+
+.table > thead > tr > th, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td, 
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {
+    padding: 4px;
+}
+
+.grid-view .summary{
+    display: none;
+} 
+
+.replace-btn{
+    margin: 0 0 10px 10px;
 }

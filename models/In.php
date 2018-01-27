@@ -96,6 +96,11 @@ class In extends \yii\db\ActiveRecord
             'id' => 'ID',
             'couple_id' => 'Couple ID',
             'tur_id' => 'Tur ID',
+            'couple_nomer' => '№',
+            'dancerId1' => 'Танцор 1',
+            'dancerId2' => 'Танцор 2',
+            'city' => 'Город',
+            
         ];
     }
 
@@ -119,6 +124,12 @@ class In extends \yii\db\ActiveRecord
     {
         return Category::find()->where(['otd_id' => $otd_id])->all();
     }
+    
+    public function getOtdWithCategories()
+    {
+        
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */

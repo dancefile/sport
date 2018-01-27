@@ -2,12 +2,43 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use yii\bootstrap\Modal;
+use yii\widgets\ActiveForm;
 
 
 ?>
 <?php \yii\widgets\Pjax::begin()?>
 
 <?= $this->render('_left_panel', ['otd_id'=>$otd_id]); ?>
+
+<?php
+    Modal::begin([
+        'header' => '<h2>Перемещение</h2>',
+        'toggleButton' => [
+            'label' => 'Переместить',
+            'tag' => 'button',
+            'class' => 'btn btn-success replace-btn',
+        ],
+        'footer' => '',
+    ]);
+?>
+    <div class="form-group">
+        <?= Html::submitButton('Переместить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+    </div>
+   
+<?php Modal::end(); ?>
+
+
+
+<?php
+    $this->registerJs("
+        $('#replace-btn').click(function(){
+            var keys = $('#w0').yiiGridView('getSelectedRows');
+            alert (keys);
+        });
+    ");
+?>
+
 
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,20 +57,23 @@ use kartik\grid\GridView;
         ],
         'columns' => [
             [
+                'class' => '\kartik\grid\CheckboxColumn'
+            ],
+            [
                 'attribute'=>'tur.category.name', 
                 'group'=>true,
                 'groupedRow' => true,
                 'groupOddCssClass'=>'category-caption',  // configure odd group cell css class
                 'groupEvenCssClass'=>'category-caption', // configure even group cell css class
-                'contentOptions' => ['class'=>'category-caption'],
+//                'contentOptions' => ['class'=>'category-caption'],
             ],
             [
                 'attribute'=>'tur.name', 
                 'group'=>true,
                 'groupedRow' => true,
-                'groupOddCssClass'=>'kv-grouped-row',  // configure odd group cell css class
-                'groupEvenCssClass'=>'kv-grouped-row', // configure even group cell css class
-                'contentOptions' => ['class'=>'colaps'],
+                'groupOddCssClass'=>'tur-caption',  // configure odd group cell css class
+                'groupEvenCssClass'=>'tur-caption', // configure even group cell css class
+//                'contentOptions' => ['class'=>'colaps'],
             ],
             
             [
@@ -49,21 +83,32 @@ use kartik\grid\GridView;
                     return $model->nomer;
                 }
             ],
-            'couple.age',
+            [
+                'attribute' => 'couple.age',
+                'options' => ['width' => '60'],
+            ],
             [
                 'attribute' => 'dancerId1',
+                'options' => ['width' => '170'],
                 'value' => function($model){
                     return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
                 }
             ],
-            'couple.dancerId1.classes',
+            [
+                'attribute' => 'couple.dancerId1.classes',
+                'options' => ['width' => '50'],
+            ],
             [
                 'attribute' => 'dancerId2',
+                'options' => ['width' => '170'],
                 'value' => function($model){
                     return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
                 }
             ],
-            'couple.dancerId2.classes',
+            [
+                'attribute' => 'couple.dancerId2.classes',
+                'options' => ['width' => '50'],
+            ],
             'city',
             'couple.club',
             'couple.trenersString',            
@@ -85,3 +130,5 @@ use kartik\grid\GridView;
     ]); 
 ?>
 <?php \yii\widgets\Pjax::end()?>
+
+

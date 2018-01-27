@@ -203,6 +203,14 @@ class InController extends Controller
         }
     }
 
+    public function actionReplace()
+    {
+        $this->view->registerJs("
+            var keys = $('#grid').yiiGridView('getSelectedRows');
+            alert (keys);
+        ");
+    }
+    
     private function inSave($tur, $coupleId)
     {
         foreach ($tur as $key => $value) {
