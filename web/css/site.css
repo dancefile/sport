@@ -379,7 +379,7 @@ td.number {
     color: #d07a7a;
 }
 
-.grid-view{
+.in-index .grid-view{
     width: 990px;
     float: right;
 }
