@@ -26,6 +26,7 @@ class In extends \yii\db\ActiveRecord
 {
     public $otd_id;
     public $category_id;
+    public $new_category_id;
     
     /**
      * @inheritdoc
@@ -122,7 +123,7 @@ class In extends \yii\db\ActiveRecord
     
     public function getCategories($otd_id)
     {
-        return Category::find()->where(['otd_id' => $otd_id])->all();
+        return Category::find()->filterWhere(['otd_id' => $otd_id])->all();
     }
     
     public function getOtdWithCategories()

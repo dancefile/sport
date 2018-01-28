@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\bootstrap\Modal;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 
 ?>
@@ -11,34 +11,24 @@ use yii\widgets\ActiveForm;
 
 <?= $this->render('_left_panel', ['otd_id'=>$otd_id]); ?>
 
-<?php
-    Modal::begin([
-        'header' => '<h2>Перемещение</h2>',
-        'toggleButton' => [
-            'label' => 'Переместить',
-            'tag' => 'button',
-            'class' => 'btn btn-success replace-btn',
-        ],
-        'footer' => '',
-    ]);
-?>
-    <div class="form-group">
-        <?= Html::submitButton('Переместить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
-    </div>
-   
-<?php Modal::end(); ?>
+<?php $categories = \app\models\In::getCategories('');?>
 
 
 
-<?php
-    $this->registerJs("
-        $('#replace-btn').click(function(){
-            var keys = $('#w0').yiiGridView('getSelectedRows');
-            alert (keys);
-        });
-    ");
-?>
+<?= $this->registerJs(
+        "$('#replace-btn').click(function(){
+            var new_category_id = $('[name = \"new-category-id\"]').val();
+            var replace_ins = $('#w0').yiiGridView('getSelectedRows');
+            var otd_id = $otd_id;
+            alert (otd_id);
+            return false;
+        });"      
+        );?>
 
+<div class="form-group">
+    <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map($categories, 'id', 'name')) ?>
+    <?= Html::submitButton('Переместить', ['id' => 'replace-btn', 'class' => 'btn btn-success replace-btn']) ?>
+</div>  
 
 <?= GridView::widget([
         'dataProvider' => $dataProvider,

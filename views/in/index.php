@@ -22,8 +22,6 @@ $this->title = 'Список участников';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    
-        
     <?php
     
         $tabs=[];
@@ -38,7 +36,7 @@ $this->title = 'Список участников';
             } else {
                 $active = null;
             }
-
+            
             $searchModel->otd_id =$otd['id'];
             
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -52,6 +50,7 @@ $this->title = 'Список участников';
                                         'searchModel' => $searchModel,
                                         'otd_id' => $otd['id'],
                                         'category_id' => $category_id,
+
                                     ]
                                 ),
                 'active' => $active,

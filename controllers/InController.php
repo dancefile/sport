@@ -52,7 +52,7 @@ class InController extends Controller
      * Lists all In models.
      * @return mixed
      */
-    public function actionIndex($category_id=null)
+    public function actionIndex($category_id=null, $otd_id=null)
     {
         $otds = \app\models\Otd::find()->all();
         $searchModel = new InSearch();
@@ -64,8 +64,10 @@ class InController extends Controller
 //        }
         return $this->render('index', [
             'otds' => $otds,
+            'otd_id' => $otd_id,
             'searchModel' => $searchModel,
             'category_id' => $category_id,
+
         ]);
     }
 
@@ -203,12 +205,13 @@ class InController extends Controller
         }
     }
 
-    public function actionReplace()
+    public function actionReplace($replace_ins, $new_category_id, $otd_id)
     {
-        $this->view->registerJs("
-            var keys = $('#grid').yiiGridView('getSelectedRows');
-            alert (keys);
-        ");
+        $ins = In::find()->where($replace_ins)->all();
+        $tur = Tur::find()->where(['category_id'=>$new_category_id])->orderBy('nomer')->one();
+        $ins->updateAttributes(['tur_id' => $tur->id]);
+        
+        return $this->redirect(['index', 'otd_id' => $otd_id]);
     }
     
     private function inSave($tur, $coupleId)
