@@ -121,6 +121,13 @@ a.desc:after {
 }
 
 /* M Dolgopolov */
+
+
+h1{
+    font-size: 28px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
 label{
     font-weight: normal;
 }
