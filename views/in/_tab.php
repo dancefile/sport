@@ -16,13 +16,10 @@ use yii\helpers\Url;
 <?php $categories = \app\models\In::getCategories('');?>
 
 <?php $form = ActiveForm::begin(['action' => ['replace'],'options' => ['method' => 'post']]); ?>
-    <?php $url = Url::to(['replace']);?>
     <?php $this->registerJs(
             "$('.kv-row-select').click(function(){
-                var replace_ins = $('#tab$otd_id').yiiGridView('getSelectedRows');
-                var otd_id = $otd_id;
-                $('#replace_ins$otd_id').val(replace_ins);
-                $('#otd_id$otd_id').val(otd_id);
+                $('#replace_ins$otd_id').val($('#tab$otd_id').yiiGridView('getSelectedRows'));
+                $('#otd_id$otd_id').val($otd_id);
             });"      
     );?>
 
