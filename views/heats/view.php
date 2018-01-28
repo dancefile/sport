@@ -5,8 +5,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
-
-$this->title = 'Заходы '.$tur['name'].' '.$tur['turname'];
+// $turInfo->gettur('')
+$this->title = 'Заходы '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,10 +16,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php 
 
-    $columns[]=[
-           	    'header' => 'Пары/танцы',
-               	'attribute' => 'id',
-    	       ];
+    $columns=[[
+           	    'header' => 'Номер',
+               	'attribute' => 'nomer',
+    	       ],
+			  [
+           	    'header' => 'Участники',
+               	'attribute' => 'name',
+    	       ]];
 	foreach ($arrDance as $key => $dance): 
    		$columns[]=[
            	    'header' => $dance,
@@ -30,10 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
  
 
     $data=[];
+	$heatsArr=$turInfo->getHeats();
+	$inArr=$turInfo->getIn();
 	asort($inArr);
 	 
     foreach ($inArr as $key => $nomer): 
-    	$data[$key] = ['id' => $nomer];
+    	$data[$key] = ['nomer' => $nomer,'name'=>$turInfo->GetNameCouple($key)];
 		if (isset($heatsArr[$key])) {
 			foreach ($heatsArr[$key] as $key1 => $value1) {
 				$data[$key]['id'.$key1]=$value1;			
@@ -45,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'allModels' => $data,
         'pagination' => 
         	[
-            	'pageSize' => 20,
+            	'pageSize' => 2000,
         	],
 
     ]);
@@ -55,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'dataProvider' => $provider,
     'columns' => $columns
 ]);
- echo Html::a('Создать новые заходы', ['new','idT'=>$idT], ['class' => 'btn btn-success']);
+ echo Html::a('Создать новые заходы', ['new','idT'=>$turInfo->getTur('idT')], ['class' => 'btn btn-success']);
  ?>
 
 </div>

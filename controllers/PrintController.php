@@ -12,7 +12,7 @@ class PrintController extends \yii\web\Controller
 	
 
 
-	public function actionIndex($idС=10)
+	public function actionIndex($idС=11)
 	{
 	$pdf = new FPDF('L');
 	$pdf->AddFont('Arial','','arial.php');
@@ -55,8 +55,8 @@ class PrintController extends \yii\web\Controller
 	$pdf->Ln(5);
  $pdf->SetFillColor(224,224,224);
     // Header
-    $header = array('№', 'Участники', 'Город', 'Клуб', 'Тренеры');
-	$w = array(10,60,30,30,50,20,20,20,20,20,20);
+    $header = array('№', 'Участники', 'Город', 'Клуб', 'Руководитель', 'Тренеры');
+	$w = array(10,60,30,30,30,50,20,20,20,20,20);
     
     for($i=0;$i<count($header);$i++)
         $pdf->Cell($w[$i],5,iconv("UTF-8","Windows-1251",$header[$i]),1,0,'C',true);
@@ -100,11 +100,12 @@ class PrintController extends \yii\web\Controller
 		$pdf->SetFillColor(224,235,255);
 		$fill = false;
 		foreach ($coupleName as $nomer => $Name) {
-			$pdf->Cell($w[0],8,iconv("UTF-8","Windows-1251",$nomer),1,0,'C',$fill);
-			$pdf->Cell($w[1],8,iconv("UTF-8","Windows-1251",$Name),1,0,'C',$fill);
-			$pdf->Cell($w[2],8,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['city']),1,0,'C',$fill);
-			$pdf->Cell($w[3],8,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['club']),1,0,'C',$fill);
-			$pdf->Cell($w[4],8,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['trener']),1,0,'C',$fill);
+			$pdf->Cell($w[0],7,iconv("UTF-8","Windows-1251",$nomer),1,0,'C',$fill);
+			$pdf->Cell($w[1],7,iconv("UTF-8","Windows-1251",$Name),1,0,'C',$fill);
+			$pdf->Cell($w[2],7,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['city']),1,0,'C',$fill);
+			$pdf->Cell($w[3],7,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['club']),1,0,'C',$fill);
+			$pdf->Cell($w[4],7,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['trener']),1,0,'C',$fill);
+			$pdf->Cell($w[5],7,iconv("UTF-8","Windows-1251",$coupleInfo[$nomer]['trener']),1,0,'C',$fill);
     		$pdf->Ln();
 			$fill=!$fill;
 		 }	
@@ -270,15 +271,15 @@ class PrintController extends \yii\web\Controller
 					->orderBy(['nomer' => SORT_ASC]);
 				foreach ($results->each() as $result) {
 					if (isset($sum[$result['nomer']])) {$sum[$result['nomer']]=$sum[$result['nomer']]+$result['place'];} else $sum[$result['nomer']]=$result['place'];
-					$pdf->Cell(10,7,iconv("UTF-8","Windows-1251",$result['nomer']),1,0,'C',$fill);
+					$pdf->Cell(10,6,iconv("UTF-8","Windows-1251",$result['nomer']),1,0,'C',$fill);
 					foreach ($judge as $jId => $jNomer) {
-					$pdf->Cell(10,7,iconv("UTF-8","Windows-1251",$krestArr[$result['nomer']][$key][$jNomer]),1,0,'C',$fill);	
+					$pdf->Cell(10,6,iconv("UTF-8","Windows-1251",$krestArr[$result['nomer']][$key][$jNomer]),1,0,'C',$fill);	
 					}
-					$pdf->Cell(12,7,iconv("UTF-8","Windows-1251",$result['place']),1,0,'C',$fill);
+					$pdf->Cell(12,6,iconv("UTF-8","Windows-1251",$result['place']),1,0,'C',$fill);
 					$pdf->Ln();
 					$fill=!$fill;
 				}
-				$pdf->Ln(15);
+				$pdf->Ln(10);
 
 			}
 				$pdf->SetFillColor(224,224,224);
@@ -293,9 +294,9 @@ class PrintController extends \yii\web\Controller
 	    			->where(['tur_id' => $tursCurent['id'],'dance_id'=> null])
 					->orderBy(['nomer' => SORT_ASC]);
 				foreach ($results->each() as $result) {
-				$pdf->Cell(15,7,iconv("UTF-8","Windows-1251",$result['nomer']),1,0,'C',$fill);				
-				$pdf->Cell(25,7,iconv("UTF-8","Windows-1251",$sum[$result['nomer']]),1,0,'C',$fill);
-				$pdf->Cell(12,7,iconv("UTF-8","Windows-1251",$result['place']),1,0,'C',$fill);
+				$pdf->Cell(15,6,iconv("UTF-8","Windows-1251",$result['nomer']),1,0,'C',$fill);				
+				$pdf->Cell(25,6,iconv("UTF-8","Windows-1251",$sum[$result['nomer']]),1,0,'C',$fill);
+				$pdf->Cell(12,6,iconv("UTF-8","Windows-1251",$result['place']),1,0,'C',$fill);
 				$pdf->Ln();
 				$fill=!$fill;
 				}
