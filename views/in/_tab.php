@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 
 ?>
@@ -14,20 +15,21 @@ use yii\helpers\ArrayHelper;
 <?php $categories = \app\models\In::getCategories('');?>
 
 
-
+<?php $url = Url::to(['replace']);?>
 <?= $this->registerJs(
         "$('#replace-btn$otd_id').click(function(){
             var new_category_id = $('[name = \"new-category-id\"]').val();
             var replace_ins = $('#tab$otd_id').yiiGridView('getSelectedRows');
             var otd_id = $otd_id;
-            $.post(\"replace\", { new_category_id: new_category_id, otd_id: otd_id} );
+            $.post('$url', {replace_ins, new_category_id, otd_id} );
             return false;
         });"      
 );?>
 
 <div class="form-group">
     <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map($categories, 'id', 'name')) ?>
-    <?= Html::submitButton('Переместить', ['id' => 'replace-btn'.$otd_id, 'class' => 'btn btn-success replace-btn']) ?>
+    <?= Html::a('Переместить',' ', ['id' => 'replace-btn'.$otd_id, 'class' => 'btn btn-success replace-btn']) ?>
+    
     
 </div>  
 

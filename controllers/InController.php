@@ -30,9 +30,6 @@ use kartik\grid\EditableColumnAction;
  */
 class InController extends Controller
 {
-
-    
-
     /**
      * @inheritdoc
      */
@@ -207,9 +204,14 @@ class InController extends Controller
 
     public function actionReplace($replace_ins, $new_category_id, $otd_id)
     {
-        $ins = In::find()->where($replace_ins)->all();
+        $items = implode(',', $replace_ins);
+        $ins = In::find()->where(['id' => $items])->all();
+        
         $tur = Tur::find()->where(['category_id'=>$new_category_id])->orderBy('nomer')->one();
-        $ins->updateAttributes(['tur_id' => $tur->id]);
+        foreach ($ins as $in) {
+            $in->updateAttributes(['tur_id' => $tur->id]);
+        }
+        
         
         return $this->redirect(['index', 'otd_id' => $otd_id]);
     }

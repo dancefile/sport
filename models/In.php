@@ -27,6 +27,7 @@ class In extends \yii\db\ActiveRecord
     public $otd_id;
     public $category_id;
     public $new_category_id;
+    public $replace_ins;
     
     /**
      * @inheritdoc
@@ -60,6 +61,7 @@ class In extends \yii\db\ActiveRecord
             [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],
 
             [['dancer1', 'dancer2'], 'checkDancer'],
+            [['replace_ins', 'new_category_id'], 'safe'],
 
             // ['dancer1[]', 'required', 'when' => function ($model) {
             // return $model->field_2 == '';
