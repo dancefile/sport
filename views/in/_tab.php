@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 
+
 ?>
 <?php \yii\widgets\Pjax::begin()?>
 
@@ -14,24 +15,26 @@ use yii\helpers\Url;
 
 <?php $categories = \app\models\In::getCategories('');?>
 
+<?php $form = ActiveForm::begin(['action' => ['replace'],'options' => ['method' => 'post']]); ?>
+    <?php $url = Url::to(['replace']);?>
+    <?php $this->registerJs(
+            "$('.kv-row-select').click(function(){
+                var replace_ins = $('#tab$otd_id').yiiGridView('getSelectedRows');
+                var otd_id = $otd_id;
+                $('#replace_ins$otd_id').val(replace_ins);
+                $('#otd_id$otd_id').val(otd_id);
+            });"      
+    );?>
 
-<?php $url = Url::to(['replace']);?>
-<?= $this->registerJs(
-        "$('#replace-btn$otd_id').click(function(){
-            var new_category_id = $('[name = \"new-category-id\"]').val();
-            var replace_ins = $('#tab$otd_id').yiiGridView('getSelectedRows');
-            var otd_id = $otd_id;
-            $.post('$url', {replace_ins, new_category_id, otd_id} );
-            return false;
-        });"      
-);?>
+    <div class="form-group">
+        <input id="replace_ins<?=$otd_id?>" type="hidden" name="replace_ins" value="" />
+        <input id="otd_id<?=$otd_id?>" type="hidden" name="otd_id" value="" />
+        
+        <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map($categories, 'id', 'name')) ?>
+        <?= Html::submitButton('Переместить', ['id' => 'replace-btn'.$otd_id, 'class' => 'btn btn-success replace-btn']) ?>
+    </div>  
+<?php $form = ActiveForm::end() ?>
 
-<div class="form-group">
-    <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map($categories, 'id', 'name')) ?>
-    <?= Html::a('Переместить',' ', ['id' => 'replace-btn'.$otd_id, 'class' => 'btn btn-success replace-btn']) ?>
-    
-    
-</div>  
 
 <?= GridView::widget([
         'id' => 'tab'.$otd_id,
