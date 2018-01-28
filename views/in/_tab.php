@@ -16,24 +16,26 @@ use yii\helpers\ArrayHelper;
 
 
 <?= $this->registerJs(
-        "$('#replace-btn').click(function(){
+        "$('#replace-btn$otd_id').click(function(){
             var new_category_id = $('[name = \"new-category-id\"]').val();
-            var replace_ins = $('#w0').yiiGridView('getSelectedRows');
+            var replace_ins = $('#tab$otd_id').yiiGridView('getSelectedRows');
             var otd_id = $otd_id;
-            alert (otd_id);
+            $.post(\"replace\", { new_category_id: new_category_id, otd_id: otd_id} );
             return false;
         });"      
-        );?>
+);?>
 
 <div class="form-group">
     <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map($categories, 'id', 'name')) ?>
-    <?= Html::submitButton('Переместить', ['id' => 'replace-btn', 'class' => 'btn btn-success replace-btn']) ?>
+    <?= Html::submitButton('Переместить', ['id' => 'replace-btn'.$otd_id, 'class' => 'btn btn-success replace-btn']) ?>
+    
 </div>  
 
 <?= GridView::widget([
+        'id' => 'tab'.$otd_id,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-//        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
+
         
         'toolbar' =>  [
             ['content' => 
