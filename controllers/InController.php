@@ -202,18 +202,19 @@ class InController extends Controller
         }
     }
 
-    public function actionReplace($replace_ins, $new_category_id, $otd_id)
+    public function actionReplace()
     {
-        $items = implode(',', $replace_ins);
+        $post = Yii::$app->request->post();
+        $items = explode(',', $post['replace_ins']);
         $ins = In::find()->where(['id' => $items])->all();
         
-        $tur = Tur::find()->where(['category_id'=>$new_category_id])->orderBy('nomer')->one();
+        $tur = Tur::find()->where(['category_id'=>$post['new-category-id']])->orderBy('nomer')->one();
         foreach ($ins as $in) {
             $in->updateAttributes(['tur_id' => $tur->id]);
         }
         
         
-        return $this->redirect(['index', 'otd_id' => $otd_id]);
+        return $this->redirect(['index', 'otd_id' => $post['otd_id']]);
     }
     
     private function inSave($tur, $coupleId)
