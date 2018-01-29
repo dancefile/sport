@@ -12,6 +12,7 @@ $this->registerJsFile('@web/js/main.js',
 );
 $this->registerCssFile('@web/css/jquery-ui.css');
 
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -19,13 +20,10 @@ $this->title = 'Список участников';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="in-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?php
-    
+    <?php   
         $tabs=[];
-        
+        $categories = \app\models\In::getCategories('');
         foreach ($otds as $otd) {
             if (isset($otd_id)){
                 if($otd_id==$otd['id']){
@@ -38,7 +36,7 @@ $this->title = 'Список участников';
             }
             
             $searchModel->otd_id =$otd['id'];
-            
+            $searchModel->category_id =$category_id;
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->pagination = false;
             $tabs[]=[
@@ -50,21 +48,15 @@ $this->title = 'Список участников';
                                         'searchModel' => $searchModel,
                                         'otd_id' => $otd['id'],
                                         'category_id' => $category_id,
-
+                                        'categories' => $categories,
                                     ]
                                 ),
                 'active' => $active,
             ];
         }
 
-        
-
         echo Tabs::widget([
             'items' => $tabs
         ]);
-    ?>
-    
-    
-    
-                
+    ?>           
 </div>

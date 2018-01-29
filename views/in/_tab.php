@@ -1,19 +1,14 @@
 <?php
-
-use yii\helpers\Html;
-use kartik\grid\GridView;
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
-
-
-
+    use yii\helpers\Html;
+    use kartik\grid\GridView;
+    use yii\widgets\ActiveForm;
+    use yii\helpers\ArrayHelper;
+    use yii\helpers\Url;
 ?>
+
 <?php \yii\widgets\Pjax::begin()?>
 
-<?= $this->render('_left_panel', ['otd_id'=>$otd_id]); ?>
-
-<?php $categories = \app\models\In::getCategories('');?>
+<?= $this->render('_left_panel', ['otd_id'=>$otd_id, 'categories'=> $categories]); ?>
 
 <?php $form = ActiveForm::begin(['action' => ['replace'],'options' => ['method' => 'post']]); ?>
     <?php $this->registerJs(
@@ -37,8 +32,6 @@ use yii\helpers\Url;
         'id' => 'tab'.$otd_id,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-
-        
         'toolbar' =>  [
             ['content' => 
                 Html::a('<i class="glyphicon glyphicon-plus"></i>', ['registration/create'], ['class' => 'btn btn-success']) 
@@ -88,10 +81,10 @@ use yii\helpers\Url;
                     return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
                 }
             ],
-            [
-                'attribute' => 'couple.dancerId1.classes',
-                'options' => ['width' => '50'],
-            ],
+//            [
+//                'attribute' => 'couple.dancerId1.classes',
+//                'options' => ['width' => '50'],
+//            ],
             [
                 'attribute' => 'dancerId2',
                 'options' => ['width' => '170'],
@@ -99,13 +92,13 @@ use yii\helpers\Url;
                     return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
                 }
             ],
-            [
-                'attribute' => 'couple.dancerId2.classes',
-                'options' => ['width' => '50'],
-            ],
-            'city',
-            'couple.club',
-            'couple.trenersString',            
+//            [
+//                'attribute' => 'couple.dancerId2.classes',
+//                'options' => ['width' => '50'],
+//            ],
+//            'city',
+//            'couple.club',
+//            'couple.trenersString',            
 
             [
                 'class' => 'yii\grid\ActionColumn',
