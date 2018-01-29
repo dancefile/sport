@@ -53,7 +53,7 @@ class InController extends Controller
     {
         $otds = \app\models\Otd::find()->all();
         $searchModel = new InSearch();
-        $searchModel->category_id =$category_id;
+        
 //        if ($category_id){
 //            $searchModel->category_id =$category_id;
 //        } else {
@@ -64,7 +64,6 @@ class InController extends Controller
             'otd_id' => $otd_id,
             'searchModel' => $searchModel,
             'category_id' => $category_id,
-
         ]);
     }
 

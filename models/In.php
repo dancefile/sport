@@ -127,12 +127,7 @@ class In extends \yii\db\ActiveRecord
     {
         return Category::find()->filterWhere(['otd_id' => $otd_id])->all();
     }
-    
-    public function getOtdWithCategories()
-    {
-        
-    }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
