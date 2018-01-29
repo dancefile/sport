@@ -10,10 +10,76 @@ class TurInfo extends \yii\base\Object
 	private	$inArrMore=null;	
 	private	$heatsArr=null;
 	private	$names=null;	
+	private	$dancerClub=null;
+	private	$dancerTreners=null;
 
+
+	public function GetCoupleTrener($inId,$seporate='<br>')
+	{
+		if ($this->dancerTreners===null) {$this->loadDancerInfo();}
+		$trenerCouple=[];
+		if (isset($this->inArrMore[$inId]['dancer1']) && isset($this->dancerTreners[$this->inArrMore[$inId]['dancer1']])) {
+			foreach ($this->dancerTreners[$this->inArrMore[$inId]['dancer1']] as $value) {if (array_search($value, $trenerCouple)===FALSE) $trenerCouple[]=$value;}
+		}
+		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->dancerTreners[$this->inArrMore[$inId]['dancer2']])) {
+			foreach ($this->dancerTreners[$this->inArrMore[$inId]['dancer2']] as $value) {if (array_search($value, $trenerCouple)===FALSE) $trenerCouple[]=$value;}
+		}
+		return implode($trenerCouple, $seporate);
+	}
+
+
+
+	public function loadDancerInfo()
+	{
+		if ($this->names===null) $this->loadNames();
+		$ids=[];
+		foreach ($this->names as $value) {
+			if (isset($value['clubId']) && $value['clubId'] && array_search($value['clubId'], $ids)===FALSE) $ids[]=$value['clubId']; 
+		}
+		$this->dancerClub=[];
+		$clubs = (new \yii\db\Query()) 
+    		->select(['club.id','cityName'=>'city.name','countryName'=>'country.name'])
+			->from('club')
+			->leftJoin('city','club.city_id=city.id')
+			->leftJoin('country','city.country_id=country.id')
+        	->where(['in', 'club.id',$ids]);
+            foreach ($clubs->each() as $row) {
+				$this->dancerClub[$row['id']]['cityName']=$row['cityName'];
+				$this->dancerClub[$row['id']]['countryName']=$row['countryName'];
+			}
+					
+		$ids=array_keys($this->names);
+		$this->dancerTreners=[];
+		$treners = (new \yii\db\Query()) 
+    		->select(['dancer_trener.dancer_id','trener.name','trener.sname'])
+			->from('dancer_trener')
+			->leftJoin('trener','dancer_trener.trener_id=trener.id')
+        	->where(['in', 'dancer_trener.dancer_id',$ids]);
+            foreach ($treners->each() as $row) {
+				$this->dancerTreners[$row['dancer_id']][]=$row['sname'].' '.$row['name'];
+			}
+				
+		
+	}
+
+	public function GetCoupleCity($inId,$info='cityName',$seporate='<br>')
+	{
+
+		if ($this->dancerClub===null) {$this->loadDancerInfo();}
+			$CoupleInfo=[];
+		if (isset($this->inArrMore[$inId]['dancer1']) && isset($this->names[$this->inArrMore[$inId]['dancer1']]['clubId'])) 
+		{
+			if (isset($this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info]))	$CoupleInfo[]=$this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info];
+		}
+		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->names[$this->inArrMore[$inId]['dancer2']]['clubId'])) {
+			if (isset($this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info]))	$CoupleInfo[]=$this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info];
+		}		
+		return implode($CoupleInfo, $seporate);	
+	}
 
 	public function loadNames()
 	{
+		if ($this->inArr===null) $this->getIn();
 		$ids=[];
 		foreach ($this->inArrMore as $value) {
 			if(isset($value['dancer1']) && array_search($value['dancer1'], $ids)===FALSE) $ids[]=$value['dancer1'];
@@ -21,25 +87,28 @@ class TurInfo extends \yii\base\Object
 		}
 	
 	$dancers = (new \yii\db\Query()) 
-    	->select(['dancer.name','dancer.id','dancer.sname','clubName'=>'club.name','clasLaName'=>'clasLa.name','clasStname'=>'clasSt.name'])
+    	->select(['dancer.name','dancer.id','dancer.sname','clubName'=>'club.name','clubId'=>'dancer.club','clasLaName'=>'clasLa.name','clasStname'=>'clasSt.name'])
 		->from('dancer')
 		->leftJoin('club','dancer.club=club.id')
 		->leftJoin('clas as clasLa','dancer.clas_id_st=clasLa.id')
 		->leftJoin('clas as clasSt','dancer.clas_id_la=clasSt.id')
-		//->leftJoin('city','city_id=city.id')
         ->where(['in', 'dancer.id',$ids]);
             foreach ($dancers->each() as $row) {
-				$this->names[$row['id']]=$row['sname'].' '.$row['sname'];
+				$this->names[$row['id']]['fname']=$row['sname'].' '.$row['name'];
+				$this->names[$row['id']]['clubName']=$row['clubName'];
+				$this->names[$row['id']]['clubId']=$row['clubId'];
+				$this->names[$row['id']]['clasStname']=$row['clasStname'];
+				$this->names[$row['id']]['clasLaName']=$row['clasLaName'];
 			}
 	}
 
-	public function GetNameCouple($inId)
+	public function GetCoupleName($inId,$info='fname',$seporate='<br>')
 	{
 		if ($this->names===null) {$this->loadNames();}
 		$nameCouple=[];
-		if (isset($this->inArrMore[$inId]['dancer1']) && isset($this->names[$this->inArrMore[$inId]['dancer1']])) {$nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer1']];}
-		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->names[$this->inArrMore[$inId]['dancer2']])) {$nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer2']];}
-		return implode($nameCouple, ', ');
+		if (isset($this->inArrMore[$inId]['dancer1']) && isset($this->names[$this->inArrMore[$inId]['dancer1']][$info])) {$nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer1']][$info];}
+		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->names[$this->inArrMore[$inId]['dancer2']][$info])) {$nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer2']][$info];}
+		return implode($nameCouple, $seporate);
 	}
 	
 	

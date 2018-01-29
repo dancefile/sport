@@ -23,6 +23,22 @@ $this->params['breadcrumbs'][] = $this->title;
 			  [
            	    'header' => 'Участники',
                	'attribute' => 'name',
+               	'format' => 'raw',
+    	       ],
+    	       			  [
+           	    'header' => 'Клуб',
+               	'attribute' => 'club',
+               	'format' => 'raw',
+    	       ],
+   			  [
+           	    'header' => 'Город',
+               	'attribute' => 'City',
+               	'format' => 'raw',
+    	       ],
+   			  [
+           	    'header' => 'Тренеры',
+               	'attribute' => 'Trener',
+               	'format' => 'raw',
     	       ]];
 	foreach ($arrDance as $key => $dance): 
    		$columns[]=[
@@ -39,7 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
 	asort($inArr);
 	 
     foreach ($inArr as $key => $nomer): 
-    	$data[$key] = ['nomer' => $nomer,'name'=>$turInfo->GetNameCouple($key)];
+    	$data[$key] = [	'nomer' => $nomer,
+    					'name'=>$turInfo->GetCoupleName($key),
+    					'club'=>$turInfo->GetCoupleName($key,'clubName'),
+    					'City'=>$turInfo->GetCoupleCity($key),
+    					'Trener'=>$turInfo->GetCoupleTrener($key),
+    					
+    					];
 		if (isset($heatsArr[$key])) {
 			foreach ($heatsArr[$key] as $key1 => $value1) {
 				$data[$key]['id'.$key1]=$value1;			
