@@ -64,7 +64,7 @@ class HeatsController extends \yii\web\Controller
             return $this->actionIndex($idT);
 	}
 	
-	public function actionIndex($idT=0) //отбражаем заходы тура
+	public function actionIndex($idT=0,$ved=0) //отбражаем заходы тура
 	{
 		$turInfo = new \app\models\volod\TurInfo;
 		$turInfo->setTur($idT);
@@ -85,7 +85,10 @@ class HeatsController extends \yii\web\Controller
                     break;
             }
 
-
+		if ($ved)  return $this->render('viewVed', ['arrDance' => $arrDance,
+                        'turInfo' => $turInfo,
+					]);
+		else
             return $this->render('view', ['arrDance' => $arrDance,
                         'turInfo' => $turInfo,
 					]);
