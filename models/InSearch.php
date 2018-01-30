@@ -47,11 +47,12 @@ class InSearch extends In
     {
         $query = In::find()
             ->joinWith(['couple', 'tur', 'tur.category'])
+            
             ->joinWith(['couple.dancerId1'=> function($q){
-                                $q->from('dancer c1');
+                                $q->from('dancer dancer1');
                             }])
             ->joinWith(['couple.dancerId2'=> function($q){
-                                $q->from('dancer c2');
+                                $q->from('dancer dancer2');
                             }]);
             
 
@@ -72,8 +73,8 @@ class InSearch extends In
         // grid filtering conditions
         $query
             ->andFilterWhere(['like', 'couple.nomer', $this->couple_nomer])
-            ->andFilterWhere(['like', 'c1.sname', $this->dancerId1])
-            ->andFilterWhere(['like', 'c2.sname', $this->dancerId2]);    
+            ->andFilterWhere(['like', 'dancer1.sname', $this->dancerId1])
+            ->andFilterWhere(['like', 'dancer2.sname', $this->dancerId2]);    
         
         $query->andFilterWhere(['category.otd_id' => $this->otd_id]);
         $query->andFilterWhere(['category.id' => $this->category_id]);

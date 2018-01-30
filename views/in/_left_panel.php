@@ -10,8 +10,8 @@ use yii\helpers\Html;
         });
         
         foreach ($cat as $category) {
-            echo Html::a($category->name, ['index', 'category_id'=>$category['id']], ['class' => 'btn']);  
-        }   
+            echo Html::a($category->name.'<span> ('. app\models\Category::getCatRegPairs($category->id).')</span>', ['index', 'category_id'=>$category['id']], ['class' => 'btn']);  
+        }    
         echo Html::a('Показать все', ['index', 'category_id'=>null, 'otd_id' =>$otd_id], ['class' => 'btn']);
     ?>
     

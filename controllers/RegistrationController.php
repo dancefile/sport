@@ -12,10 +12,20 @@ use app\models\In;
 class RegistrationController extends AppController
 {
    
-     public function actionCreate()
+     public function actionCreate($pre_reg_id=null)
      {
          $model = new Registration();
 
+         if ($pre_reg_id){
+             $pre_reg = \app\models\PreRegistration::find()->where(['id'=>$pre_reg_id])->one();
+             $model->d1_name = $pre_reg->dancer1_name;
+             $model->d1_sname = $pre_reg->dancer1_sname;
+             $model->d2_name = $pre_reg->dancer2_name;
+             $model->d2_sname = $pre_reg->dancer2_sname;
+             $model->city = $pre_reg->city;
+             $model->club = $pre_reg->club;
+         }
+         
          if ($model->load(Yii::$app->request->post()) && $model->validate()) {
              
              RegService::regSave($model, false);

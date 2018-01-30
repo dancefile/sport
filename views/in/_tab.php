@@ -81,10 +81,10 @@
                     return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
                 }
             ],
-//            [
-//                'attribute' => 'couple.dancerId1.classes',
-//                'options' => ['width' => '50'],
-//            ],
+            [
+                'attribute' => 'couple.dancerId1.classes',
+                'options' => ['width' => '50'],
+            ],
             [
                 'attribute' => 'dancerId2',
                 'options' => ['width' => '170'],
@@ -92,13 +92,13 @@
                     return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
                 }
             ],
-//            [
-//                'attribute' => 'couple.dancerId2.classes',
-//                'options' => ['width' => '50'],
-//            ],
-//            'city',
-//            'couple.club',
-//            'couple.trenersString',            
+            [
+                'attribute' => 'couple.dancerId2.classes',
+                'options' => ['width' => '50'],
+            ],
+            'city',
+            'couple.club',
+            'couple.trenersString',            
 
             [
                 'class' => 'yii\grid\ActionColumn',

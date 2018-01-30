@@ -371,14 +371,14 @@ td.number {
     margin-top: 20px;
 }
 .left-panel{
-    width: 140px;
+    width: 180px;
     float: left;
     overflow: auto;
     
 }
 
 .left-panel .btn{
-    width: 140px;
+    width: 180px;
     text-align: left;
 }
 
@@ -387,7 +387,7 @@ td.number {
 }
 
 .in-index .grid-view{
-    width: 990px;
+    width: 950px;
     float: right;
 }
 

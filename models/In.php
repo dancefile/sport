@@ -123,6 +123,14 @@ class In extends \yii\db\ActiveRecord
         return $this->hasOne(Tur::className(), ['id' => 'tur_id'])->inverseOf('ins');
     }
     
+    public function getAddInfo()
+    {
+        $class = Clas::find()->select('name')->asArray()->indexBy('id')->column();
+        $addInfo['class'] = $class;
+        
+        return $addInfo;
+    }
+    
     public function getCategories($otd_id)
     {
         return Category::find()->filterWhere(['otd_id' => $otd_id])->all();
