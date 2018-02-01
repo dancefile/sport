@@ -29,9 +29,9 @@ class Otd extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'id'], 'integer'],
+            [['id'], 'integer'],
 //            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['id' => 'otd_id']],
-            [['startTime'], 'safe'],
+            [['name', 'full_name', 'startTime'], 'safe'],
         ];
     }
 

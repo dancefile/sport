@@ -5,8 +5,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
-    <input type="text" name="start" value="20750" />
-    <input type="text" name="end" value="20880" />
-    <input type="submit" value="Пошел">
+    <input type="submit" style="width: 400px; height: 300px; font-size: 50px;" class="btn btn-success" value="Пошел">
 <?php $form = ActiveForm::end(); ?>
 
