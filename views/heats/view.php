@@ -2,9 +2,12 @@
 
 /* @var $this yii\web\View */
 
+use kartik\grid\EditableColumnAction;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
+
+
 // $turInfo->gettur('')
 $this->title = 'Заходы '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
@@ -43,8 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
     	       ]];
 	foreach ($arrDance as $key => $dance): 
    		$columns[]=[
+   				'editableOptions'=> ['formOptions' => ['action' => ['/site/editbook']]],
            	    'header' => $dance,
                	'attribute' => 'id'.$key,
+               	
                	//'value' => function($model, $key, $index, $grid) {
                		//var_dump($grid);
        // return $index;
