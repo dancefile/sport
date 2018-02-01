@@ -34,8 +34,9 @@ class PreRegistration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category', 'dancer1_name', 'dancer1_sname', 'dancer2_name', 'dancer2_sname', 'city', 'club', 'trener'], 'string', 'max' => 200],
+            [['dancer1_name', 'dancer1_sname', 'dancer2_name', 'dancer2_sname', 'city', 'club'], 'string', 'max' => 200],
             [['class'], 'string', 'max' => 5],
+            [['tur_id', 'trener_name', 'trener_sname'], 'safe']
         ];
     }
 

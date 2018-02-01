@@ -64,11 +64,11 @@
             ],
             
             [
-                'attribute' => 'couple_nomer',
+                'attribute' => 'nomer',
                 'options' => ['width' => '50'],
-                'value' => function($model){
-                    return $model->nomer;
-                }
+//                'value' => function($model){
+//                    return $model->nomer;
+//                }
             ],
             [
                 'attribute' => 'couple.age',

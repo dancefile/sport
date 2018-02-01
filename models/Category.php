@@ -105,19 +105,25 @@ class Category extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        $this->clas = implode(", ", $this->clas);
-        $this->dances = implode(", ", $this->dances);
-
-        $judgeArr = $this->chesses_list;
-        Chess::deleteAll(['category_id' => $this->id]);
-        $i=1;
-        foreach ($judgeArr as $judge) {   
-            $chess = new Chess;
-            $chess->judge_id = $judge;
-            $chess->category_id = $this->id;
-            $i==1 ? $chess->chief = 1 : $chess->chief = 0;
-            $chess->nomer = $i++;
-            $chess->save();
+        if (isset($this->clas)){
+            $this->clas = implode(", ", $this->clas);
+        }
+        if (isset($this->dances)){
+            $this->dances = implode(", ", $this->dances);
+        }
+        
+        if (isset($this->chesses_list)){
+            $judgeArr = $this->chesses_list;
+            Chess::deleteAll(['category_id' => $this->id]);
+            $i=1;
+            foreach ($judgeArr as $judge) {   
+                $chess = new Chess;
+                $chess->judge_id = $judge;
+                $chess->category_id = $this->id;
+                $i==1 ? $chess->chief = 1 : $chess->chief = 0;
+                $chess->nomer = $i++;
+                $chess->save();
+            }
         }
         // print_r($chess);
         // exit;

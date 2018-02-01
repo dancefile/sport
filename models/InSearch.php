@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class InSearch extends In
 {
-    public $couple_nomer;
+//    public $nomer;
     public $dancerId1;
     public $dancerId2;
     /**
@@ -23,7 +23,7 @@ class InSearch extends In
 
             // [['couple_nomer', 'couple.age', 'dancer_id_1', 'dancer_id_2', 'nomer'], 'integer'],
             // [['couple.dancerId1.dancerFullName', 'couple.dancerId1.classes', 'couple.dancerId2.dancerFullName', 'couple.dancerId2.classes', 'couple.dancerId1.club0.city.name', 'couple.club', 'couple.trenersString'], 'safe'],
-            [['couple_nomer', 'dancerId1', 'dancerId2'], 'safe'],
+            [['nomer', 'dancerId1', 'dancerId2'], 'safe'],
         ];
     }
 
@@ -72,7 +72,7 @@ class InSearch extends In
 
         // grid filtering conditions
         $query
-            ->andFilterWhere(['like', 'couple.nomer', $this->couple_nomer])
+            ->andFilterWhere(['like', 'in.nomer', $this->nomer])
             ->andFilterWhere(['like', 'dancer1.sname', $this->dancerId1])
             ->andFilterWhere(['like', 'dancer2.sname', $this->dancerId2]);    
         

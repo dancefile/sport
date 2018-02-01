@@ -19,7 +19,7 @@ class PreRegistrationSearch extends PreRegistration
     {
         return [
             [['id'], 'integer'],
-            [['category', 'class', 'dancer1_name', 'dancer1_sname', 'dancer2_name', 'dancer2_sname', 'city', 'club', 'trener'], 'safe'],
+            [['tur_id', 'class', 'dancer1_name', 'dancer1_sname', 'dancer2_name', 'dancer2_sname', 'city', 'club', 'trener_name', 'trener_sname'], 'safe'],
         ];
     }
 
@@ -62,15 +62,15 @@ class PreRegistrationSearch extends PreRegistration
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'category', $this->category])
-            ->andFilterWhere(['like', 'class', $this->class])
+        $query->andFilterWhere(['like', 'class', $this->class])
             ->andFilterWhere(['like', 'dancer1_name', $this->dancer1_name])
             ->andFilterWhere(['like', 'dancer1_sname', $this->dancer1_sname])
             ->andFilterWhere(['like', 'dancer2_name', $this->dancer2_name])
             ->andFilterWhere(['like', 'dancer2_sname', $this->dancer2_sname])
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'club', $this->club])
-            ->andFilterWhere(['like', 'trener', $this->trener]);
+            ->andFilterWhere(['like', 'trener_name', $this->trener_name])
+            ->andFilterWhere(['like', 'trener_sname', $this->trener_sname]);
 
         return $dataProvider;
     }

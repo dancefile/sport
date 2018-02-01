@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                    },
                 ]
             ],
-            'category',
+            'tur_id',
             'class',
             'dancer1_name',
             'dancer1_sname',
@@ -37,7 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dancer2_sname',
             'city',
             'club',
-            'trener',
+            'trener_name',
+            'trener_sname',
         ],
     ]); ?>
 </div>

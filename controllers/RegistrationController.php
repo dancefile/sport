@@ -22,6 +22,8 @@ class RegistrationController extends AppController
              $model->d1_sname = $pre_reg->dancer1_sname;
              $model->d2_name = $pre_reg->dancer2_name;
              $model->d2_sname = $pre_reg->dancer2_sname;
+             $model->d_trener1_name = $pre_reg->trener_name;
+             $model->d_trener1_sname = $pre_reg->trener_sname;
              $model->city = $pre_reg->city;
              $model->club = $pre_reg->club;
          }

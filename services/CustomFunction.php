@@ -58,6 +58,13 @@ class CustomFunction
                 }
                 if ($otd=$row->find('a',0)){
                     $result[$otd_i]['sub_otd'][$sub_otd_i]['category'][substr(trim($otd->href),-5)]['name']=self::mb_ucfirst(trim($otd->plaintext));
+                    if (stristr($otd->plaintext, 'соло')|| stristr($otd->plaintext, 'Соло')){
+                        $solo=0;
+                    } else {
+                        $solo=1;
+                    }
+                    $result[$otd_i]['sub_otd'][$sub_otd_i]['category'][substr(trim($otd->href),-5)]['solo']=$solo; 
+                    
                 }
             }
         }
@@ -157,6 +164,7 @@ class CustomFunction
                                     foreach ($tr->find('td') as $key_td=>$td) {     // записывает в массив
                                         switch ($key_td){
                                             case 1:
+                                                $cat['in'][$key_tr-1]['country'] ='';
                                                 $cat['in'][$key_tr-1]['class'] = $td->plaintext;
                                                 break;
                                             case 2:
