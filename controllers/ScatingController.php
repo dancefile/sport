@@ -5,7 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\components\Scating;
-use app\models\Otd;
+use app\models\Volod\TurInfo;
 
 class ScatingController extends \yii\web\Controller
 {
@@ -243,8 +243,38 @@ class ScatingController extends \yii\web\Controller
 
 	}//actionCalc
 
-
-
+	public function actionFormallheats($idT=0,$idZ=0) 
+	{
+		
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+		$judges = (new \yii\db\Query()) //получаем список судей данной категории
+	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
+	    ->from('chess,judge')
+	    ->where(['chess.category_id' => $turInfo->getTur('id')])
+		->andWhere('`judge`.`id`=`chess`.`judge_id`');
+		$judge=[];
+		foreach ($judges->each() as $row) {
+			$judge[$row['id']]=$row['nomer'].'. '.$row['sname'].' '.$row['name'];
+		}
+		asort($judge);	
+		
+		$krest = (new \yii\db\Query()) //получаем оценки всех судей за все танцы за текущей тур
+    	->select(['judge_id','dance_id','nomer','ball'])
+    	->from('krest')
+    	->where(['tur_id' => $idT]);	
+		
+		$krestArr=[];
+		foreach ($krest->each() as $row) {
+			$krestArr[$row['judge_id']][$row['dance_id']][$row['nomer']]=$row['ball'];	
+		}
+		
+	return $this->render('formallheats', [
+								  'turInfo' => $turInfo,
+								  'krestArr' => $krestArr,
+								  'judge' => $judge,
+								  'idZ' => $idZ]);		
+	}
 	public function actionForm($idT=0,$idD=0) //ввод оченок судей парам за танец
 	{
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
@@ -337,8 +367,73 @@ class ScatingController extends \yii\web\Controller
 	}//actionEntry
 	
 	
+	public function actionEntryallheats($idT=0, $idZ=0) //сохраняем оценки
+    {
+    	$insetArr=[];
+		$delIn=[];
+		$forDel=[];
+    	foreach (Yii::$app->request->post() as $key => $value) {
+    		$keyar=explode(';', $key);
+			if ($keyar[0]=='bal' && $value) {
+				if (trim($value)) {
+					$insetArr[]=[$keyar[1], $idT, $keyar[2], $keyar[3], $value];
+					$forDel[$idT][$keyar[2]][$keyar[3]]=0;
+					//$delIn[]['tur_id' => $idT, 'dance_id' => $keyar[2], 'nomer' => $keyar[3]];
+					//['judge_id', 'tur_id', 'dance_id', 'nomer', 'ball']
+				}
+				
+			};
+			
+		}
+		
+		foreach ($forDel as $tur_id => $value1) {
+			foreach ($value1 as $dance_id => $value2) {
+				foreach ($value2 as $nomer => $value2) {
+					$delIn[]=['tur_id' => $tur_id, 'dance_id' => $dance_id, 'nomer' => $nomer];		
+		}}}
+		
+		Yii::$app->db->createCommand()->delete('krest', ['in',['tur_id', 'dance_id', 'nomer'],$delIn])->execute();
+		Yii::$app->db->createCommand()->batchInsert('krest', ['judge_id', 'tur_id', 'dance_id', 'nomer', 'ball'], $insetArr)->execute();
+
+		return self::actionInputallheats($idT);
+	}//actionEntryallheats
+	
+	public function actionInputallheats($idT=0) {
+		
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+		$judges = (new \yii\db\Query()) //получаем список судей данной категории
+	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
+	    ->from('chess,judge')
+	    ->where(['chess.category_id' => $turInfo->getTur('id')])
+		->andWhere('`judge`.`id`=`chess`.`judge_id`');
+		$judge=[];
+		foreach ($judges->each() as $row) {
+			$judge[$row['id']]=$row['nomer'].'. '.$row['sname'].' '.$row['name'];
+		}
+		asort($judge);
+			
+			
+		$krest = (new \yii\db\Query()) //получаем оценки всех судей за все танцы за текущей тур
+    	->select(['judge_id','dance_id','nomer','ball'])
+    	->from('krest')
+    	->where(['tur_id' => $idT]);	
+		
+		$krestArr=[];
+		foreach ($krest->each() as $row) {
+			$krestArr[$row['judge_id']][$row['dance_id']][$row['nomer']]=$row['ball'];	
+		}
+				
+			
+			
+	return $this->render('listallheats', ['turInfo' => $turInfo, 'judge' => $judge, 'krestArr' => $krestArr]);	
+	}
+	
 	public function actionInput($idT=0) //ввывод количестава оценок судей за каждый танец
 	{
+		
+	
+		
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
 		->select(['tur.category_id','turname'=>'tur.name','tur.dances','category.name'])
 	    ->from('tur')
@@ -369,6 +464,7 @@ class ScatingController extends \yii\web\Controller
 		}
 	
 		$dancesArr = array_fill_keys(explode(',',str_replace(' ','',$tur['dances'])), '');
+		
 		$Dance = (new \yii\db\Query()) //получаем заходы для пар в текущем туре
     	->from('dance')
     	->where(['in', 'id',array_keys($dancesArr)]);	

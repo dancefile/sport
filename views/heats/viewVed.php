@@ -42,7 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
     	       ]];
     $data=[];
 	$heatsArr=$turInfo->getHeats();
-	var_dump($heatsArr);
 	$inArr=$turInfo->getIn();
 	asort($inArr);
 	 
@@ -80,16 +79,38 @@ echo GridView::widget([
     	       ],
 				];
 
-foreach ($arrDance as $key => $dance){
+
+
+
+
+foreach ($arrDance as $keyDance => $dance){
+	$arr[$keyDance][0]=$inArr;
+}
+
+
+		foreach ($heatsArr as $idcouple => $value1) {
+			foreach ($value1 as $iddance => $zahod) {
+				unset($arr[$iddance][0][$idcouple]);
+				$arr[$iddance][$zahod][$idcouple]=$inArr[$idcouple];				
+			}
+		}
+
+foreach ($arrDance as $idDance => $dance){
 echo '<h3>'. Html::encode($dance).'</h3>';	
 $data=[];
 
-if (isset($heatsArr[$key])) {
-	var_dump($heatsArr[$key]);
-	foreach ($heatsArr[$key] as $key1 => $value1) {
-				$data[$key1]['couple']=$key;			
-			}
-		}
+for ($i=1; $i <= $turInfo->gettur('zahodcount'); $i++) {
+	$data[$i]['heats']='Заход '.$i;
+}
+
+
+	foreach ($arr[$idDance] as $zahod => $value1) {
+		if (count($value1)) {
+				asort($value1);
+				$data[$zahod]['heats']='Заход '.$zahod;
+				$data[$zahod]['couple']=implode($value1, ', ');			
+			}}
+		
     $provider = new ArrayDataProvider([
         'allModels' => $data,
         'pagination' => 

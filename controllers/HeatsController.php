@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\models\Volod;
+use app\models\Volod\TurInfo;
 
 class HeatsController extends \yii\web\Controller
 {
@@ -61,12 +61,12 @@ class HeatsController extends \yii\web\Controller
 
             Yii::$app->db->createCommand()->batchInsert('in_dance', ['id_in', 'dance_id', 'zahod'], $insetArr)->execute();
 		
-            return $this->actionIndex($idT);
+        //    return $this->actionIndex($idT);
 	}
 	
 	public function actionIndex($idT=0,$ved=0) //отбражаем заходы тура
 	{
-		$turInfo = new \app\models\volod\TurInfo;
+		$turInfo = new TurInfo;
 		$turInfo->setTur($idT);
 
             if (!$turInfo->gettur("typezahod")) return $this->error('Не найден тур или не задан способ формирования заходов');

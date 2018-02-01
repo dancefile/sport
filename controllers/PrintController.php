@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\components\FPDF;
+use app\models\Volod\TurInfo;
 
 class PrintController extends \yii\web\Controller
 {
@@ -12,6 +13,39 @@ class PrintController extends \yii\web\Controller
 	
 
 
+	public function actionList($idT=13)
+	{
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+
+		$judges = (new \yii\db\Query()) //получаем список судей данной категории
+	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
+	    ->from('chess,judge')
+	    ->where(['chess.category_id' => $turInfo->getTur('id')])
+		->andWhere('`judge`.`id`=`chess`.`judge_id`');
+		$judge=[];
+		foreach ($judges->each() as $row) {
+			$judge[$row['id']]=$row['nomer'].'. '.$row['sname'].' '.$row['name'];
+		}
+		asort($judge);
+				
+		switch ($turInfo->gettur("typeSkating")) {
+          case '1'://балы
+			return $this->render('balAllHeats', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>true]);
+          break;
+		  case '2'://кресты
+			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE]);
+          break;
+		  case '3'://скейтинг
+			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'места', 'prosmotr'=>FALSE]);
+          break;
+
+		  
+		}
+
+	return $this->error('что то пошло не так :(');
+	}
+	
 	public function actionIndex($idС=11)
 	{
 	$pdf = new FPDF('L');

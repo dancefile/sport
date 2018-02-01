@@ -45,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
    		$columns[]=[
            	    'header' => $dance,
                	'attribute' => 'id'.$key,
+               	//'value' => function($model, $key, $index, $grid) {
+               		//var_dump($grid);
+       // return $index;
+      //}
                	
     	       ];
 	endforeach;
@@ -82,9 +86,29 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= GridView::widget([
     'dataProvider' => $provider,
-    'columns' => $columns
-]);
- echo Html::a('Создать новые заходы', ['new','idT'=>$turInfo->getTur('idT')], ['class' => 'btn btn-success']);
+    'columns' => $columns,
+
+]);//'new','idT'=>$turInfo->getTur('idT')
+ echo Html::a('Создать новые заходы', ['','idT'=>$turInfo->getTur('idT')], ['class' => 'greatGeats btn btn-success']);
  ?>
 
 </div>
+
+	<script>
+
+window.onload=function(){
+	
+$( ".greatGeats" ).click(function() {
+  
+$.get( "<?='/heats/new?idT='.$turInfo->getTur('idT') ?>", function( ) {
+
+ location.reload();
+
+});
+  
+  
+  return false;
+});
+}
+</script>
+
