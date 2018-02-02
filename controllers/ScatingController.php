@@ -13,6 +13,15 @@ class ScatingController extends \yii\web\Controller
 	
 	public function actionKrest($idT=0,$count=0) //подсчет результатов тура
 	{
+		function point($place=5,$count=10) {//функция для подсчета очков  на классификационных соревнованиях в личном зачете
+			$point=0;
+			while ($count > 1) {
+				$count=floor($count/2);
+				if ($place<=$count)	{$point++;} else  $count=0;
+			};
+			return $point;
+		}
+		
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
 		->select(['tur.category_id','turname'=>'tur.name','tur.ParNextTur','tur.nomer','category.name','tur.typeSkating'])
 	    ->from('tur')
