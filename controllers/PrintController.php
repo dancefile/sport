@@ -6,11 +6,52 @@ use Yii;
 use yii\web\Controller;
 use app\components\FPDF;
 use app\models\Volod\TurInfo;
+use app\models\Volod\Competition;
 
 class PrintController extends \yii\web\Controller
 {
 	public $defaultAction = 'index';
 	
+
+	public function actionDiplom($idT=13)
+	{
+		$Competition = new Competition;
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+
+		switch ($turInfo->gettur("typeSkating")) {
+          case '1'://балы
+          	$resultCouple=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT])
+					->orderBy(['result' => SORT_DESC]);
+			foreach ($results->each() as $result) {
+				$resultCouple[$result['nomer']]=['bal'=>$result['result'],'stepen' => $result['place']];
+			}	          
+			return $this->render('diplomeBal', ['turInfo' => $turInfo,'resultCouple' => $resultCouple, 'Competition' => $Competition]);
+          break;
+		  case '2'://кресты
+          break;
+		  case '3'://скейтинг
+		            	$resultCouple=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT, 'dance_id' => null])
+					->orderBy(['place' => SORT_DESC]);
+			foreach ($results->each() as $result) {
+				$resultCouple[$result['nomer']]=['place' => $result['place']];
+			}
+			return $this->render('diplome', ['turInfo' => $turInfo,'resultCouple' => $resultCouple, 'Competition' => $Competition]);
+          break;
+
+		  
+		}	
+			
+			
+			
+	return $this->error('что то пошло не так :(');	
+	}
 
 
 	public function actionList($idT=13)
@@ -46,7 +87,7 @@ class PrintController extends \yii\web\Controller
 	return $this->error('что то пошло не так :(');
 	}
 	
-	public function actionIndex($idС=11)
+	public function actionIndex($idС=16)
 	{
 	$pdf = new FPDF('L');
 	$pdf->AddFont('Arial','','arial.php');

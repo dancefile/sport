@@ -67,13 +67,11 @@ $this->params['breadcrumbs'][] = $this->title;
     					'Trener'=>$turInfo->GetCoupleTrener($key),
     					
     					];
-						foreach ($arrDance as $key1 => $dance) {
+	foreach ($arrDance as $key1 => $dance) {
 		if (isset($heatsArr[$key][$key1])) {
-		//	foreach ($heatsArr[$key] as $key1 => $value1) {
 				$data[$key]['id'.$key1]=Html::a($heatsArr[$key][$key1],NULL, ['class' => 'setheats btn btn-success','id' =>$nomer.'_'.$key1]);			
-			//}
 		} else $data[$key]['id'.$key1]=Html::a('+',NULL, ['class' => 'setheats btn btn-success','id' =>$nomer.'_'.$key1]);
-		}
+	}
     endforeach;
 
     $provider = new ArrayDataProvider([
