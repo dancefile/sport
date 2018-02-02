@@ -75,15 +75,15 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'detailAnimationDuration' => 0,
 //        ],
 
-        [
-            'attribute'=>'otd_id', 
-            'width'=>'310px',
-            'value'=>function ($model, $key, $index, $widget) { 
-                return 'Отделение ' . $model->otd->name;
-            },
-            'group'=>true,
-            'groupedRow' => true,
-        ],
+//        [
+//            'attribute'=>'otd_id', 
+//            'width'=>'310px',
+//            'value'=>function ($model, $key, $index, $widget) { 
+//                return 'Отделение ' . $model->otd->name;
+//            },
+//            'group'=>true,
+//            'groupedRow' => true,
+//        ],
 
         'name',
 
@@ -150,15 +150,15 @@ $this->params['breadcrumbs'][] = $this->title;
     
     ];
 ?>
+
+    
+<?php \yii\widgets\Pjax::begin()?>
+    
 <?php
     foreach ($otd_list as $otd) {
         echo Html::a($otd->name, ['reglament/index', 'otd_id'=>$otd->id, 'otd_name' => $otd->name], ['class' => 'btn']);
     }
 ?>
-    
-<?php \yii\widgets\Pjax::begin()?>
-    
-
 <?php
     echo GridView::widget([
         'dataProvider' => $dataProvider,
@@ -167,7 +167,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'condensed' => true,
         'hover' => true,
         
-        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title).'  Отделение № '.$otd_name],
+        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title).'  Отделение № '.$searchModel->otd->name],
         
         'columns' => $gridColumns,
          

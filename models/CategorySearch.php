@@ -41,7 +41,7 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
-        $query = Category::find()->orderBy('otd_id');
+        $query = Category::find()->joinWith('otd')->orderBy('otd_id');
 
         // add conditions that should always apply here
 

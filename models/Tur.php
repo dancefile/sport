@@ -78,12 +78,13 @@ class Tur extends \yii\db\ActiveRecord
             'typeSkating' => 'Система подсчета',
             'status' => 'Статус',
             'turTime' => 'Время',
+            'regPairs' => 'Рег. пар',
         ];
     }
 
     public function beforeSave($insert)
     {
-        if (isset($this->chesses_list)){
+        if (isset($this->dances)){
             $this->dances = implode(", ", $this->dances);
         }
         return  true;

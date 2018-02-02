@@ -105,7 +105,7 @@ class Category extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        if (isset($this->clas)){
+        if ($this->clas>''){
             $this->clas = implode(", ", $this->clas);
         }
         if (isset($this->dances)){

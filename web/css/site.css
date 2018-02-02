@@ -441,3 +441,7 @@ tr.filters td {
     vertical-align: top;
     margin-left: 10px;
 }
+
+div.btn-toolbar{
+    float: none !important;
+}

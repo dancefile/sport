@@ -112,7 +112,7 @@ class TurController extends Controller
         $model->dances = explode(", ", $model->dances);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['reglament/index']);
+            return $this->redirect(['tur/index', 'cat_id' => $model->category_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

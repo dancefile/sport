@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 /* @var $searchModel app\models\TurSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-//$this->title = 'Список туров';
+$this->title = 'Категория '.$searchModel->category->name. '.  Список туров.';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tur-index">
@@ -86,7 +86,11 @@ use yii\helpers\ArrayHelper;
              
         ],
         'toolbar' =>  [
+            ['content' =>
+                Html::a('<i class="btn-left glyphicon glyphicon-arrow-left"></i>', ['reglament/index', 'otd_id'=>$searchModel->category->otd_id], ['title' => 'Назад', 'class' => 'btn btn-success'])
+            ],
             ['content' => 
+                
                 Html::a('<i class="glyphicon glyphicon-plus"></i>', ['tur/create', 'category_id'=>$searchModel->category_id, 'dances' => $searchModel->category->dances], ['title' => 'Добавить тур', 'class' => 'btn btn-success']) . ' '.
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('kvgrid', 'Reset Grid')])
             ],
