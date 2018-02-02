@@ -12,6 +12,13 @@ use app\models\In;
 class RegistrationController extends AppController
 {
    
+   public function actionSearch($query='') {
+   	
+	echo json_encode($array);
+		
+   }
+   
+   
      public function actionCreate($pre_reg_id=null)
      {
          $model = new Registration();
