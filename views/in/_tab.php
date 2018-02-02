@@ -78,7 +78,11 @@
                 'attribute' => 'dancerId1',
                 'options' => ['width' => '170'],
                 'value' => function($model){
-                    return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
+                    if ($model->who == 1){
+                        return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
+                    } else {
+                        return '-';
+                    }
                 }
             ],
             [
@@ -89,7 +93,11 @@
                 'attribute' => 'dancerId2',
                 'options' => ['width' => '170'],
                 'value' => function($model){
-                    return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
+                    if ($model->who == 2){
+                        return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
+                    } else {
+                        return '-';
+                    }
                 }
             ],
             [
