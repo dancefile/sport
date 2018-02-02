@@ -62,7 +62,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
     ?>  
 
     <?= $form->field($model, 'status')
-        ->radioList($model->statusList); 
+        ->radioList($model->statusList, ['value'=>0]); 
     ?>
 
     <div class="form-group">
