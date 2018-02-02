@@ -113,7 +113,7 @@ class CategoryController extends AppController
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['reglament/index']);
+            return $this->redirect(['reglament/index', 'otd_id' => $model->otd_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

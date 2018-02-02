@@ -138,6 +138,11 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Otd::className(), ['id' => 'otd_id'])->inverseOf('category');
     }
+    
+    public function getOtdList() 
+    {
+        return Otd::find()->all();
+    }
 
     /**
      * @return \yii\db\ActiveQuery

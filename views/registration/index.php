@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
+        
         'pjax' => true,
         'condensed' => true,
         'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],

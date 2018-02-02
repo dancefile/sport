@@ -38,15 +38,23 @@ class ReglamentController extends AppController
      * Lists all Category models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($otd_id=null, $otd_name = null)
     {        
-        $searchModel = new CategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);      
+        if (!$otd_id){
+            $otd = \app\models\Otd::find()->one();
+            $otd_id = $otd->id;
+            $otd_name = $otd->name;
+        }
         
+        $searchModel = new CategorySearch();
+        $searchModel->otd_id =$otd_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);      
+        $dataProvider->pagination= false;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-
+            'otd_list' => Category::getOtdList(),
+            'otd_name' => $otd_name,
         ]);
     }
 

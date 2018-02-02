@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
 
+   
 <?php
     $colorPluginOptions =  [
         'showPalette' => true,
@@ -41,32 +42,38 @@ $this->params['breadcrumbs'][] = $this->title;
             'mergeHeader' => false,
             'vAlign' => GridView::ALIGN_TOP,
             'width' => '50px',
-            'template' => '{update}&nbsp;&nbsp;{delete}',
+            'template' => '{tur}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
             'urlCreator'=>function($action, $model, $key, $index){
                 return \yii\helpers\Url::to(['category/'.$action,'id'=>$model->id]);
             },
             'header' => false,
+            'buttons' => [
+                'tur' => function ($url, $model, $key){
+                   return Html::a('', ['tur/index', 'cat_id'=>$model->id], ['class' => 'glyphicon glyphicon-star']);
+                },
+            ]
+                    
         ],
                     
-        [
-            'class' => 'kartik\grid\ExpandRowColumn',
-            'value' => function ($model, $key, $index, $column) {
-                return GridView::ROW_COLLAPSED;
-            },
-            'detail' => function ($model, $key, $index, $column) {
-                $turSearchModel = new TurSearch();
-                $turSearchModel->category_id = $model->id;
-                $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams); 
-                
-                return Yii::$app->controller->renderPartial('_turs', [
-                    'searchModel' => $turSearchModel, 
-                    'dataProvider' => $turDataProvider,
-                ]);
-            },
-            'headerOptions' => ['class' => 'kartik-sheet-style'], 
-            'expandOneOnly' => true,
-            'detailAnimationDuration' => 0,
-        ],
+//        [
+//            'class' => 'kartik\grid\ExpandRowColumn',
+//            'value' => function ($model, $key, $index, $column) {
+//                return GridView::ROW_COLLAPSED;
+//            },
+//            'detail' => function ($model, $key, $index, $column) {
+//                $turSearchModel = new TurSearch();
+//                $turSearchModel->category_id = $model->id;
+//                $turDataProvider = $turSearchModel->search(Yii::$app->request->queryParams); 
+//                
+//                return Yii::$app->controller->renderPartial('_turs', [
+//                    'searchModel' => $turSearchModel, 
+//                    'dataProvider' => $turDataProvider,
+//                ]);
+//            },
+//            'headerOptions' => ['class' => 'kartik-sheet-style'], 
+//            'expandOneOnly' => true,
+//            'detailAnimationDuration' => 0,
+//        ],
 
         [
             'attribute'=>'otd_id', 
@@ -142,9 +149,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     
     ];
+?>
+<?php
+    foreach ($otd_list as $otd) {
+        echo Html::a($otd->name, ['reglament/index', 'otd_id'=>$otd->id, 'otd_name' => $otd->name], ['class' => 'btn']);
+    }
+?>
+    
+<?php \yii\widgets\Pjax::begin()?>
+    
 
-
-
+<?php
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
@@ -152,7 +167,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'condensed' => true,
         'hover' => true,
         
-        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title)],
+        'panel'=>['type'=>'primary', 'heading'=>Html::encode($this->title).'  Отделение № '.$otd_name],
         
         'columns' => $gridColumns,
          
@@ -172,5 +187,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-
+<?php \yii\widgets\Pjax::end()?>
 

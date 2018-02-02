@@ -51,12 +51,13 @@ class TurController extends Controller
      * Lists all Tur models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($cat_id=null)
     {
         $searchModel = new TurSearch();
+        $searchModel->category_id =$cat_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('..\reglament\_turs', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
