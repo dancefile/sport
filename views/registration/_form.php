@@ -110,31 +110,34 @@ use kartik\datecontrol\DateControl;
              	
                 <?= $form
                     ->field($model, 'club')
-                    ->widget(TypeaheadBasic::classname(), [
-                        'data' => $model->clubList,
-                        'options' => ['placeholder' => 'Клуб'],
-                        'pluginOptions' => ['highlight'=>true],
-                    ])
+                    ->textInput(['placeholder' => 'Клуб'])
+//                    ->widget(TypeaheadBasic::classname(), [
+//                        'data' => $model->clubList,
+//                        'options' => ['placeholder' => 'Клуб'],
+//                        'pluginOptions' => ['highlight'=>true],
+//                    ])
                     ->label(false);
                 ?>
 
                 <?= $form
                     ->field($model, 'city')
-                    ->widget(TypeaheadBasic::classname(), [
-                        'data' => $model->cityList,
-                        'options' => ['placeholder' => 'Город'],
-                        'pluginOptions' => ['highlight'=>true],
-                    ])
+                    ->textInput(['placeholder' => 'Город'])
+//                    ->widget(TypeaheadBasic::classname(), [
+//                        'data' => $model->cityList,
+//                        'options' => ['placeholder' => 'Город'],
+//                        'pluginOptions' => ['highlight'=>true],
+//                    ])
                     ->label(false);
                 ?>
 
                 <?= $form
                     ->field($model, 'country')
-                    ->widget(TypeaheadBasic::classname(), [
-                        'data' => $model->countryList,
-                        'options' => ['placeholder' => 'Страна'],
-                        'pluginOptions' => ['highlight'=>true],
-                    ])
+                    ->textInput(['placeholder' => 'Страна'])
+//                    ->widget(TypeaheadBasic::classname(), [
+//                        'data' => $model->countryList,
+//                        'options' => ['placeholder' => 'Страна'],
+//                        'pluginOptions' => ['highlight'=>true],
+//                    ])
                     ->label(false); 
                 ?>
 
@@ -143,20 +146,22 @@ use kartik\datecontrol\DateControl;
                     <div id="trener_1" class="trenerItem">
                         <?= $form
                         ->field($model, 'd_trener1_sname')
-                        ->widget(TypeaheadBasic::classname(), [
-                            'data' => $model->trenerSnameList,
-                            'options' => ['placeholder' => 'Фамилия тренера'],
-                            'pluginOptions' => ['highlight'=>true],
-                        ])
+                        ->textInput(['placeholder' => 'Фамилия тренера'])
+//                        ->widget(TypeaheadBasic::classname(), [
+//                            'data' => $model->trenerSnameList,
+//                            'options' => ['placeholder' => 'Фамилия тренера'],
+//                            'pluginOptions' => ['highlight'=>true],
+//                        ])
                         ->label(false); 
                         ?>
                         <?= $form
                             ->field($model, 'd_trener1_name')
-                            ->widget(TypeaheadBasic::classname(), [
-                                'data' => $model->trenerNameList,
-                                'options' => ['placeholder' => 'Имя тренера'],
-                                'pluginOptions' => ['highlight'=>true],
-                            ])
+                            ->textInput(['placeholder' => 'Имя тренера'])
+//                            ->widget(TypeaheadBasic::classname(), [
+//                                'data' => $model->trenerNameList,
+//                                'options' => ['placeholder' => 'Имя тренера'],
+//                                'pluginOptions' => ['highlight'=>true],
+//                            ])
                             ->label(false); 
                         ?>
                         
@@ -165,20 +170,22 @@ use kartik\datecontrol\DateControl;
                     <div id="trener_2" class="trenerItem">
                         <?= $form
                         ->field($model, 'd_trener2_sname')
-                        ->widget(TypeaheadBasic::classname(), [
-                            'data' => $model->trenerSnameList,
-                            'options' => ['placeholder' => 'Фамилия тренера'],
-                            'pluginOptions' => ['highlight'=>true],
-                        ])
+                        ->textInput(['placeholder' => 'Фамилия тренера'])
+//                        ->widget(TypeaheadBasic::classname(), [
+//                            'data' => $model->trenerSnameList,
+//                            'options' => ['placeholder' => 'Фамилия тренера'],
+//                            'pluginOptions' => ['highlight'=>true],
+//                        ])
                         ->label(false); 
                         ?>
                         <?= $form
                             ->field($model, 'd_trener2_name')
-                            ->widget(TypeaheadBasic::classname(), [
-                                'data' => $model->trenerNameList,
-                                'options' => ['placeholder' => 'Имя тренера'],
-                                'pluginOptions' => ['highlight'=>true],
-                            ])
+                            ->textInput(['placeholder' => 'Имя тренера'])
+//                            ->widget(TypeaheadBasic::classname(), [
+//                                'data' => $model->trenerNameList,
+//                                'options' => ['placeholder' => 'Имя тренера'],
+//                                'pluginOptions' => ['highlight'=>true],
+//                            ])
                             ->label(false); 
                         ?>
                     </div>
@@ -186,20 +193,22 @@ use kartik\datecontrol\DateControl;
                     <div id="trener_3" class="trenerItem">
                         <?= $form
                         ->field($model, 'd_trener3_sname')
-                        ->widget(TypeaheadBasic::classname(), [
-                            'data' => $model->trenerSnameList,
-                            'options' => ['placeholder' => 'Фамилия тренера'],
-                            'pluginOptions' => ['highlight'=>true],
-                        ])
+                        ->textInput(['placeholder' => 'Фамилия тренера'])
+//                        ->widget(TypeaheadBasic::classname(), [
+//                            'data' => $model->trenerSnameList,
+//                            'options' => ['placeholder' => 'Фамилия тренера'],
+//                            'pluginOptions' => ['highlight'=>true],
+//                        ])
                         ->label(false); 
                         ?>
                         <?= $form
                             ->field($model, 'd_trener3_name')
-                            ->widget(TypeaheadBasic::classname(), [
-                                'data' => $model->trenerNameList,
-                                'options' => ['placeholder' => 'Имя тренера'],
-                                'pluginOptions' => ['highlight'=>true],
-                            ])
+                            ->textInput(['placeholder' => 'Имя тренера'])
+//                            ->widget(TypeaheadBasic::classname(), [
+//                                'data' => $model->trenerNameList,
+//                                'options' => ['placeholder' => 'Имя тренера'],
+//                                'pluginOptions' => ['highlight'=>true],
+//                            ])
                             ->label(false); 
                         ?>
                     </div>
@@ -207,20 +216,22 @@ use kartik\datecontrol\DateControl;
                     <div id="trener_4" class="trenerItem">
                         <?= $form
                         ->field($model, 'd_trener4_sname')
-                        ->widget(TypeaheadBasic::classname(), [
-                            'data' => $model->trenerSnameList,
-                            'options' => ['placeholder' => 'Фамилия тренера'],
-                            'pluginOptions' => ['highlight'=>true],
-                        ])
+                        ->textInput(['placeholder' => 'Фамилия тренера'])
+//                        ->widget(TypeaheadBasic::classname(), [
+//                            'data' => $model->trenerSnameList,
+//                            'options' => ['placeholder' => 'Фамилия тренера'],
+//                            'pluginOptions' => ['highlight'=>true],
+//                        ])
                         ->label(false); 
                         ?>
                         <?= $form
                             ->field($model, 'd_trener4_name')
-                            ->widget(TypeaheadBasic::classname(), [
-                                'data' => $model->trenerNameList,
-                                'options' => ['placeholder' => 'Имя тренера'],
-                                'pluginOptions' => ['highlight'=>true],
-                            ])
+                            ->textInput(['placeholder' => 'Имя тренера'])
+//                            ->widget(TypeaheadBasic::classname(), [
+//                                'data' => $model->trenerNameList,
+//                                'options' => ['placeholder' => 'Имя тренера'],
+//                                'pluginOptions' => ['highlight'=>true],
+//                            ])
                             ->label(false); 
                         ?>
                     </div>
@@ -228,20 +239,22 @@ use kartik\datecontrol\DateControl;
                     <div id="trener_5" class="trenerItem">
                         <?= $form
                         ->field($model, 'd_trener5_sname')
-                        ->widget(TypeaheadBasic::classname(), [
-                            'data' => $model->trenerSnameList,
-                            'options' => ['placeholder' => 'Фамилия тренера'],
-                            'pluginOptions' => ['highlight'=>true],
-                        ])
+                        ->textInput(['placeholder' => 'Фамилия тренера'])
+//                        ->widget(TypeaheadBasic::classname(), [
+//                            'data' => $model->trenerSnameList,
+//                            'options' => ['placeholder' => 'Фамилия тренера'],
+//                            'pluginOptions' => ['highlight'=>true],
+//                        ])
                         ->label(false); 
                         ?>
                         <?= $form
                             ->field($model, 'd_trener5_name')
-                            ->widget(TypeaheadBasic::classname(), [
-                                'data' => $model->trenerNameList,
-                                'options' => ['placeholder' => 'Имя тренера'],
-                                'pluginOptions' => ['highlight'=>true],
-                            ])
+                            ->textInput(['placeholder' => 'Имя тренера'])
+//                            ->widget(TypeaheadBasic::classname(), [
+//                                'data' => $model->trenerNameList,
+//                                'options' => ['placeholder' => 'Имя тренера'],
+//                                'pluginOptions' => ['highlight'=>true],
+//                            ])
                             ->label(false); 
                         ?>
                     </div>
@@ -249,20 +262,22 @@ use kartik\datecontrol\DateControl;
                     <div id="trener_6" class="trenerItem">
                         <?= $form
                         ->field($model, 'd_trener6_sname')
-                        ->widget(TypeaheadBasic::classname(), [
-                            'data' => $model->trenerSnameList,
-                            'options' => ['placeholder' => 'Фамилия тренера'],
-                            'pluginOptions' => ['highlight'=>true],
-                        ])
+                        ->textInput(['placeholder' => 'Фамилия тренера'])
+//                        ->widget(TypeaheadBasic::classname(), [
+//                            'data' => $model->trenerSnameList,
+//                            'options' => ['placeholder' => 'Фамилия тренера'],
+//                            'pluginOptions' => ['highlight'=>true],
+//                        ])
                         ->label(false); 
                         ?>
                         <?= $form
                             ->field($model, 'd_trener6_name')
-                            ->widget(TypeaheadBasic::classname(), [
-                                'data' => $model->trenerNameList,
-                                'options' => ['placeholder' => 'Имя тренера'],
-                                'pluginOptions' => ['highlight'=>true],
-                            ])
+                            ->textInput(['placeholder' => 'Имя тренера'])
+//                            ->widget(TypeaheadBasic::classname(), [
+//                                'data' => $model->trenerNameList,
+//                                'options' => ['placeholder' => 'Имя тренера'],
+//                                'pluginOptions' => ['highlight'=>true],
+//                            ])
                             ->label(false); 
                         ?>
                     </div>
