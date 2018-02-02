@@ -52,7 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
                    return Html::a('', ['tur/index', 'cat_id'=>$model->id], ['class' => 'glyphicon glyphicon-star']);
                 },
             ]
-                    
         ],
                     
 //        [
@@ -111,8 +110,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'value' => function ($model, $key, $index, $widget) { 
                 return $model->soloList[$model->solo];
             }
-
-        ],        
+        ],   
+             
+        [
+            'attribute' => 'type_comp', 
+            'width' => '50px',
+            'value' => function ($model, $key, $index, $widget) { 
+                return $model->typeCompList[$model->type_comp];
+            }
+        ],
+        [
+            'attribute' => 'dancing_order', 
+            'width' => '50px',
+            'value' => function ($model, $key, $index, $widget) { 
+                return $model->dancingOrderList[$model->dancing_order];
+            }
+        ],
+                
         [
             'attribute' => 'agemin',
             'width' => '50px',

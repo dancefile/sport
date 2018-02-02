@@ -80,8 +80,14 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                     return $model->category->skayList[$model->typeSkating];
                 }
             ],
-
-            'status',
+            [
+                'attribute' => 'status',
+//                'width' => '80px',
+                'value' => function ($model, $key, $index, $widget) { 
+                    return $model->statusList[$model->status];
+                }
+            ],            
+            
 
              
         ],

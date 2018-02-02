@@ -32,11 +32,18 @@ use Yii;
 class Tur extends \yii\db\ActiveRecord
 {
     public $typezahodList = [
-                                '1' => 'Постоянный',
-                                '2' => 'Переменный',
-                                '3' => 'Чередование',
-                            ];
+        '1' => 'Постоянный',
+        '2' => 'Переменный',
+        '3' => 'Чередование',
+    ];
             
+    public $statusList = [
+        '0' => 'Регистрация',
+        '1' => 'Заркыто',
+        '2' => 'Ввод оценок',
+        '3' => 'Подведен итог',
+    ];
+    
             
     /**
      * @inheritdoc
@@ -53,11 +60,11 @@ class Tur extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'nomer'], 'required'],
-            [['nomer', 'zahodcount', 'typezahod', 'ParNextTur', 'typeSkating', 'status'], 'integer'],
+            [['nomer', 'zahodcount', 'typezahod', 'ParNextTur', 'typeSkating'], 'integer'],
             [['name'], 'string', 'max' => 250],
             // [['dances'], 'string', 'max' => 200],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['dances', 'turTime'], 'safe'],
+            [['dances', 'turTime', 'status'], 'safe'],
         ];
     }
 
