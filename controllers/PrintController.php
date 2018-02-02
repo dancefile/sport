@@ -13,6 +13,61 @@ class PrintController extends \yii\web\Controller
 	public $defaultAction = 'index';
 	
 
+	public function actionVkleika($idT=13)
+	{
+		$Competition = new Competition;
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+
+		$firsttur = (new \yii\db\Query()) //получаем инфу о данном туре
+	    ->select(['id'])
+	    ->from('tur')
+	    ->where(['category_id' => $turInfo->gettur('id')])
+		->orderBy(['nomer' => SORT_ASC])
+		->one();	
+
+		if (!isset($firsttur['id'])) return $this->error('Не найден тур или категория');
+		
+		$COUNTallCouple = (new \yii\db\Query()) //получаем список пар  за текущей тур
+    	->select(['COUNT'=>'COUNT(*)'])
+    	->from('in')
+    	->where(['tur_id' => $firsttur['id']])
+		->one();
+
+		switch ($turInfo->gettur("typeSkating")) {
+          case '1'://балы
+
+          break;
+		  case '2'://кресты
+           	$resultCouple=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT, 'dance_id' => null, 'nextTur' => 0])
+					->orderBy(['place' => SORT_DESC]);
+			foreach ($results->each() as $result) {
+				$resultCouple[$result['nomer']]=['place' => $result['place']];
+			}
+			return $this->render('vkleika', ['turInfo' => $turInfo,'resultCouple' => $resultCouple, 'Competition' => $Competition, 'COUNTallCouple'=> $COUNTallCouple['COUNT']]);
+		  
+          break;
+		  case '3'://скейтинг
+		            	$resultCouple=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT, 'dance_id' => null])
+					->orderBy(['place' => SORT_DESC]);
+			foreach ($results->each() as $result) {
+				$resultCouple[$result['nomer']]=['place' => $result['place']];
+			}
+			return $this->render('vkleika', ['turInfo' => $turInfo,'resultCouple' => $resultCouple, 'Competition' => $Competition, 'COUNTallCouple'=> $COUNTallCouple['COUNT']]);
+          break;
+
+		  
+		}	
+	return $this->error('что то пошло не так :(');	
+	}
+
+
 	public function actionDiplom($idT=13)
 	{
 		$Competition = new Competition;
@@ -47,9 +102,6 @@ class PrintController extends \yii\web\Controller
 
 		  
 		}	
-			
-			
-			
 	return $this->error('что то пошло не так :(');	
 	}
 

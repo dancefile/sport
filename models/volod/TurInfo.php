@@ -72,7 +72,8 @@ class TurInfo extends \yii\base\Object
 			if (isset($this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info]))	$CoupleInfo[]=$this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info];
 		}
 		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->names[$this->inArrMore[$inId]['dancer2']]['clubId'])) {
-			if (isset($this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info]))	$CoupleInfo[]=$this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer1']]['clubId']][$info];
+			if (isset($this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer2']]['clubId']][$info]))	
+			$CoupleInfo[]=$this->dancerClub[$this->names[$this->inArrMore[$inId]['dancer2']]['clubId']][$info];
 		}		
 		return implode($CoupleInfo, $seporate);	
 	}
