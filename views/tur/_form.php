@@ -60,9 +60,10 @@ $this->registerCssFile('@web/css/jquery-ui.css');
     <?= $form->field($model, 'dances')
         ->checkboxList($model->getDanceList($model->category_id));
     ?>  
-
+    
+    <?php $model->isNewRecord==1 ? $model->status=0:$model->status;?>
     <?= $form->field($model, 'status')
-        ->radioList($model->statusList, ['value'=>0]); 
+        ->radioList($model->statusList); 
     ?>
 
     <div class="form-group">
