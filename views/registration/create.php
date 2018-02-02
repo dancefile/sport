@@ -293,4 +293,4 @@ function key_activate(n){
 		}
    
     </style>
-<div id="search_advice_wrapper"></div>
+<div id="search_advice_wrapper"></div>*/

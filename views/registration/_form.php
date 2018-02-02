@@ -302,7 +302,7 @@ use kartik\datecontrol\DateControl;
 			if (!isset($tur['nomer'])) $tur['nomer']='';
 
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), $tur['nomer'], ['class' => '']);
-                        printf("</td> <td>%s, %s</td> </tr>", $tur['id'], $tur['name']);            
+                        printf("</td> <td>%s</td> </tr>", $tur['name']);            
                     }
                 ?>
                 </table>
@@ -326,7 +326,7 @@ use kartik\datecontrol\DateControl;
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), $tur['nomer_M'], ['class' => '']);
                         echo '</td><td class="number">';
                         echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), $tur['nomer_W'], ['class' => '']);
-                        printf("</td> <td>%s, %s</td> </tr>", $tur['id'], $tur['name']);
+                        printf("</td> <td>%s</td> </tr>", $tur['name']);
                     }
                     
                 ?>
