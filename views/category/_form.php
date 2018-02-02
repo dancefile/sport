@@ -79,6 +79,13 @@ $this->registerCssFile('@web/css/jquery-ui.css');
             );
         ?>
         
+        <?= $form->field($model, 'type_comp')
+            ->radioList($model->typeCompList); 
+        ?>
+    
+        <?= $form->field($model, 'dancing_order')
+            ->radioList($model->dancingOrderList); 
+        ?>
 
         
 

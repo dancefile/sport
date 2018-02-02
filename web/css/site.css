@@ -143,7 +143,9 @@ label{
 #tur-typezahod,
 #tur-dances,
 #tur-typeskating,
-.field-tur-status
+#tur-status,
+#category-type_comp,
+#category-dancing_order
 {
     border: 1px solid #cccccc;
     background: #fff9e8;
@@ -154,7 +156,10 @@ label{
 #category-chesses_list label,
 #tur-typezahod label,
 #tur-dances label,
-#tur-typeskating label
+#tur-typeskating label,
+#tur-status label,
+#category-type_comp label,
+#category-dancing_order label
 {
     background: rgb(221, 221, 221);
     padding: 5px 10px;
@@ -176,11 +181,20 @@ label{
 .field-tur-parnexttur,
 .field-tur-typeskating,
 .field-tur-status,
-.field-tur-nomer
+.field-tur-nomer,
+.field-category-type_comp,
+.field-category-dancing_order
 {
     display: inline-block;
     margin-right: 20px;
 }
+
+#category-type_comp,
+#category-dancing_order
+{
+    width: 230px;
+}
+
 
 .field-tur-turtime{
     display: inline-table;

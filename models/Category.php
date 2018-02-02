@@ -53,6 +53,16 @@ class Category extends \yii\db\ActiveRecord
         'E' => 'E',
     ];
     
+    public $typeCompList = [
+        '0' => 'Рейтинг',
+        '1' => 'Класс',
+    ];
+    
+    public $dancingOrderList = [
+        '0' => 'Танцы',
+        '1' => 'Заходы',
+    ];
+    
     public $chesses_list;
     
     
@@ -72,7 +82,7 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay'], 'integer'],
+            [['solo', 'otd_id', 'program', 'agemin', 'agemax', 'skay', 'type_comp', 'dancing_order'], 'integer'],
             [['name'], 'string', 'max' => 200],
             [['clas', 'dances', 'chesses_list'], 'safe'],
         ];
@@ -96,7 +106,9 @@ class Category extends \yii\db\ActiveRecord
             'dances' => 'Перечень танцев',
             'reg_pairs' => 'Пар',
             'judges_count' => 'Cудий',
-            'chesses_list' => 'Судейская комиссия'
+            'chesses_list' => 'Судейская комиссия',
+            'dancing_order' => 'Посл. танцев',
+            'type_comp' => 'Тип соревн.',
         ];
     }
 
@@ -187,10 +199,6 @@ class Category extends \yii\db\ActiveRecord
 
     public function getDanceList()
     {
-//        if($prog <> 1 && $prog <> 2) {
-//            $prog = [1, 2];
-//        }
-//        return ArrayHelper::map(Dance::find()->where(['prog'=>$prog])->all(), 'id', 'name');
         return ArrayHelper::map(Dance::find()->all(), 'id', 'name');
     }
 

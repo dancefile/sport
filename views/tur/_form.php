@@ -61,7 +61,9 @@ $this->registerCssFile('@web/css/jquery-ui.css');
         ->checkboxList($model->getDanceList($model->category_id));
     ?>  
 
-    <?= $form->field($model, 'status')->checkbox() ?>
+    <?= $form->field($model, 'status')
+        ->radioList($model->statusList); 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
