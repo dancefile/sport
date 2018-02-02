@@ -11,6 +11,28 @@ class HeatsController extends \yii\web\Controller
 {
 	public $defaultAction = 'index';
 	
+		public function actionNew1($idT=0,$name='',$value='') //задаем заходы автоматом
+	{
+		$arr=explode('_', $name);
+		if (count($arr)==2) {
+            $in = (new \yii\db\Query()) //получаем список пар  за текущей тур
+                ->select(['id'])
+                ->from('in')
+                ->where(['tur_id' => $idT,'nomer' => $arr[0]])		
+				->one();
+			if (isset($in['id'])) {
+				if (!$arr[1]) $arr[1]=NULL;
+				 Yii::$app->db->createCommand()->delete('in_dance', ['id_in' => $in['id'],'dance_id' =>$arr[1]])->execute();
+				Yii::$app->db->createCommand()->insert('in_dance', [
+																	'id_in' => $in['id'],
+																	'dance_id' => $arr[1],
+																	'zahod' => $value
+																	])->execute();	
+					
+			}
+				
+		}
+	}
 	public function actionNew($idT=0) //задаем заходы автоматом
 	{
             $tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории

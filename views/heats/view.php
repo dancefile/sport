@@ -2,7 +2,6 @@
 
 /* @var $this yii\web\View */
 
-use kartik\grid\EditableColumnAction;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
@@ -46,14 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
     	       ]];
 	foreach ($arrDance as $key => $dance): 
    		$columns[]=[
-   				'editableOptions'=> ['formOptions' => ['action' => ['/site/editbook']]],
            	    'header' => $dance,
                	'attribute' => 'id'.$key,
-               	
-               	//'value' => function($model, $key, $index, $grid) {
-               		//var_dump($grid);
-       // return $index;
-      //}
+               	'format' => 'raw',
+
                	
     	       ];
 	endforeach;
@@ -72,10 +67,12 @@ $this->params['breadcrumbs'][] = $this->title;
     					'Trener'=>$turInfo->GetCoupleTrener($key),
     					
     					];
-		if (isset($heatsArr[$key])) {
-			foreach ($heatsArr[$key] as $key1 => $value1) {
-				$data[$key]['id'.$key1]=$value1;			
-			}
+						foreach ($arrDance as $key1 => $dance) {
+		if (isset($heatsArr[$key][$key1])) {
+		//	foreach ($heatsArr[$key] as $key1 => $value1) {
+				$data[$key]['id'.$key1]=Html::a($heatsArr[$key][$key1],NULL, ['class' => 'setheats btn btn-success','id' =>$nomer.'_'.$key1]);			
+			//}
+		} else $data[$key]['id'.$key1]=Html::a('+',NULL, ['class' => 'setheats btn btn-success','id' =>$nomer.'_'.$key1]);
 		}
     endforeach;
 
@@ -106,14 +103,57 @@ window.onload=function(){
 $( ".greatGeats" ).click(function() {
   
 $.get( "<?='/heats/new?idT='.$turInfo->getTur('idT') ?>", function( ) {
-
- location.reload();
-
+location.reload();
 });
-  
-  
   return false;
+ });
+	
+	$('html').click(function(){
+		$('#search_advice_wrapper').hide();
+	});
+		$('#setheats').click(function(){
+		return false;
+	});
+	
+$( ".setheats" ).click(function() {
+loc=$(this).offset();
+$("#setheats").val($(this).html());
+$("#setheats").attr('name',$(this).attr('id'));
+$('#search_advice_wrapper').show().offset({top:loc.top, left:loc.left});
+$("#setheats").select();
+  return false;
+});
+
+	$("#setheats").keyup(function(I){
+		//alert('data');
+		// определяем какие действия нужно делать при нажатии на клавиатуру
+		switch(I.keyCode) {
+			// игнорируем нажатия на эти клавишы
+			case 13:  // enter
+			$.get( "<?='/heats/new1?idT='.$turInfo->getTur('idT') ?>&name="+$(this).attr('name')+"&value="+$(this).val(), function( ) {$('#search_advice_wrapper').hide();});
+			$('#'+$(this).attr('name')).html($(this).val());
+}
 });
 }
 </script>
+<style>
 
+		#search_advice_wrapper{
+			display:none;
+			width: 100px;
+			height: 25px;
+			background-color: rgb(80, 80, 80);
+			-moz-opacity: 0.95;
+			opacity: 0.95;
+			-ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=95);
+			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=95);
+			filter:alpha(opacity=95);
+			z-index:999;
+			position: absolute;
+			top: 60px; left: 10px;
+		}
+
+
+   
+    </style>	
+<div id="search_advice_wrapper"><input id="setheats" type="text" value="s"/></div>
