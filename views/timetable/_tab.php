@@ -6,10 +6,10 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 
 
-$this->registerCssFile("@web/css/print.css", [
-    'depends' => ['app\assets\AppAsset',],
-    'media' => 'print',
-], 'css-print-theme');
+//$this->registerCssFile("@web/css/print.css", [
+//    'depends' => ['app\assets\AppAsset',],
+//    'media' => 'print',
+//], 'css-print-theme');
 
 
 /* @var $this yii\web\View */
