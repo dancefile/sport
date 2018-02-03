@@ -20,7 +20,7 @@ use yii\helpers\ArrayHelper;
  */
 class Registration extends \yii\base\Model
 {
-    public $print_check;
+    public $print_check=true;
     public $d1_id;
     public $d1_sname;
     public $d1_name;

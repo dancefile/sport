@@ -88,7 +88,7 @@ $inArr=$turInfo->getIn();
 		  foreach ($inArr as $coupleid => $nomer){
 		  	    		
 		  	    	$data[$coupleid] = [	'nomer' => $nomer,
-    					'name'=>$turInfo->GetCoupleName($coupleid),
+    					'name'=>$turInfo->GetCoupleName($coupleid).' Класс'.$turInfo->GetCoupleName($coupleid,'clas_id_st'),
     					'club'=>$turInfo->GetCoupleName($coupleid,'clubName'),
     					'City'=>$turInfo->GetCoupleCity($coupleid),
     					'Trener'=>$turInfo->GetCoupleTrener($coupleid),
