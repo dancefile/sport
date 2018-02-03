@@ -223,11 +223,11 @@ class CustomFunction
                     ];
                 $arr_str[]=[
                     'str' => $model->d1_name.' '.$model->d1_sname,
-                    'size'=> 18
+                    'size'=> 22
                     ];
                 $arr_str[]=[
                     'str' => $model->d2_name.' '.$model->d2_sname,
-                    'size'=> 18
+                    'size'=> 22
                     ];
                 $turList = \yii\helpers\ArrayHelper::map(\app\models\Tur::find()->joinWith('category')->all(),'id','category.name');
 
@@ -235,7 +235,7 @@ class CustomFunction
                     if ($tur){
                         $arr_str[]=[
                             'str' =>  $turList[$id].' - '. $tur,
-                            'size'=> 10
+                            'size'=> 15
                             ];
                     }
                 }
@@ -243,7 +243,7 @@ class CustomFunction
                     if ($tur){
                         $arr_str[]=[
                             'str' => $turList[$id].' - '. $tur,
-                            'size'=> 10
+                            'size'=> 15
                             ];
                     }
                 }
@@ -251,7 +251,7 @@ class CustomFunction
                     if ($tur){
                         $arr_str[]=[
                             'str' => $turList[$id].' - '. $tur,
-                            'size'=> 10
+                            'size'=> 15
                             ];
                     }
                 }
