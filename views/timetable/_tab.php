@@ -41,7 +41,7 @@ use yii\helpers\Url;
             'dances_count',
             'programm',
             [
-                'attributes' => 'dances',
+                'attribute' => 'dances',
                 'value' => function ($model, $key, $index, $widget) { 
                     return $model->getDancesString($model->dances);
                 }

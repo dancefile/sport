@@ -89,7 +89,7 @@ class Timetable extends \yii\db\ActiveRecord
                         $programm = "St";
                         break;
                     case 3:
-                        $programm = "10 D";
+                        $programm = "St, La";
                         break;
                 }
                 self::timeTableSave($tur, $programm, $dt);
@@ -100,9 +100,10 @@ class Timetable extends \yii\db\ActiveRecord
     
     public function getDancesString($dances) {
         $dance_list = \yii\helpers\ArrayHelper::map(Dance::find()->all(), 'id', 'name');
-        $s = array_intersect_key($dance_list, explode(', ', $dances));
-        
-        return implode(', ', $s['name']);
+        $s = array_intersect_key($dance_list, array_flip(explode(', ', $dances)));
+//        echo '<pre>', print_r($s), '</pre>';
+//        exit;
+        return implode(', ', $s);
         
     }
 
