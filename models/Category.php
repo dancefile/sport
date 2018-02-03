@@ -120,11 +120,11 @@ class Category extends \yii\db\ActiveRecord
         if ($this->clas>''){
             $this->clas = implode(", ", $this->clas);
         }
-        if (isset($this->dances)){
+        if ($this->dances){
             $this->dances = implode(", ", $this->dances);
         }
         
-        if (isset($this->chesses_list)){
+        if ($this->chesses_list){
             $judgeArr = $this->chesses_list;
             Chess::deleteAll(['category_id' => $this->id]);
             $i=1;
