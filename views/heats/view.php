@@ -8,10 +8,14 @@ use yii\data\ArrayDataProvider;
 
 
 // $turInfo->gettur('')
-$this->title = 'Заходы '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
+$this->title = $turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<style>
+.nomer {
+    font-size: 20px !important;;
+}
+</style>
 <div class="setings-index">
 
 <h1><?= Html::encode($this->title) ?></h1>
@@ -22,37 +26,38 @@ $this->params['breadcrumbs'][] = $this->title;
     $columns=[[
            	    'header' => 'Номер',
                	'attribute' => 'nomer',
-    	       ],
-			  [
-           	    'header' => 'Участники',
-               	'attribute' => 'name',
-               	'format' => 'raw',
-    	       ],
-    	       			  [
-           	    'header' => 'Клуб',
-               	'attribute' => 'club',
-               	'format' => 'raw',
-    	       ],
-   			  [
-           	    'header' => 'Город',
-               	'attribute' => 'City',
-               	'format' => 'raw',
-    	       ],
-   			  [
-           	    'header' => 'Тренеры',
-               	'attribute' => 'Trener',
-               	'format' => 'raw',
-    	       ]];
-	foreach ($arrDance as $key => $dance): 
+               	 'contentOptions' =>function ($model, $key, $index, $column){
+                return ['class' => 'nomer'];
+            },
+    	       ],];
+
+	foreach ($arrDance as $key => $dance){ 
    		$columns[]=[
            	    'header' => $dance,
                	'attribute' => 'id'.$key,
                	'format' => 'raw',
-
-               	
     	       ];
-	endforeach;
- 
+	};
+ $columns[]= [
+           	    'header' => 'Участники',
+               	'attribute' => 'name',
+               	'format' => 'raw',
+    	       ];
+ $columns[]= [  
+           	    'header' => 'Клуб',
+               	'attribute' => 'club',
+               	'format' => 'raw',
+    	       ];
+   $columns[]= 	[
+           	    'header' => 'Город',
+               	'attribute' => 'City',
+               	'format' => 'raw',
+    	       ];
+  $columns[]=  	[
+           	    'header' => 'Тренеры',
+               	'attribute' => 'Trener',
+               	'format' => 'raw',
+    	       ]; 
 
     $data=[];
 	$heatsArr=$turInfo->getHeats();
@@ -69,8 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
     					];
 	foreach ($arrDance as $key1 => $dance) {
 		if (isset($heatsArr[$key][$key1])) {
-				$data[$key]['id'.$key1]=Html::a($heatsArr[$key][$key1],NULL, ['class' => 'setheats btn btn-success','id' =>$nomer.'_'.$key1]);			
-		} else $data[$key]['id'.$key1]=Html::a('+',NULL, ['class' => 'setheats btn btn-success','id' =>$nomer.'_'.$key1]);
+				$data[$key]['id'.$key1]=Html::a($heatsArr[$key][$key1],NULL, ['class' => 'setheats nomer','id' =>$nomer.'_'.$key1]);			
+		} else $data[$key]['id'.$key1]=Html::a('+',NULL, ['class' => 'setheats nomer','id' =>$nomer.'_'.$key1]);
 	}
     endforeach;
 

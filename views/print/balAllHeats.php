@@ -9,10 +9,29 @@ use yii\data\ArrayDataProvider;
 $this->title = 'Бегунки '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style>
+.begunok{
+    font-size: 22px !important;
 
+    
+}
+.nomer1 {
+	margin: 0px;
+    font-size: 20px !important;
+    text-align: center;
+}
+.nomer {
+	margin: 0px;
+    font-size: 30px !important;
+    text-align: center;
+}
+.otstup{
+	padding-bottom: 10px;
+}
+</style>
 <div class="setings-index">
 
-<h1><?= Html::encode($this->title) ?></h1>
+<h1 class="no-print"><?= Html::encode($this->title) ?></h1>
 
 <?php 
 
@@ -44,6 +63,8 @@ foreach ($arrDance as $keyDance => $dance){
     $columns=[[
            	    'header' => 'танец',
                	'attribute' => 'dance',
+               	'headerOptions' => ['class' =>'no-print','style' => ''],
+               	'contentOptions' => ['class' =>'nomer1'],
     	       ],
 				];
 			for ($i=1; $i <16 ; $i++) { 
@@ -51,10 +72,15 @@ foreach ($arrDance as $keyDance => $dance){
            	    'header' => $i,
                	'attribute' => 'c'.$i,
                	'format' => 'raw',
+               	'headerOptions' => ['class' =>'no-print','style' => ''],
+               	'contentOptions' => ['class' =>'nomer'],
+               	'options' => ['style' => 'width: 55px; max-width: 55px;'],
     	       ];			
 			};
 		   
 for ($zahod=1; $zahod <= $turInfo->gettur('zahodcount'); $zahod++) {
+	
+if ($zahod < $turInfo->gettur('zahodcount')) echo '<div class="next-page">'; else	 echo '<div>';	
 $data=[];
 foreach ($arrDance as $idDance => $dance){
 
@@ -89,14 +115,20 @@ foreach ($arr as $iddance => $value1) {
 
     ]);
 foreach ($judge as $judgeId => $judgeName) {
-	echo Html::encode('заход '.$zahod.'. '.$judgeName);
+	echo '<div class="not-razriv otstup">';
+	echo '<h3>'.Html::encode($turInfo->gettur('id').'. '.$turInfo->gettur('name').' '.$turInfo->gettur('turname')).'</h3>';
+	echo '<div class="begunok">'.Html::encode('заход '.$zahod).'<span style="width: 100px; display:inline-block;"> </span>'.Html::encode($judgeName.' ______________');
+	echo '<span style="width: 100px; display:inline-block;"> </span>';
+	echo '</div>';
+	echo '<div class="">'.Html::encode($Competition->name.' '.$Competition->data).'</div>';
 	echo GridView::widget([
     'dataProvider' => $provider,
     'columns' => $columns
-]);
+	]);
+	echo '</div>';
 }
 
-
+echo '</div>';
 }
 
  ?>

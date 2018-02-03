@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 // $turInfo->gettur('')
-$this->title = 'Заходы '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
+$this->title = $turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

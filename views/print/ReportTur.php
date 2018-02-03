@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="no-print"><?= Html::encode($this->title) ?></h1>
 
 <?php
 
@@ -167,6 +167,20 @@ echo GridView::widget([
 						
 					}
 				 }
+				 					    $provider = new ArrayDataProvider([
+        'allModels' => $data,
+        'pagination' => 
+        	[
+            	'pageSize' => 2000,
+        	],
+
+    ]);
+
+echo GridView::widget([
+    'dataProvider' => $provider,
+    'columns' => $columns,
+	
+	]);	
 			break;
 				
 			case '2'://подсчет крестов
@@ -212,7 +226,20 @@ echo GridView::widget([
 						
 					}
 				 }
-				
+									    $provider = new ArrayDataProvider([
+        'allModels' => $data,
+        'pagination' => 
+        	[
+            	'pageSize' => 2000,
+        	],
+
+    ]);
+
+echo GridView::widget([
+    'dataProvider' => $provider,
+    'columns' => $columns,
+	
+	]);	
 			break;
 			
 			case '3'://скайтинг

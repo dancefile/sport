@@ -97,7 +97,7 @@ class HeatsController extends \yii\web\Controller
             switch ($turInfo->gettur("typezahod")) {
                 case '1':
                 case '2':
-                    $arrDance=[0=>'Все'];
+                    $arrDance=[0=>'Заход'];
                 break;
 
                 case '3':

@@ -30,11 +30,27 @@
     .btn,
     .nav,
     .breadcrumb,
-    .footer .pull-right,
+    .footer,
     .summary,
     .action-column,
-    .actionColumnCell
+    .actionColumnCell,
+    .no-print
     {
         display: none;
+    }
+    
+    .wrap > .container {
+    padding: 0px 0px 0px;
+}
+     a[href]:after {
+        content: "";
+    }
+    .not-razriv
+    {
+    page-break-inside: avoid;
+    }
+    
+    .next-page {
+     page-break-after: always;
     }
 }

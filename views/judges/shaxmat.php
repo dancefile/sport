@@ -14,13 +14,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="setings-index">
 
 <h1><?= Html::encode($this->title) ?></h1>
-
+<style>
+.vertical-text {
+height: 200px;
+-webkit-writing-mode: vertical-rl;
+}
+</style>
 <?php
     $columns=['name'];
     foreach ($Categories as $cat): 
     	$columns[]=[
-            	    'header' => $cat->name,
+            	    'header' => '<div  class="vertical-text">'.$cat->name.'</div>',
                 	'attribute' => 's'.$cat->id,
+                	'options' => ['class' => 'vertical-text'],
     		       ];
     endforeach;
     $data=[];
@@ -29,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
     endforeach;
 
     foreach ($Chess as $Ches):
-    	$data[$Ches->judge_id] = array_merge($data[$Ches->judge_id],['s'.$Ches->category_id=>$Ches->nomer.(($Ches->chief) ? ' chief' : '')]);
+    	$data[$Ches->judge_id] = array_merge($data[$Ches->judge_id],['s'.$Ches->category_id=>$Ches->nomer]);// (($Ches->chief) ? ' chief' : '')]);
     endforeach;
     $provider = new ArrayDataProvider([
         'allModels' => $data,
