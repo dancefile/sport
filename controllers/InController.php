@@ -221,22 +221,24 @@ class InController extends Controller
 
     public function actionReplace()
     {
-        switch ($submit){
-            case 'replace':
-                echo '<pre>', print_r('replace'), '</pre>';
-                break;
-            case 'copy':
-                echo '<pre>', print_r('replace'), '</pre>';
-                break;
-        }
-        exit;
         $post = Yii::$app->request->post();
         $items = explode(',', $post['replace_ins']);
-        $ins = In::find()->where(['id' => $items])->all();
-        
+        $ins = In::find()->where(['id' => $items])->all();        
         $tur = Tur::find()->where(['category_id'=>$post['new-category-id']])->orderBy('nomer')->one();
-        foreach ($ins as $in) {
-            $in->updateAttributes(['tur_id' => $tur->id]);
+        
+        if (isset($post['replace'])){
+            foreach ($ins as $in) {
+                $in->updateAttributes(['tur_id' => $tur->id]);
+            }
+        } elseif (isset($post['copy'])){
+            foreach ($ins as $in) {
+                $new_in = new In();
+                $new_in->couple_id = $in->couple_id;
+                $new_in->tur_id = $tur->id;
+                $new_in->nomer = $in->nomer;
+                $new_in->who = $in->who;
+                $new_in->save(false);
+            }
         }
         
         
