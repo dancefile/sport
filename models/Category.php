@@ -49,6 +49,15 @@ class Category extends \yii\db\ActiveRecord
         '1' => 'Класс',
     ];
     
+    public $classList = [
+        'N' => 'N',
+        'A' => 'A',
+        'B' => 'B',
+        'C' => 'C',
+        'D' => 'D',
+        'E' => 'E',
+    ];
+    
     public $dancingOrderList = [
         '0' => 'Танцы',
         '1' => 'Заходы',
@@ -198,8 +207,8 @@ class Category extends \yii\db\ActiveRecord
         return implode(", ", Dance::find()->asArray()->select('name')->where(['id' => explode(", ", $dances)])->column());
     }
     
-    public static function getClassList()
-    {
-        return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
-    }
+//    public static function getClassList()
+//    {
+//        return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
+//    }
 }

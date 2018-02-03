@@ -89,11 +89,11 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'clas',
             'width' => '70px',
-            'value' => function ($model, $key, $index, $widget) {
-                if ($model->clas){
-                    return $model->classList[$model->clas];
-                }
-            }
+//            'value' => function ($model, $key, $index, $widget) {
+//                if ($model->clas){
+//                    return $model->classList[$model->clas];
+//                }
+//            }
         ],
         [
             'attribute' => 'program',
