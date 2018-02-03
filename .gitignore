@@ -32,3 +32,4 @@ tests/_support/_generated
 # vl
 /web/uploads
 config/db.php
+web/tmp/1.jpg
