@@ -264,8 +264,8 @@ class CustomFunction
     
     public function arrayStrToImg($arr_str)
     {
-        $paper = 384;
-        $im = imagecreatetruecolor($paper, 900);
+        $paper = 570;
+        $im = imagecreatetruecolor($paper, 1200);
         $black = imagecolorallocate($im, 0, 0, 0);
         $white = imagecolorallocate($im, 255, 255, 255);
         $font = 'fonts/arial.ttf';
@@ -284,7 +284,7 @@ class CustomFunction
         imagedestroy($im);
 
        
-//        exec('C:\Apache24\htdocs\exe\print.exe C:\Apache24\htdocs\tmp\1.jpg "'.$price['printer'].'"');
+       exec('C:\htdocs\sport\exe\print.exe C:\htdocs\sport\web\tmp\1.jpg "CITIZEN"');
     }
 
         

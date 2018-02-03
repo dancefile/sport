@@ -23,6 +23,7 @@ else {$programname=$turName;$agename='';};
 
 ?>
 <div class="site-about">
+	<div  class="no-print">
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Html::beginForm ( ['print/diplom', 'idT' => $turInfo->gettur('idT')], 'post', [] ) ?>
 <p> Название программы:   <?= Html::textInput ( 'programname', $programname, $options = ['class' => 'judg'] );	?></p>
@@ -93,18 +94,21 @@ else {$programname=$turName;$agename='';};
         	],
 
     ]);
-foreach ($countDiploms as $key => $value) {
-echo 'Степень: '.$key.' кол: '.$value.'.<br>';	
-}
+echo '</div>';
+echo '<div class="next-page"><h3>'.$turInfo->gettur('name').' '.$turInfo->gettur('turname').'</h3>';
 
 echo GridView::widget([
     'dataProvider' => $provider,
     'columns' => $columns,
 	
 	]);
+		echo '</div>';
 	echo '<center>';
-	foreach ($diploms as $diplom) {
-		echo '<div class="startDiplom" style="height: 500px;"> </div>';
+			end($diploms);
+$lastKey=key($diploms);
+	foreach ($diploms as $key=>$diplom) {
+			if ($lastKey==$key) echo '<div>'; else	echo '<div class="next-page">';
+		echo '<div class="" style="height: 500px;"> </div>';
 		echo '<div class="" style="height: 100px;">'.$diplom['name'].'</div>';
 		echo '<div class="" style="height: 50px;">'.$diplom['place'].'</div>';
 		echo '<div class="" style="height: 50px;">'.$Competition->shortname.'</div>';
@@ -113,6 +117,7 @@ echo GridView::widget([
 		echo '<div class="" style="height: 50px;">'.$Competition->org.'<span style="width: 100px; display:inline-block;"></span>'.$Competition->chief.'</div>';
 		echo '<div class="" style="height: 100px;"><img src="/img/signature.gif" /></div>';
 		echo '<div class="" style="height: 50px;">'.$Competition->data.'</div>';
+		echo '</div>';
 	} 
 		
 	

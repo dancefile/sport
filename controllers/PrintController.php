@@ -110,7 +110,7 @@ class PrintController extends \yii\web\Controller
 	{
 		$turInfo = new TurInfo;
 		$turInfo->setTur($idT);
-
+		$Competition = new Competition;
 		$judges = (new \yii\db\Query()) //получаем список судей данной категории
 	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
 	    ->from('chess,judge')
@@ -125,14 +125,14 @@ class PrintController extends \yii\web\Controller
 		switch ($turInfo->gettur("typeSkating")) {
           case '1'://балы
           if ($turInfo->getTur('dancing_order')==1) {
-			return $this->render('balAllHeats', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>true]);
-			} else return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False]);
+			return $this->render('balAllHeats', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
+			} else return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
           break;
 		  case '2'://кресты
-			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE]);
+			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
           break;
 		  case '3'://скейтинг
-			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'места', 'prosmotr'=>FALSE]);
+			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'места', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
           break;
 
 		  
@@ -175,7 +175,7 @@ class PrintController extends \yii\web\Controller
 	    			->where(['tur_id' => $idT]);
 					switch ($turInfo->gettur('typeSkating')) {
 						case '1'://подсчет балов
-					$results->orderBy(['nomer' => SORT_ASC]);
+					$results->orderBy(['result' => SORT_DESC,'nomer' => SORT_ASC]);
 									break;
 				
 			case '2'://подсчет крестов
