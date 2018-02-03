@@ -55,15 +55,18 @@ class RegistrationController extends AppController
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->print_check){
-//                echo '<pre>', print_r($model), '</pre>';
-//                exit;    
+                
+                $arr_str[]=[
+                    'str' => 'Рег. №'.$model->coupleId,
+                    'size'=> 15
+                    ];
                 $arr_str[]=[
                     'str' => $model->d1_name.' '.$model->d1_sname,
-                    'size'=> 20
+                    'size'=> 18
                     ];
                 $arr_str[]=[
                     'str' => $model->d2_name.' '.$model->d2_sname,
-                    'size'=> 20
+                    'size'=> 18
                     ];
                 $turList = \yii\helpers\ArrayHelper::map(\app\models\Tur::find()->joinWith('category')->all(),'id','category.name');
 
@@ -91,8 +94,6 @@ class RegistrationController extends AppController
                             ];
                     }
                 }
-                 
-                 
                  
                  \app\services\CustomFunction::arrayStrToImg($arr_str);
 

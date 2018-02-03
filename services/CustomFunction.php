@@ -231,7 +231,7 @@ class CustomFunction
             $y=$y+10;
         }
         
-        imagejpeg($im,'1.jpg',100);
+        imagejpeg($im,'tmp/1.jpg',100);
         imagedestroy($im);
 
        
