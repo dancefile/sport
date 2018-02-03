@@ -98,7 +98,15 @@ class Timetable extends \yii\db\ActiveRecord
         self::timeUpdate($otd_id);
     }
     
-    
+    public function getDancesString($dances) {
+        $dance_list = \yii\helpers\ArrayHelper::map(Dance::find()->all(), 'id', 'name');
+        $s = array_intersect_key($dance_list, explode(', ', $dances));
+        
+        return implode(', ', $s['name']);
+        
+    }
+
+
     private function timeTableSave($tur, $programm, $dt)
     {
         $tt = new Timetable();  

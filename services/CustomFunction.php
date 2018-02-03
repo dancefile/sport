@@ -213,6 +213,55 @@ class CustomFunction
     }
     
     
+    public function printCheck($model) 
+    {
+        if ($model->print_check){
+                
+                $arr_str[]=[
+                    'str' => 'Рег. №'.$model->coupleId,
+                    'size'=> 15
+                    ];
+                $arr_str[]=[
+                    'str' => $model->d1_name.' '.$model->d1_sname,
+                    'size'=> 18
+                    ];
+                $arr_str[]=[
+                    'str' => $model->d2_name.' '.$model->d2_sname,
+                    'size'=> 18
+                    ];
+                $turList = \yii\helpers\ArrayHelper::map(\app\models\Tur::find()->joinWith('category')->all(),'id','category.name');
+
+                foreach ($model->turPair as $id=>$tur) {
+                    if ($tur){
+                        $arr_str[]=[
+                            'str' =>  $turList[$id].' - '. $tur,
+                            'size'=> 10
+                            ];
+                    }
+                }
+                foreach ($model->turSolo_M as $id=>$tur) {
+                    if ($tur){
+                        $arr_str[]=[
+                            'str' => $turList[$id].' - '. $tur,
+                            'size'=> 10
+                            ];
+                    }
+                }
+                foreach ($model->turSolo_W as $id=>$tur) {
+                    if ($tur){
+                        $arr_str[]=[
+                            'str' => $turList[$id].' - '. $tur,
+                            'size'=> 10
+                            ];
+                    }
+                }
+                 
+                self::arrayStrToImg($arr_str);
+
+             }
+    }
+    
+    
     public function arrayStrToImg($arr_str)
     {
         $paper = 384;

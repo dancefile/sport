@@ -40,7 +40,13 @@ use yii\helpers\Url;
             'reg_pairs',
             'dances_count',
             'programm',
-            'dances',
+            [
+                'attributes' => 'dances',
+                'value' => function ($model, $key, $index, $widget) { 
+                    return $model->getDancesString($model->dances);
+                }
+            ],
+            
             'heats_count',
             'tur_time',
             [
