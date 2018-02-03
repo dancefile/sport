@@ -54,7 +54,49 @@ class RegistrationController extends AppController
         $model->loadFromRecord($in);
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-             
+            if ($model->print_check){
+//                echo '<pre>', print_r($model), '</pre>';
+//                exit;    
+                $arr_str[]=[
+                    'str' => $model->d1_name.' '.$model->d1_sname,
+                    'size'=> 20
+                    ];
+                $arr_str[]=[
+                    'str' => $model->d2_name.' '.$model->d2_sname,
+                    'size'=> 20
+                    ];
+                $turList = \yii\helpers\ArrayHelper::map(\app\models\Tur::find()->joinWith('category')->all(),'id','category.name');
+
+                foreach ($model->turPair as $id=>$tur) {
+                    if ($tur){
+                        $arr_str[]=[
+                            'str' =>  $turList[$id].' - '. $tur,
+                            'size'=> 10
+                            ];
+                    }
+                }
+                foreach ($model->turSolo_M as $id=>$tur) {
+                    if ($tur){
+                        $arr_str[]=[
+                            'str' => $turList[$id].' - '. $tur,
+                            'size'=> 10
+                            ];
+                    }
+                }
+                foreach ($model->turSolo_W as $id=>$tur) {
+                    if ($tur){
+                        $arr_str[]=[
+                            'str' => $turList[$id].' - '. $tur,
+                            'size'=> 10
+                            ];
+                    }
+                }
+                 
+                 
+                 
+                 \app\services\CustomFunction::arrayStrToImg($arr_str);
+
+             }
              RegService::regSave($model, true);
 
              return $this->redirect(['in/index']);

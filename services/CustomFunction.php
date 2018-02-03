@@ -1,6 +1,9 @@
 <?php
 namespace app\services;
 
+//use yii\helpers\Html;
+//use yii\helpers\Url;
+
 
 class CustomFunction
 {
@@ -209,6 +212,42 @@ class CustomFunction
         return $result;
     }
     
+    
+    public function arrayStrToImg($arr_str)
+    {
+        $paper = 384;
+        $im = imagecreatetruecolor($paper, 900);
+        $black = imagecolorallocate($im, 0, 0, 0);
+        $white = imagecolorallocate($im, 255, 255, 255);
+        $font = 'fonts/arial.ttf';
+        $y=0;
+        imagefilledrectangle($im, 0, 0, $paper, 26182, $white);// установка белого фона
+
+        foreach ($arr_str as $str){
+            $bbox = imageftbbox($str['size'], 0, $font, $str['str']);
+            $x =($paper-$bbox[2])/2;
+            $y=$y+intval(($bbox[1]-$bbox[7])*1.3);
+            imagefttext($im, $str['size'], 0, $x, $y, $black, $font, $str['str']);
+            $y=$y+10;
+        }
+        
+        imagejpeg($im,'1.jpg',100);
+        imagedestroy($im);
+
+       
+//        exec('C:\Apache24\htdocs\exe\print.exe C:\Apache24\htdocs\tmp\1.jpg "'.$price['printer'].'"');
+    }
+
+        
+
+        
+
+
+
+       
+
+
+
 }
     
 

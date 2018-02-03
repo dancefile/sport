@@ -48,6 +48,16 @@ class RegService
             self::deleteInSaveRecord($existInPairRecors, $model->turPair, 3);
         }
         
+        if ($update){
+            if ($ds[0]){
+                $to_delete[] = $ds[0]->id;
+            }
+            if ($ds[1]){
+                $to_delete[] = $ds[1]->id;
+            }
+            
+            \app\models\DancerTrener::deleteAll(['dancer_id'=>[implode(',', $to_delete)]]);
+        }
         for ($i=1; $i<=6; $i++) {
             $name = $model->{'d_trener'.$i.'_name'};
             $sname = $model->{'d_trener'.$i.'_sname'};

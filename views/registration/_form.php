@@ -334,6 +334,14 @@ use kartik\datecontrol\DateControl;
             </div>
         </div>
         <div class="form-group three">
+            <?= $form->field($model, 'print_check')
+                ->checkbox([
+                    'label' => 'Печать чека',
+                    'labelOptions' => [
+                        'style' => 'padding-left:20px;'
+                    ],
+            ]); ?>
+            
             <?= Html::submitButton('Create', 
                 ['class' => 'btn btn-success']) 
             ?>
