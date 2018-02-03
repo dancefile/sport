@@ -61,7 +61,7 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
             [
                 'attribute' => 'dances',
                 'value' => function($model){
-                    return $model->getDanceToString($model->dances);
+                    return \app\models\Category::getDanceToString($model->dances);
                 },
             ],
             'regPairs',

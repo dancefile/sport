@@ -43,7 +43,7 @@ use yii\helpers\Url;
             [
                 'attribute' => 'dances',
                 'value' => function ($model, $key, $index, $widget) { 
-                    return $model->getDancesString($model->dances);
+                    return \app\models\Category::getDanceToString($model->dances);
                 }
             ],
             
