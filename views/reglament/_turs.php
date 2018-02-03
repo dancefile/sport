@@ -31,17 +31,20 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                 'mergeHeader' => false,
                 'vAlign' => GridView::ALIGN_TOP,
                 'width' => '70px',
-                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{print_list}&nbsp;&nbsp;{update}',
                 'urlCreator'=>function($action, $model, $key, $index){
                     return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
                 },
                 'header' => false,
                 'buttons' => [
                    'heats' => function ($url, $model, $key){
-                      return Html::a('', ['/heats', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-star']);
+                      return Html::a('', ['/heats', 'idT'=>$model->id], ['title' => 'Заходы', 'class' => 'glyphicon glyphicon-star']);
                    },
                    'scating' => function ($url, $model, $key){
-                      return Html::a('', ['/scating/input', 'idT'=>$model->id], ['class' => 'glyphicon glyphicon-flag']);
+                      return Html::a('', ['/scating/input', 'idT'=>$model->id], ['title' => 'Скейтинг', 'class' => 'glyphicon glyphicon-flag']);
+                   },
+                   'print_list' => function ($url, $model, $key){
+                      return Html::a('', ['/print/list', 'idT'=>$model->id], ['title' => 'Бегунки для судей', 'class' => 'glyphicon glyphicon-file']);
                    },
                 ]
             ],
@@ -86,7 +89,19 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                 'value' => function ($model, $key, $index, $widget) { 
                     return $model->statusList[$model->status];
                 }
-            ],            
+            ], 
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                'noWrap' => true,
+                'mergeHeader' => false,
+                'vAlign' => GridView::ALIGN_TOP,
+                'width' => '30px',
+                'template' => '{delete}',
+                'urlCreator'=>function($action, $model, $key, $index){
+                    return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
+                },
+                'header' => false,
+            ],
             
 
              
@@ -96,7 +111,7 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                 Html::a('<i class="glyphicon glyphicon-arrow-left"></i>', ['/reglament/index', 'otd_id'=>$searchModel->category->otd_id], ['title' => 'Назад', 'class' => 'btn btn-success'])
             ],
             ['content' =>
-                Html::a('<i class="glyphicon glyphicons-file"></i>', ['/print/diplom', 'idT'=>$last_tur->id], ['title' => 'Печать дипломов', 'class' => 'btn btn-success'])
+                Html::a('<i class="glyphicon glyphicon-file"></i>', ['/print/diplom', 'idT'=>$last_tur->id], ['title' => 'Печать дипломов', 'class' => 'btn btn-success'])
             ],
             ['content' => 
                 
