@@ -44,15 +44,6 @@ class Category extends \yii\db\ActiveRecord
         '3' => 'Скей тинг',
     ];
     
-    public $classList = [
-        'N' => 'N',
-        'A' => 'A',
-        'B' => 'B',
-        'C' => 'C',
-        'D' => 'D',
-        'E' => 'E',
-    ];
-    
     public $typeCompList = [
         '0' => 'Рейтинг',
         '1' => 'Класс',
@@ -180,10 +171,10 @@ class Category extends \yii\db\ActiveRecord
      * @inheritdoc
      * @return CategoryQuery the active query used by this AR class.
      */
-    public static function find()
-    {
-        return new CategoryQuery(get_called_class());
-    }
+//    public static function find()
+//    {
+//        return new CategoryQuery(get_called_class());
+//    }
 
     public function getCatRegPairs($id)
     { 
@@ -205,5 +196,10 @@ class Category extends \yii\db\ActiveRecord
     public function getDanceToString($dances)
     {
         return implode(", ", Dance::find()->asArray()->select('name')->where(['id' => explode(", ", $dances)])->column());
+    }
+    
+    public static function getClassList()
+    {
+        return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
     }
 }

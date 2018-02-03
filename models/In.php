@@ -135,6 +135,11 @@ class In extends \yii\db\ActiveRecord
     {
         return Category::find()->filterWhere(['otd_id' => $otd_id])->all();
     }
+    
+    public function getOtdList()
+    {
+        return Otd::find()->all();
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -146,7 +151,8 @@ class In extends \yii\db\ActiveRecord
 
     public function getClassList()
     {
-        return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
+        $classes = Clas::find()->all();
+        return ArrayHelper::map($classes, 'id', 'name');
     }
 
     public function getDancerList()
@@ -161,7 +167,7 @@ class In extends \yii\db\ActiveRecord
 
     public function getCityList()
     {
-        return City::find()->select('name')->column();
+        return ArrayHelper::map(City::find()->all(), 'id', 'name');
     }
 
     public function getCountryList()
@@ -224,8 +230,8 @@ class In extends \yii\db\ActiveRecord
      * @inheritdoc
      * @return InQuery the active query used by this AR class.
      */
-    public static function find()
-    {
-        return new InQuery(get_called_class());
-    }
+//    public static function find()
+//    {
+//        return new InQuery(get_called_class());
+//    }
 }

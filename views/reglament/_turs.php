@@ -93,7 +93,10 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
         ],
         'toolbar' =>  [
             ['content' =>
-                Html::a('<i class="btn-left glyphicon glyphicon-arrow-left"></i>', ['reglament/index', 'otd_id'=>$searchModel->category->otd_id], ['title' => 'Назад', 'class' => 'btn btn-success'])
+                Html::a('<i class="glyphicon glyphicon-arrow-left"></i>', ['/reglament/index', 'otd_id'=>$searchModel->category->otd_id], ['title' => 'Назад', 'class' => 'btn btn-success'])
+            ],
+            ['content' =>
+                Html::a('<i class="glyphicon glyphicons-file"></i>', ['/print/diplom', 'idT'=>$last_tur->id], ['title' => 'Печать дипломов', 'class' => 'btn btn-success'])
             ],
             ['content' => 
                 

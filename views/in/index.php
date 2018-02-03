@@ -19,44 +19,37 @@ $this->registerCssFile('@web/css/jquery-ui.css');
 $this->title = 'Список участников';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="in-index">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php   
-        $tabs=[];
-        $categories = \app\models\In::getCategories('');
-        foreach ($otds as $otd) {
-            if (isset($otd_id)){
-                if($otd_id==$otd['id']){
-                    $active = true;
-                } else {
-                    $active = false;
-                }
-            } else {
-                $active = null;
-            }
-            
-            $searchModel->otd_id =$otd['id'];
-            $searchModel->category_id =$category_id;
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->pagination = false;
-            $tabs[]=[
-                'label'     =>  'Отделение '.$otd['name'],
-                'content'   =>  $this->render(
-                                    '_tab', 
-                                    [
-                                        'dataProvider' =>  $dataProvider,
-                                        'searchModel' => $searchModel,
-                                        'otd_id' => $otd['id'],
-                                        'category_id' => $category_id,
-                                        'categories' => $categories,
-                                    ]
-                                ),
-                'active' => $active,
-            ];
+    <h4>Отделения</h4>
+    
+    <?php     
+        foreach ($otd_list as $otd) {
+            echo Html::a($otd->name, ['index', 'otd_id'=>$otd->id], ['class' => 'btn']);
         }
-
-        echo Tabs::widget([
-            'items' => $tabs
-        ]);
-    ?>           
+    ?>
+    
+    
+    
+    <?php \yii\widgets\Pjax::begin()?>
+    <?= $this->render('_left_panel', ['otd_id'=>$otd_id, 'categories'=> $categories]); ?>
+    <?=
+    $this->render('_tab', 
+        [
+            'dataProvider' =>  $dataProvider,
+            'searchModel' => $searchModel,
+            'otd_id' => $otd_id,
+            'class_list' => $class_list,
+            'city_list' => $city_list,
+            'club_list' => $club_list,
+            'categories' => $categories,
+//            'category_id' => $category_id,
+//            'categories' => $categories,
+        ]
+    );
+    ?>
+    
+    <?php \yii\widgets\Pjax::end()?>
+              
 </div>

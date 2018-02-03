@@ -6,9 +6,6 @@
     use yii\helpers\Url;
 ?>
 
-<?php \yii\widgets\Pjax::begin()?>
-
-<?= $this->render('_left_panel', ['otd_id'=>$otd_id, 'categories'=> $categories]); ?>
 
 <?php $form = ActiveForm::begin(['action' => ['replace'],'options' => ['method' => 'post']]); ?>
     <?php $this->registerJs(
@@ -22,8 +19,9 @@
         <input id="replace_ins<?=$otd_id?>" type="hidden" name="replace_ins" value="" />
         <input id="otd_id<?=$otd_id?>" type="hidden" name="otd_id" value="" />
         
-        <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map($categories, 'id', 'name')) ?>
-        <?= Html::submitButton('Переместить', ['id' => 'replace-btn'.$otd_id, 'class' => 'btn btn-success replace-btn']) ?>
+        <?= Html::dropDownList('new-category-id',' ' ,ArrayHelper::map(\app\models\In::getCategories(null), 'id', 'name')) ?>
+        <?= Html::submitInput('Переместить', ['id' => 'replace-btn'.$otd_id, 'name'=>'replace', 'class' => 'btn btn-success replace-btn']) ?>
+        <?= Html::submitInput('Копировать', ['id' => 'copy-btn'.$otd_id, 'name'=>'copy', 'class' => 'btn btn-success replace-btn']) ?>
     </div>  
 <?php $form = ActiveForm::end() ?>
 
@@ -86,8 +84,23 @@
                 }
             ],
             [
-                'attribute' => 'couple.dancerId1.classes',
+                'attribute' => 'classes',
                 'options' => ['width' => '50'],
+                'value' => function($model) use ($class_list){
+                    if ($model->who == 1){
+                        if ($model->couple->dancerId1->clas_id_st){
+                            $classes[] = $class_list[$model->couple->dancerId1->clas_id_st]. '(St)';
+                        }
+                        if ($model->couple->dancerId1->clas_id_la){
+                            $classes[] = $class_list[$model->couple->dancerId1->clas_id_la]. '(La)';
+                        }
+                        if (isset($classes)){
+                            return implode(' ', $classes);
+                        }
+                    } else {
+                        return '-';
+                    }
+                }
             ],
             [
                 'attribute' => 'dancerId2',
@@ -101,11 +114,44 @@
                 }
             ],
             [
-                'attribute' => 'couple.dancerId2.classes',
+                'attribute' => 'classes',
                 'options' => ['width' => '50'],
+                'value' => function($model) use ($class_list){
+                    if ($model->who == 2){
+                        if ($model->couple->dancerId2->clas_id_st){
+                            $classes[] = $class_list[$model->couple->dancerId2->clas_id_st]. '(St)';
+                        }
+                        if ($model->couple->dancerId2->clas_id_la){
+                            $classes[] = $class_list[$model->couple->dancerId2->clas_id_la]. '(La)';
+                        }
+                        if (isset($classes)){
+                            return implode(' ', $classes);
+                        }
+                    } else {
+                        return '-';
+                    }
+                }
             ],
             'city',
-            'couple.club',
+            [
+                'attribute' => 'club',
+//                'options' => ['width' => '50'],
+                'value' => function($model) use ($club_list){
+//                    echo '<pre>', print_r($model->couple->dancerId1->club0), '</pre>';
+//                    exit;
+                    if (isset($model->couple->dancerId1->club)){
+                        $clubs[] = $club_list[$model->couple->dancerId1->club];
+                    }
+                    if (isset($model->couple->dancerId2->club0->city)){
+                        $clubs[] = $club_list[$model->couple->dancerId2->club];
+                    }
+                    if (isset($clubs)){
+                        return implode(', ', $clubs);
+                    }
+                }
+            ],
+                    
+
             'couple.trenersString',            
 
             [
@@ -124,6 +170,5 @@
         ],
     ]); 
 ?>
-<?php \yii\widgets\Pjax::end()?>
 
 

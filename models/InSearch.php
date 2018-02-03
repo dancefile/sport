@@ -46,7 +46,7 @@ class InSearch extends In
     public function search($params)
     {
         $query = In::find()
-            ->joinWith(['couple', 'tur', 'tur.category'])
+            ->joinWith(['couple', 'tur', 'tur.category', 'tur.category.otd'])
             
             ->joinWith(['couple.dancerId1'=> function($q){
                                 $q->from('dancer dancer1');

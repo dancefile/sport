@@ -56,10 +56,15 @@ class TurController extends Controller
         $searchModel = new TurSearch();
         $searchModel->category_id =$cat_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        if ($cat_id){
+            $last_tur = Tur::find()->select('id')->where(['category_id' => $cat_id])->orderBy(['nomer' => SORT_DESC])->one();
+        } else {
+            $last_tur = null;
+        }
         return $this->render('..\reglament\_turs', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'last_tur' => $last_tur,
         ]);
     }
 

@@ -50,20 +50,38 @@ class InController extends Controller
      * @return mixed
      */
     public function actionIndex($category_id=null, $otd_id=null)
-    {
-        $otds = \app\models\Otd::find()->all();
+    {        
         $searchModel = new InSearch();
         
+        $otd_list = In::getOtdList();
+        $class_list = In::getClassList();
+        $city_list = In::getCityList();
+        $club_list = In::getClubList();
+        if (!$otd_id){
+            $categories = In::getCategories($otd_list[0]);
+        } else {
+            $categories = In::getCategories($otd_id);
+        }
 //        if ($category_id){
 //            $searchModel->category_id =$category_id;
 //        } else {
 //            $searchModel->defaultOrder = ['tur_id' => SORT_ASC];
 //        }
+        $searchModel->otd_id =$otd_id;
+        $searchModel->category_id =$category_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = false;
+        
         return $this->render('index', [
-            'otds' => $otds,
-            'otd_id' => $otd_id,
             'searchModel' => $searchModel,
-            'category_id' => $category_id,
+            'dataProvider' => $dataProvider,
+            'otd_list' =>$otd_list,
+            'otd_id' => $otd_id,
+            'class_list' => $class_list,
+            'city_list' => $city_list,
+            'club_list' => $club_list,
+            'categories' => $categories,
+//            'category_id' => $category_id,
         ]);
     }
 
@@ -203,6 +221,15 @@ class InController extends Controller
 
     public function actionReplace()
     {
+        switch ($submit){
+            case 'replace':
+                echo '<pre>', print_r('replace'), '</pre>';
+                break;
+            case 'copy':
+                echo '<pre>', print_r('replace'), '</pre>';
+                break;
+        }
+        exit;
         $post = Yii::$app->request->post();
         $items = explode(',', $post['replace_ins']);
         $ins = In::find()->where(['id' => $items])->all();
