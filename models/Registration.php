@@ -214,7 +214,7 @@ class Registration extends \yii\base\Model
         }
         
         $this->loadDancerAttr($dancer1 , $dancer2);
-        $this->loadTrenersAttr($dancer1->id, $dancer2->id);
+        $this->loadTrenersAttr($dancer1, $dancer2);
         
         foreach ($this->turListPair() as $key => $tur) {
             $this->inPair[$key] = $tur;
@@ -251,35 +251,49 @@ class Registration extends \yii\base\Model
     
     private function loadDancerAttr($dancer1, $dancer2)
     {   
-        $this->d1_id = $dancer1->id;
-        $this->d1_sname = $dancer1->sname;
-        $this->d1_name = $dancer1->name;
-        $this->d1_date = $dancer1->date;
-        $this->d1_class_st = $dancer1->clas_id_st;
-        $this->d1_class_la = $dancer1->clas_id_la;
-        $this->d1_booknumber = $dancer1->booknumber;
-        $this->d2_id = $dancer2->id;
-        $this->d2_sname = $dancer2->sname;
-        $this->d2_name = $dancer2->name;
-        $this->d2_date = $dancer2->date;
-        $this->d2_class_st = $dancer2->clas_id_st;
-        $this->d2_class_la = $dancer2->clas_id_la;
-        $this->d2_booknumber = $dancer2->booknumber;
-        $this->club = $dancer2->club0? $dancer2->club0->name:null;
+        if (isset($dancer1->id)){
+            $this->d1_id = $dancer1->id;
+            $this->d1_sname = $dancer1->sname;
+            $this->d1_name = $dancer1->name;
+            $this->d1_date = $dancer1->date;
+            $this->d1_class_st = $dancer1->clas_id_st;
+            $this->d1_class_la = $dancer1->clas_id_la;
+            $this->d1_booknumber = $dancer1->booknumber;
+            $this->club = $dancer1->club0? $dancer1->club0->name:null;
+        }
+        if (isset($dancer2->id)){
+            $this->d2_id = $dancer2->id;
+            $this->d2_sname = $dancer2->sname;
+            $this->d2_name = $dancer2->name;
+            $this->d2_date = $dancer2->date;
+            $this->d2_class_st = $dancer2->clas_id_st;
+            $this->d2_class_la = $dancer2->clas_id_la;
+            $this->d2_booknumber = $dancer2->booknumber;
+            $this->club = $dancer2->club0? $dancer2->club0->name:null;
+        }
+        
     }
     
-    private function loadTrenersAttr($dancer1_id, $dancer2_id)
+    private function loadTrenersAttr($dancer1, $dancer2)
     {
-        if (isset($dancer1_id)){
+        if (isset($dancer1->id)){
+            $dancer1_id = $dancer1->id;
             $treners = DancerTrener::find()->where(['dancer_id'=>$dancer1_id])->all();
             $i=1;
             foreach ($treners as $trener) {
-                $this->{'d_trener'.$i.'_sname'} = $trener->trener->sname;
-                $i ++;
-            
+                $this->{'d_trener'. $i .'_sname'} = $trener->trener->sname;
+                $i++;
             }
-            
         }
-//        $this->d_trener1_sname = 
+        if (isset($dancer2->id)){
+            $dancer2_id = $dancer2->id;
+            $treners = DancerTrener::find()->where(['dancer_id'=>$dancer2_id])->all();
+            $i=1;
+            foreach ($treners as $key=>$trener) {
+                $this->{'d_trener'. $i .'_sname'} = $trener->trener->sname;
+                $i++;
+            }
+        }
+        
     }
 }
