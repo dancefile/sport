@@ -404,14 +404,17 @@ class ScatingController extends \yii\web\Controller
 		Yii::$app->db->createCommand()->delete('krest', ['in',['tur_id', 'dance_id', 'nomer'],$delIn])->execute();
 		Yii::$app->db->createCommand()->batchInsert('krest', ['judge_id', 'tur_id', 'dance_id', 'nomer', 'ball'], $insetArr)->execute();
 
-		return self::actionInputallheats($idT);
+		return self::actionInput($idT);
 	}//actionEntryallheats
 	
-	public function actionInputallheats($idT=0) {
+
+	public function actionInput($idT=0) //ввывод количестава оценок судей за каждый танец
+	{
 		
 		$turInfo = new TurInfo;
 		$turInfo->setTur($idT);
-		$judges = (new \yii\db\Query()) //получаем список судей данной категории
+		if ($turInfo->getTur('dancing_order')==1) {
+			$judges = (new \yii\db\Query()) //получаем список судей данной категории
 	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
 	    ->from('chess,judge')
 	    ->where(['chess.category_id' => $turInfo->getTur('id')])
@@ -436,12 +439,7 @@ class ScatingController extends \yii\web\Controller
 			
 			
 	return $this->render('listallheats', ['turInfo' => $turInfo, 'judge' => $judge, 'krestArr' => $krestArr]);	
-	}
-	
-	public function actionInput($idT=0) //ввывод количестава оценок судей за каждый танец
-	{
-		
-	
+		} else {
 		
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
 		->select(['tur.category_id','turname'=>'tur.name','tur.dances','category.name'])
@@ -482,7 +480,7 @@ class ScatingController extends \yii\web\Controller
 		}
 	
 	return $this->render('list', ['dancesArr' => $dancesArr, 'krestArr' => $krestArr, 'judgesArr' => $judgesArr, 'tur' => $tur, 'idT' => $idT]);	
-	} //actionInput
+	}} //actionInput
 
 	public function actionIndex()
 	{

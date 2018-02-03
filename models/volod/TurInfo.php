@@ -116,7 +116,7 @@ class TurInfo extends \yii\base\Object
 	public function setTur($idT=0) 
 	{
      $this->tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
-		->select(['idT'=>'tur.id','category.id','turname'=>'tur.name','tur.typezahod','tur.typezahod','tur.dances','category.name','tur.typeSkating','tur.zahodcount'])
+		->select(['idT'=>'tur.id','category.id','turname'=>'tur.name','tur.typezahod','category.dancing_order','tur.typezahod','tur.dances','category.name','tur.typeSkating','tur.zahodcount'])
                 ->from('tur')
 		->innerJoin('category','tur.category_id=category.id')
 		->where(['tur.id'=>$idT])

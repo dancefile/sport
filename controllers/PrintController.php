@@ -124,7 +124,9 @@ class PrintController extends \yii\web\Controller
 				
 		switch ($turInfo->gettur("typeSkating")) {
           case '1'://балы
+          if ($turInfo->getTur('dancing_order')==1) {
 			return $this->render('balAllHeats', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>true]);
+			} else return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False]);
           break;
 		  case '2'://кресты
 			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE]);
@@ -139,7 +141,67 @@ class PrintController extends \yii\web\Controller
 	return $this->error('что то пошло не так :(');
 	}
 	
-	public function actionIndex($idС=16)
+	public function actionReporttur($idT=1)
+	{
+		$Competition = new Competition;
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+		$judges = (new \yii\db\Query()) //получаем список судей данной категории
+	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
+	    ->from('chess,judge')
+	    ->where(['chess.category_id' => $turInfo->getTur('id')])
+		->andWhere('`judge`.`id`=`chess`.`judge_id`');
+		$judge=[];
+		$judgeName=[];
+		foreach ($judges->each() as $row) {
+			$judgeName[$row['id']]=$row['nomer'].'. '.$row['sname'].' '.$row['name'];
+			$judge[$row['id']]=$row['nomer'];
+		}
+		asort($judge);
+	
+		
+			$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
+    			->select(['dance_id','nomer','ball','judge_id'])
+    			->from('krest')
+    			->where(['tur_id' => $idT]);	
+		
+				$krestArr=[];
+				foreach ($krest->each() as $row) {
+					if (isset($judge[$row['judge_id']])) $krestArr[$row['nomer']][$row['dance_id']][$judge[$row['judge_id']]]=$row['ball'];
+				}
+		$resultsArr=[];
+					$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT]);
+					switch ($turInfo->gettur('typeSkating')) {
+						case '1'://подсчет балов
+					$results->orderBy(['nomer' => SORT_ASC]);
+									break;
+				
+			case '2'://подсчет крестов
+					$results->orderBy(['result' => SORT_DESC,'nomer' => SORT_ASC]);	
+				break;
+			
+			case '3'://скайтинг
+			$results->andWhere(['dance_id' => null])
+			->orderBy(['nomer' => SORT_ASC]);
+			
+						};
+				 foreach ($results->each() as $result) {
+				 $resultsArr[$result['nomer']]=['place'=>$result['place'],'result' => $result['result'], 'nextTur' => $result['nextTur']];	
+				 }
+		
+	return $this->render('ReportTur', ['turInfo' => $turInfo, 'judgeName' =>$judgeName, 'Competition' => $Competition, 'krestArr' => $krestArr, 'resultsArr' => $resultsArr, 'judge' => $judge]);	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public function actionIndex($idС=1)
 	{
 	$pdf = new FPDF('L');
 	$pdf->AddFont('Arial','','arial.php');
