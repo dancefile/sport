@@ -47,7 +47,7 @@ class Timetable extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'time' => 'Время',
+            'time' => 'Начало',
             'otd_id' => 'Отделение',
             'tur_id' => 'Тур',
             'category_name' => 'Категория',
@@ -58,6 +58,7 @@ class Timetable extends \yii\db\ActiveRecord
             'heats_count' => 'Заходов',
             'dances_count' => 'Танцев',
             'tur_name' => 'Тур',
+            'tur_time' => 'Длительность'
         ];
     }
 
@@ -101,10 +102,7 @@ class Timetable extends \yii\db\ActiveRecord
     public function getDancesString($dances) {
         $dance_list = \yii\helpers\ArrayHelper::map(Dance::find()->all(), 'id', 'name');
         $s = array_intersect_key($dance_list, array_flip(explode(', ', $dances)));
-//        echo '<pre>', print_r($s), '</pre>';
-//        exit;
         return implode(', ', $s);
-        
     }
 
 

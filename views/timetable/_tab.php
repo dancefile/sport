@@ -52,6 +52,9 @@ use yii\helpers\Url;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}&emsp;{delete}',
+                'options' => [
+                    'width' => '50px',
+                ],
                 'contentOptions' =>[
                     'class' => 'actionColumnCell'
                 ]
