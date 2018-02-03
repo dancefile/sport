@@ -31,7 +31,7 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                 'mergeHeader' => false,
                 'vAlign' => GridView::ALIGN_TOP,
                 'width' => '70px',
-                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{print_list}&nbsp;&nbsp;{update}',
+                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{print_list}&nbsp;&nbsp;{result}&nbsp;&nbsp;{update}',
                 'urlCreator'=>function($action, $model, $key, $index){
                     return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
                 },
@@ -45,6 +45,9 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                    },
                    'print_list' => function ($url, $model, $key){
                       return Html::a('', ['/print/list', 'idT'=>$model->id], ['title' => 'Бегунки для судей', 'class' => 'glyphicon glyphicon-file']);
+                   },
+                   'result' => function ($url, $model, $key){
+                      return Html::a('', ['/print/reporttur', 'idT'=>$model->id], ['title' => 'Результаты тура', 'class' => 'glyphicon glyphicon-certificate']);
                    },
                 ]
             ],
