@@ -62,11 +62,7 @@ $this->registerCssFile('@web/css/jquery-ui.css');
         ?>
     
         <?= $form->field($model, 'dances')
-            ->checkboxList($model->getDanceList($model->program)
-//                    [
-//                        'options' => ['data-prog'=>1],
-//                    ]
-                    );
+            ->checkboxList($model->getDanceList($model->program));
         ?> 
        
         <?= $form->field($model, 'clas')

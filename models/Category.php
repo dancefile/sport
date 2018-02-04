@@ -214,8 +214,4 @@ class Category extends \yii\db\ActiveRecord
         }
     }
     
-//    public static function getClassList()
-//    {
-//        return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
-//    }
 }
