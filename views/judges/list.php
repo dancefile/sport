@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'name',
             'sname',
+            'name',
             [
                 'attribute' => 'language_id',
                 'value' => function ($model, $key, $index, $widget) { 

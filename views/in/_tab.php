@@ -76,7 +76,7 @@
                 'attribute' => 'dancerId1',
                 'options' => ['width' => '170'],
                 'value' => function($model){
-                    if ($model->who == 1){
+                    if ($model->who == 1 || $model->who == 3){
                         return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
                     } else {
                         return '-';
@@ -87,7 +87,7 @@
                 'attribute' => 'classes',
                 'options' => ['width' => '50'],
                 'value' => function($model) use ($class_list){
-                    if ($model->who == 1){
+                    if ($model->who == 1 || $model->who == 3){
                         if ($model->couple->dancerId1->clas_id_st){
                             $classes[] = $class_list[$model->couple->dancerId1->clas_id_st]. '(St)';
                         }
@@ -106,7 +106,7 @@
                 'attribute' => 'dancerId2',
                 'options' => ['width' => '170'],
                 'value' => function($model){
-                    if ($model->who == 2){
+                    if ($model->who == 2 || $model->who == 3){
                         return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
                     } else {
                         return '-';
@@ -117,7 +117,7 @@
                 'attribute' => 'classes',
                 'options' => ['width' => '50'],
                 'value' => function($model) use ($class_list){
-                    if ($model->who == 2){
+                    if ($model->who == 2 || $model->who == 3){
                         if ($model->couple->dancerId2->clas_id_st){
                             $classes[] = $class_list[$model->couple->dancerId2->clas_id_st]. '(St)';
                         }

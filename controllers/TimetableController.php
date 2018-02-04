@@ -106,6 +106,18 @@ class TimetableController extends Controller
 
         return $this->redirect(['index']);
     }
+    
+    public function actionDeletezero($otd_id)
+    {
+//        print_r($otd_id);
+//        exit;
+        Timetable::deleteAll([
+                            'and',
+                            'otd_id' => $otd_id,
+                            'reg_pairs' => '0',
+                        ]);
+        return $this->render('index', ['otd_id'=>$otd_id]);
+    }
 
     public function actionLoad($otd_id) 
     {

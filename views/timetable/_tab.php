@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use richardfan\sortable\SortableGridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use app\models\Category;
 
 
 //$this->registerCssFile("@web/css/print.css", [
@@ -22,6 +23,7 @@ use yii\helpers\Url;
     <?= Html::a('Добавить строку', ['create', 'otd_id'=>$otd_id, 'otd_name'=>$otd_name ], ['class' => 'btn btn-success']); ?>
     <?= Html::a('Обновить время', ['timeupdate', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
     <?= Html::a('Печать', [' '], ['onclick'=>'print()','class' => 'btn btn-success']); ?>
+    <?= Html::a('Удалить нулевые', ['deletezero', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
     
 
 </p>
@@ -35,6 +37,7 @@ use yii\helpers\Url;
         'columns' => [
             'time',
             ['class' => 'yii\grid\SerialColumn'],
+//            'category.id',
             'category_name',
             'tur_name',
             'reg_pairs',
@@ -43,7 +46,7 @@ use yii\helpers\Url;
             [
                 'attribute' => 'dances',
                 'value' => function ($model, $key, $index, $widget) { 
-                    return $model->getDancesString($model->dances);
+                    return Category::getDanceToString($model->dances);
                 }
             ],
             

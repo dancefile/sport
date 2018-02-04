@@ -460,3 +460,11 @@ tr.filters td {
 div.btn-toolbar{
     float: none !important;
 }
+
+.left-panel a{
+    font-size: 12px;
+}
+
+.grid-view td,.grid-view th{
+    font-size:16px;
+}

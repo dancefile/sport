@@ -210,11 +210,12 @@ class Registration extends \yii\base\Model
         $this->coupleId = $couple->id;
         $dancer1 = $couple->dancerId1;
         $dancer2 = $couple->dancerId2;
-        if ($dancer1->club0){
-            $this->city = $dancer1->club0->city? $dancer1->club0->city->name:'';
-            $this->country = $dancer1->club0->city->country? $dancer1->club0->city->country->name:'';
+        if ($dancer1){
+            if ($dancer1->club0){
+                $this->city = $dancer1->club0->city? $dancer1->club0->city->name:'';
+                $this->country = $dancer1->club0->city->country? $dancer1->club0->city->country->name:'';
+            }
         }
-        
         $this->loadDancerAttr($dancer1 , $dancer2);
         $this->loadTrenersAttr($dancer1, $dancer2);
         

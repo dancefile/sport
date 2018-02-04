@@ -84,6 +84,11 @@ class CategoryController extends AppController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
+//            $tur = new Tur();
+//            $tur->category_id = $model->id;
+//            $tur->dances = $model->dances;
+//            $tur->save();
+            
             return $this->redirect(['reglament/index']);
         } else {
             return $this->render('create', [

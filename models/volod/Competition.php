@@ -9,7 +9,7 @@ class Competition extends \yii\base\Object
 	public $data='4 февраля 2018г.';
 	public $place='ТЗ «Пингвин»';
 	public $org='Клюшин Николай';
-	public $chief='Клюшин Николай';
+	public $chief='Тудинов Сергей';
 	//public $='';
 }
 	

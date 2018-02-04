@@ -17,9 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="category-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        
         <?= $form->field($model, 'sname')->textInput(['maxlength' => true]) ?>
+        
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+       
         <?= $form->field($model, 'language_id')
             ->radioList([
                 '1' => 'Русский',

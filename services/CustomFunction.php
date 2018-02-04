@@ -219,39 +219,39 @@ class CustomFunction
                 
                 $arr_str[]=[
                     'str' => 'Рег. №'.$model->coupleId,
-                    'size'=> 15
+                    'size'=> 25
                     ];
                 $arr_str[]=[
                     'str' => $model->d1_name.' '.$model->d1_sname,
-                    'size'=> 22
+                    'size'=> 30
                     ];
                 $arr_str[]=[
                     'str' => $model->d2_name.' '.$model->d2_sname,
-                    'size'=> 22
+                    'size'=> 30
                     ];
                 $turList = \yii\helpers\ArrayHelper::map(\app\models\Tur::find()->joinWith('category')->all(),'id','category.name');
 
                 foreach ($model->turPair as $id=>$tur) {
                     if ($tur){
                         $arr_str[]=[
-                            'str' =>  $turList[$id].' - '. $tur,
-                            'size'=> 15
+                            'str' =>  $turList[$id].' - №'. $tur,
+                            'size'=> 20
                             ];
                     }
                 }
                 foreach ($model->turSolo_M as $id=>$tur) {
                     if ($tur){
                         $arr_str[]=[
-                            'str' => $turList[$id].' - '. $tur,
-                            'size'=> 15
+                            'str' => $turList[$id].' - №'. $tur,
+                            'size'=> 20
                             ];
                     }
                 }
                 foreach ($model->turSolo_W as $id=>$tur) {
                     if ($tur){
                         $arr_str[]=[
-                            'str' => $turList[$id].' - '. $tur,
-                            'size'=> 15
+                            'str' => $turList[$id].' - №'. $tur,
+                            'size'=> 20
                             ];
                     }
                 }

@@ -144,8 +144,8 @@ $lastKey=key($diploms);
 		echo '<div class="diplom3" style="height: 90px;">'.$programname.'</div>';
 		echo '<div class="diplom3" style="height: 175px;">'.$agename.'</div>';
 		echo '<div class="diplom4" style="height: 75px;">'.$Competition->org.'<span style="width: 150px; display:inline-block;"></span>'.$Competition->chief.'</div>';
-		echo '<div class="diplom4" style="height: 200px;"><img src="/img/signature.gif" /></div>';
-		echo '<div class="diplom4" style="height: 50px;">'.$Competition->data.'</div>';
+		echo '<div class="diplom4" style="height: 200px;"><img src="/img/signature.gif" /><span style="width: 150px; display:inline-block;"></span><span style="width: 150px; display:inline-block;"></span></div>';
+		echo '<div class="diplom4" style="height: 50px;">'.$Competition->data.' г. Москва</div>';
 		echo '</div>';
 	} 
 		

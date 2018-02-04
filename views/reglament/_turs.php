@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
+use app\models\Category;
 
 // use app\models\Category;
 /* @var $this yii\web\View */
@@ -31,7 +32,7 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                 'mergeHeader' => false,
                 'vAlign' => GridView::ALIGN_TOP,
                 'width' => '70px',
-                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{print_list}&nbsp;&nbsp;{result}&nbsp;&nbsp;{update}',
+                'template' => '{heats}&nbsp;&nbsp;{scating}&nbsp;&nbsp;{print_vkl}&nbsp;&nbsp;{print_list}&nbsp;&nbsp;{result}&nbsp;&nbsp;{update}',
                 'urlCreator'=>function($action, $model, $key, $index){
                     return \yii\helpers\Url::to(['tur/'.$action,'id'=>$model->id]);
                 },
@@ -49,6 +50,9 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
                    'result' => function ($url, $model, $key){
                       return Html::a('', ['/print/reporttur', 'idT'=>$model->id], ['title' => 'Результаты тура', 'class' => 'glyphicon glyphicon-certificate']);
                    },
+                   'print_vkl' => function ($url, $model, $key){
+                      return Html::a('', ['/print/vkleika', 'idT'=>$model->id], ['title' => 'Печать вклеек', 'class' => 'glyphicon glyphicon-upload']);
+                   },
                 ]
             ],
             ['class' => 'yii\grid\SerialColumn'],
@@ -61,7 +65,7 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
             [
                 'attribute' => 'dances',
                 'value' => function($model){
-                    return $model->getDanceToString($model->dances);
+                    return Category::getDanceToString($model->dances);
                 },
             ],
             'regPairs',
@@ -124,6 +128,9 @@ $this->title = 'Категория '.$searchModel->category->name. '.  Спис�
             
             '{export}',
             '{toggleData}',
+            ['content' =>
+                Html::a('<i class="glyphicon glyphicon-arrow-right"></i>', ['/tur/index', 'cat_id'=>$searchModel->category->id, 'next' => true], ['title' => 'Вперед', 'class' => 'btn btn-success'])
+            ],
         ],
     ]); ?>
 

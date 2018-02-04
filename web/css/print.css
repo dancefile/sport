@@ -53,4 +53,8 @@
     .next-page {
      page-break-after: always;
     }
+    
+    .grid-view td{
+        font-size:16px;
+    }
 }

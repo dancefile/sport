@@ -84,10 +84,10 @@ class Timetable extends \yii\db\ActiveRecord
             } else {
                 switch ($tur['category']['program']) {
                     case 1:
-                        $programm = "La";
+                        $programm = "St";
                         break;
                     case 2:
-                        $programm = "St";
+                        $programm = "La";
                         break;
                     case 3:
                         $programm = "St, La";

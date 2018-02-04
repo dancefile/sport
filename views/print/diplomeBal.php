@@ -76,7 +76,7 @@ $countDiploms=[1=>0,2=>0,3=>0];
     foreach ($resultCouple as $nomer => $result){
     	$key = array_search($nomer, $inArr);
 		$names=$turInfo->GetCoupleName($key);
-		$diplom=['name'=>$names,'plase'=>$result['stepen']. ' степени. Баллов:'.$result['bal'] ];
+		$diplom=['name'=>$names,'place'=>' &nbsp;&nbsp;'.$result['stepen']. ' степень. ' ];
 		$diploms[]=$diplom;
 		$countDiploms[$result['stepen']]++;		
 		if (strripos($names,'<br>')!==false) {
@@ -89,7 +89,7 @@ $countDiploms=[1=>0,2=>0,3=>0];
     					'club'=>$turInfo->GetCoupleName($key,'clubName'),
     					'City'=>$turInfo->GetCoupleCity($key),
     					'Trener'=>$turInfo->GetCoupleTrener($key),
-    					'diplom'=>$result['stepen']. ' степени',
+    					'diplom'=>$result['stepen']. ' степень',
     					'bals'=>$result['bal'],
     					];
 						
@@ -116,18 +116,58 @@ echo GridView::widget([
 	echo '</div>';
 	echo '<center>';
 		end($diploms);
-$lastKey=key($diploms);
-	foreach ($diploms as $key=>$diplom) {
+$lastKey=key($diploms); ?>
+<style>
+.diplom1{
+    font-size: 42px !important;
+}
+.diplom2{
+    font-size: 36px !important;
+}
+.diplom3{
+    font-size: 32px !important;
+}
+.diplom4{
+    font-size: 28px !important;
+}
+.nomer1 {
+	margin: 0px;
+    font-size: 20px !important;
+    text-align: center;
+}
+.nomer {
+	margin: 0px;
+    font-size: 30px !important;
+    text-align: center;
+}
+.otstup{
+	padding-bottom: 10px;
+}
+</style>
+<?	foreach ($diploms as $key=>$diplom) {
 	if ($lastKey==$key) echo '<div>'; else	echo '<div class="next-page">';	
-		echo '<div class="" style="height: 500px;"> </div>';
-		echo '<div class="" style="height: 100px;">'.$diplom['name'].'</div>';
+	
+	
+
+		echo '<div class="" style="height: 650px;"> </div>';
+		echo '<div class="diplom1" style="height: 110px;">'.$diplom['name'].'</div>';
+		echo '<div class="diplom2" style="height: 90px;">'.$diplom['place'].'</div>';
+		echo '<div class="diplom2" style="height: 85px;">'.$Competition->shortname.'</div>';
+		echo '<div class="diplom3" style="height: 90px;">'.$programname.'</div>';
+		echo '<div class="diplom3" style="height: 175px;">'.$agename.'</div>';
+		echo '<div class="diplom4" style="height: 75px;">'.$Competition->org.'<span style="width: 150px; display:inline-block;"></span>'.$Competition->chief.'</div>';
+		echo '<div class="diplom4" style="height: 200px;"><img src="/img/signature.gif" /><span style="width: 150px; display:inline-block;"></span><span style="width: 150px; display:inline-block;"></span></div>';
+		echo '<div class="diplom4" style="height: 50px;">'.$Competition->data.' г. Москва</div>';
+	/*
+		echo '<div class="" style="height: 650px;"> </div>';
+		echo '<div class="diplom1" style="height: 110px;">'.$diplom['name'].'</div>';
 		echo '<div class="" style="height: 50px;">'.$diplom['plase'].'</div>';
 		echo '<div class="" style="height: 50px;">'.$Competition->shortname.'</div>';
 		echo '<div class="" style="height: 50px;">'.$programname.'</div>';
 		echo '<div class="" style="height: 50px;">'.$agename.'</div>';
 		echo '<div class="" style="height: 50px;">'.$Competition->org.'<span style="width: 100px; display:inline-block;"></span>'.$Competition->chief.'</div>';
 		echo '<div class="" style="height: 100px;"><img src="/img/signature.gif" /></div>';
-		echo '<div class="" style="height: 50px;">'.$Competition->data.'</div>';
+		echo '<div class="" style="height: 50px;">'.$Competition->data.'</div>';*/
 			echo '</div>';
 	} 
 		

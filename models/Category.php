@@ -204,7 +204,14 @@ class Category extends \yii\db\ActiveRecord
 
     public function getDanceToString($dances)
     {
-        return implode(", ", Dance::find()->asArray()->select('name')->where(['id' => explode(", ", $dances)])->column());
+        if (isset($dances)){
+            $dance_list = ArrayHelper::map(Dance::find()->all(), 'id', 'name');
+            $dances = explode(', ', $dances);
+            foreach ($dances as &$dance) {
+                $dan[] = $dance_list[$dance];
+            }
+            return implode(", ", $dan);
+        }
     }
     
 //    public static function getClassList()
