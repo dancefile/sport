@@ -34,6 +34,7 @@ $this->title = 'Список участников';
     
     <?php \yii\widgets\Pjax::begin()?>
 
+    
     <?=
     $this->render('_tab', 
         [
