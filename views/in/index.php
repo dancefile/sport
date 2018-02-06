@@ -33,7 +33,7 @@ $this->title = 'Список участников';
     
     
     <?php \yii\widgets\Pjax::begin()?>
-    <?= $this->render('_left_panel', ['otd_id'=>$otd_id, 'categories'=> $categories]); ?>
+
     <?=
     $this->render('_tab', 
         [
