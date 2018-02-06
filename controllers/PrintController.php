@@ -201,8 +201,259 @@ class PrintController extends \yii\web\Controller
 	
 	
 	
-	public function actionIndex($idС=1)
+	public function actionIndex()
 	{
+		function findDancer($id)
+		{
+		 $dancer = (new \yii\db\Query()) 
+		 ->select(['dancer.name','dancer.sname','clubName'=>'club.name','cityName'=>'city.name','clasLaName'=>'clasLa.name','clasStname'=>'clasSt.name'])
+		->from('dancer')
+		->leftJoin('club','dancer.club=club.id')
+		->leftJoin('city','club.id=city.id')
+		->leftJoin('clas as clasLa','dancer.clas_id_st=clasLa.id')
+		->leftJoin('clas as clasSt','dancer.clas_id_la=clasSt.id')
+        ->where(['dancer.id'=>$id])
+		->one();	
+		return $dancer;
+		}
+
+
+		function findTrener($dancerId)
+		{
+		 $trener = (new \yii\db\Query()) 
+		 ->select(['trener.name','trener.sname'])
+		->from('dancer_trener')
+		->leftJoin('trener','dancer_trener.trener_id=trener.id')
+		->where(['in', 'dancer_trener.dancer_id',$dancerId]);
+		$treners=[];
+		foreach ($trener->each() as $row) {
+			$chek=true;
+			 foreach ($treners as $tren) {
+				if ($tren['name']==$row['name'] && $tren['sname']==$row['sname']) $chek=false;
+			}
+			if ($chek) {$treners[]=['name'=>$row['name'],'sname'=>$row['sname']];}
+		}
+		return $treners;
+		}
+
+
+$Competition = new Competition;
+$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><DanceData version="2.1"></DanceData>');
+
+
+		$dancesquery = (new \yii\db\Query()) //id категорий по которым есть результаты
+	    ->from('dance');
+
+		$dancesname=[];
+		foreach ($dancesquery->each() as $rowdances) {
+			$dancesname[$rowdances['id']]=$rowdances['name'];
+		}
+		$Categories = (new \yii\db\Query()) //id категорий по которым есть результаты
+	    ->select(['`tur`.`category_id`'])
+		->distinct()
+	    ->from(['results','tur'])
+	    ->where('`results`.`tur_id`=`tur`.`id`')
+	    ->andWhere('`tur`.`status`!=-1');
+		
+		foreach ($Categories->each() as $row) {
+			$GroupData = $xml->addChild('GroupData');
+			$Header = $GroupData->addChild('Header');
+			$Header->addAttribute('language','Russian');
+			$Header->addChild('Title', $Competition->shortname)->addAttribute('compDate',$Competition->data);
+			$Header->addChild('Organizer', $Competition->org);
+			$Header->addChild('Chief', $Competition->chief);
+			$category = (new \yii\db\Query()) //имя категории
+    			->select(['name'])
+    			->from('category')
+    			->where(['id' => $row['category_id']])
+				->one();
+			$Header->addChild('Group',$category['name']);		
+			$Couples=$GroupData->addChild('Registration')->addChild('Couples');
+			
+			
+						$Judgesxml=$GroupData->addChild('Judges');
+					$judges = (new \yii\db\Query()) //получаем список судей данной категории
+	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
+	    ->from('chess,judge')
+	    ->where(['chess.category_id' => $row['category_id']])
+		->andWhere('`judge`.`id`=`chess`.`judge_id`');
+		$judge=[];
+		$judgeName=[];
+		foreach ($judges->each() as $judgesrow) {
+			$tmp=$Judgesxml->addChild('Judge');
+			$tmp->addAttribute('id',$judgesrow['nomer']);
+			$judge[$judgesrow['id']]=$judgesrow['nomer'];
+			$tmp->addAttribute('firstName',$judgesrow['name']);
+			$tmp->addAttribute('lastName',$judgesrow['sname']);
+			}
+			
+			$judgeCount=count($judge);
+			
+		$turs = (new \yii\db\Query()) //id категорий по которым есть результаты
+	    ->select(['`id`','nomer','name','dances'])
+	    ->from(['tur'])
+	    ->where(['category_id'=>$row['category_id']])
+		->orderBy(['nomer' => SORT_ASC]);
+		$firtstur=true;
+		$Resultsxml=$GroupData->addChild('Results');
+		foreach ($turs->each() as $rowTur) {
+			
+			if ($firtstur) {
+				$in = (new \yii\db\Query()) //получаем список пар  за текущей тур
+            	->select(['in.id','in.nomer','in.who','couple.dancer_id_1','couple.dancer_id_2'])
+	    		->from('in')
+				->innerJoin('couple','in.couple_id=couple.id')
+                ->where(['tur_id' => $rowTur['id']]);	
+            foreach ($in->each() as $rowin) {
+            		
+            	$Couple[$rowin['nomer']]=$Couples->addChild('Couple');
+				$Couple[$rowin['nomer']]->addAttribute('n',$rowin['nomer']);
+				switch ($rowin['who']) {
+					case '1':
+					$dancerrow=findDancer($rowin['dancer_id_1']);
+					$trenerArr=findTrener([$rowin['dancer_id_1']]);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Male');
+					$tmp->addAttribute('firstName',$dancerrow['name']);
+					$tmp->addAttribute('lastName',$dancerrow['sname']);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Club');
+					$tmp->addAttribute('city',$dancerrow['cityName']);
+					$tmp->addAttribute('name',$dancerrow['clubName']);
+					
+					break;
+					case '2':
+						
+					$dancerrow=findDancer($rowin['dancer_id_2']);
+					$trenerArr=findTrener([$rowin['dancer_id_2']]);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Female');
+					$tmp->addAttribute('firstName',$dancerrow['name']);
+					$tmp->addAttribute('lastName',$dancerrow['sname']);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Club');
+					$tmp->addAttribute('city',$dancerrow['cityName']);
+					$tmp->addAttribute('name',$dancerrow['clubName']);
+					
+					break;
+					default:
+					$dancerrow=findDancer($rowin['dancer_id_2']);
+					$trenerArr=findTrener([$rowin['dancer_id_1'],$rowin['dancer_id_2']]);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Female');
+					$tmp->addAttribute('firstName',$dancerrow['name']);
+					$tmp->addAttribute('lastName',$dancerrow['sname']);
+
+					$dancerrow=findDancer($rowin['dancer_id_1']);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Male');
+					$tmp->addAttribute('firstName',$dancerrow['name']);
+					$tmp->addAttribute('lastName',$dancerrow['sname']);
+					$tmp=$Couple[$rowin['nomer']]->addChild('Club');
+					$tmp->addAttribute('city',$dancerrow['cityName']);
+					$tmp->addAttribute('name',$dancerrow['clubName']);
+					
+					break;
+				
+			}
+			$i=1;
+			foreach ($trenerArr as $key => $value) {
+				$tmp->addAttribute('trener'.$i.'LastName',$value['sname']);		
+				$tmp->addAttribute('trener'.$i.'FirstName',$value['name']);
+				$i++;
+						}
+						}
+
+		
+		 $firtstur=false; }	
+
+
+			
+			$krest = (new \yii\db\Query()) //получаем оценки всех судей за текущей тур
+    			->select(['dance_id','nomer','ball','judge_id'])
+    			->from('krest')
+    			->where(['tur_id' => $rowTur['id']]);	
+		
+				$krestArr=[];
+				foreach ($krest->each() as $row) {
+					if (isset($judge[$row['judge_id']])) $krestArr[$row['nomer']][$row['dance_id']][$judge[$row['judge_id']]]=$row['ball'];
+				}
+
+		$Roundxml=$Resultsxml->addChild('Round');
+		$Roundxml->addAttribute('no', $rowTur['nomer']);
+		$Roundxml->addAttribute('name', $rowTur['name']);
+		$Totalxml=$Roundxml->addChild('Total');
+	          	$resultDance=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $rowTur['id']]);
+			foreach ($results->each() as $result) {
+				if (!$result['dance_id']) $result['dance_id']=0;
+				$resultDance[$result['dance_id']][$result['nomer']]=['result'=>$result['result'],'place' => $result['place']];
+			}	
+			foreach ($resultDance[0] as $key => $value) {
+				$Resultxml=$Totalxml->addChild('Result');
+				$Resultxml->addAttribute('n', $key);
+				$Resultxml->addAttribute('sum', $value['result']);
+				$Resultxml->addAttribute('place', $value['place']);
+			}			
+				
+		$dancesArr = explode(',',str_replace(' ','',$rowTur['dances']));	
+		$Dancesxml=$Roundxml->addChild('Dances');	
+		$i=1;	
+	foreach ($dancesArr as $danceId) {
+		$Dancexml=$Dancesxml->addChild('Dance');
+		$Dancexml->addAttribute('no', $i);
+		$Dancexml->addAttribute('name', $dancesname[$danceId]);
+		
+		foreach ($resultDance[0] as $key => $value) {
+		 $arr=array_fill ( 1 , $judgeCount , '-' );
+			if (isset($krestArr[$key][$danceId]))
+						foreach ($krestArr[$key][$danceId] as $Jnomer => $ballorkrest) {
+							$arr[$Jnomer]=$ballorkrest;
+						}
+			
+				$Resultxml=$Dancexml->addChild('Result',implode($arr));
+				$Resultxml->addAttribute('n', $key);
+				if (isset($resultDance[$danceId])) {
+					$Resultxml->addAttribute('sum', $resultDance[$danceId][$key]['result']);
+					$Resultxml->addAttribute('place', $resultDance[$danceId][$key]['place']);
+				}
+		}			
+						
+		
+		$i++;
+	}
+
+					//	<Result n="8" sum="1" head="1">X-----</Result>
+					//	<Result n="23" sum="4" head="1">-XXX-X</Result>
+		
+			
+			}
+			
+
+		}
+		
+
+
+
+
+file_put_contents('C:\Users\Toshiba 6\Desktop\bd.xml', $xml->asXML());
+return $this->render('about', ['message' => '<pre>' . 'ok'. '</pre>']);
+
+/*
+	$sxe = new \SimpleXMLElement($xmlstr);
+$sxe->addAttribute('type', 'documentary');
+
+$movie = $sxe->addChild('movie');
+$movie->addChild('title', 'PHP2: Истории парсера');
+$movie->addChild('plot', 'Все о людях, создававших его.');
+
+$characters = $movie->addChild('characters');
+$character  = $characters->addChild('character');
+$character->addChild('name', 'Mr. Parser');
+$character->addChild('actor', 'John Doe');
+
+$rating = $movie->addChild('rating', '5');
+$rating->addAttribute('type', 'stars');
+ 
+echo $sxe->asXML();	
+/*		
+		
 	$pdf = new FPDF('L');
 	$pdf->AddFont('Arial','','arial.php');
 	$pdf->AliasNbPages();
@@ -499,6 +750,11 @@ class PrintController extends \yii\web\Controller
 		 
 	$pdf->Output();
 		//return $this->render('about', ['message' => '<pre>' . 's'. '</pre>']);
+		
+		
+		
+		*/
+		
 }
     private function dancer_id(&$coupleName,&$coupleInfo,$nomer,$id) //
 	{
