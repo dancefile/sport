@@ -2,7 +2,7 @@
 
 namespace app\models\volod;
 
-class Competition extends \yii\base\Object
+class Competition extends \yii\base\Model
 {
 	public $name='Открытый региональный турнир МОТЛ «Кабы не было Зимы»';
 	public $shortname='«Кабы не было Зимы»';

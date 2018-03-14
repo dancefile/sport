@@ -5,7 +5,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
-// $turInfo->gettur('')
+
 $this->title = $turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -40,33 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
                	'attribute' => 'Trener',
                	'format' => 'raw',
     	       ]];
-    $data=[];
-	$heatsArr=$turInfo->getHeats();
-	$inArr=$turInfo->getIn();
-	asort($inArr);
-	 
-    foreach ($inArr as $key => $nomer): 
-    	$data[$key] = [	'nomer' => $nomer,
-    					'name'=>$turInfo->GetCoupleName($key,'fname',', '),
-    					'club'=>$turInfo->GetCoupleName($key,'clubName',', '),
-    					'City'=>$turInfo->GetCoupleCity($key,'cityName',', '),
-    					'Trener'=>$turInfo->GetCoupleTrener($key,', '),
-    					
-    					];
-		
-    endforeach;
-
-    $provider = new ArrayDataProvider([
-        'allModels' => $data,
-        'pagination' => 
-        	[
-            	'pageSize' => 2000,
-        	],
-
-    ]);
-
-echo GridView::widget([
-    'dataProvider' => $provider,
+ //   $data=[];
+//	$heatsArr=$turInfo->getHeats();
+	//$inArr=$turInfo->getIn();
+        
+    echo GridView::widget([
+    'dataProvider' => $dataProvider,
     'columns' => $columns
 ]);
     $columns=[[
@@ -79,49 +58,12 @@ echo GridView::widget([
     	       ],
 				];
 
-
-
-
-
-foreach ($arrDance as $keyDance => $dance){
-	$arr[$keyDance][0]=$inArr;
-}
-
-
-		foreach ($heatsArr as $idcouple => $value1) {
-			foreach ($value1 as $iddance => $zahod) {
-				unset($arr[$iddance][0][$idcouple]);
-				$arr[$iddance][$zahod][$idcouple]=$inArr[$idcouple];				
-			}
-		}
-
+$turInfo->SetZahodDancerArr($arrDance);
 foreach ($arrDance as $idDance => $dance){
-echo '<h3>'. Html::encode($dance).'</h3>';	
-$data=[];
-
-for ($i=1; $i <= $turInfo->gettur('zahodcount'); $i++) {
-	$data[$i]['heats']='Заход '.$i;
-}
-
-
-	foreach ($arr[$idDance] as $zahod => $value1) {
-		if (count($value1)) {
-				asort($value1);
-				$data[$zahod]['heats']='Заход '.$zahod;
-				$data[$zahod]['couple']=implode($value1, ', ');			
-			}}
-		
-    $provider = new ArrayDataProvider([
-        'allModels' => $data,
-        'pagination' => 
-        	[
-            	'pageSize' => 2000,
-        	],
-
-    ]);
+echo '<h3>'. Html::encode($dance).'</h3>';
 
 echo GridView::widget([
-    'dataProvider' => $provider,
+    'dataProvider' => $turInfo->heatProvider($idDance),
     'columns' => $columns
 ]);
 }

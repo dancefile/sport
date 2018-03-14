@@ -11,11 +11,11 @@ class HeatsController extends \yii\web\Controller
 {
 	public $defaultAction = 'index';
 	
-		public function actionNew1($idT=0,$name='',$value='') //задаем заходы автоматом
+	public function actionNew1($idT=0,$name='',$value='') //задаем заходы автоматом
 	{
 		$arr=explode('_', $name);
 		if (count($arr)==2) {
-            $in = (new \yii\db\Query()) //получаем список пар  за текущей тур
+            $in = (new \yii\db\Query()) 
                 ->select(['id'])
                 ->from('in')
                 ->where(['tur_id' => $idT,'nomer' => $arr[0]])		
@@ -24,38 +24,26 @@ class HeatsController extends \yii\web\Controller
 				if (!$arr[1]) $arr[1]=NULL;
 				 Yii::$app->db->createCommand()->delete('in_dance', ['id_in' => $in['id'],'dance_id' =>$arr[1]])->execute();
 				Yii::$app->db->createCommand()->insert('in_dance', [
-																	'id_in' => $in['id'],
-																	'dance_id' => $arr[1],
-																	'zahod' => $value
-																	])->execute();	
-					
+									'id_in' => $in['id'],
+									'dance_id' => $arr[1],
+									'zahod' => $value
+									])->execute();	
 			}
-				
 		}
 	}
+        
+        
 	public function actionNew($idT=0) //задаем заходы автоматом
 	{
-            $tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
-		->select(['category.id','turname'=>'tur.name','tur.zahodcount','tur.typezahod','tur.dances','category.name'])
-                ->from('tur')
-		->innerJoin('category','tur.category_id=category.id')
-		->where(['tur.id'=>$idT])
-		->one();
-		
-            $inArr=[];
-            $in = (new \yii\db\Query()) //получаем список пар  за текущей тур
-                ->select(['id','nomer'])
-                ->from('in')
-                ->where(['tur_id' => $idT]);	
-            foreach ($in->each() as $row) {
-		$inArr[$row['id']]=$row['nomer'];	
-            }		
-		
-            if (!isset($tur["typezahod"])) return $this->error('Не найден тур или не задан способ формирования заходов');
-			if (!isset($tur["zahodcount"])) return $this->error('Не верное кол. заходов');
-            $couplePerHeat=ceil(count($inArr)/$tur['zahodcount']);
+            	$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+		$inArr=$turInfo->getIn();
+            if (!$turInfo->gettur("typezahod")) return $this->error('Не найден тур или не задан способ формирования заходов');
+            if (!$turInfo->gettur("zahodcount")) return $this->error('Не верное кол. заходов');
+            
+            $couplePerHeat=ceil(count($inArr)/$turInfo->gettur("zahodcount"));
             $insetArr=[];
-            switch ($tur["typezahod"]) {
+            switch ($turInfo->gettur("typezahod")) {
                 case '1':
                     asort($inArr);
                     $this->headNew($insetArr,$inArr,$couplePerHeat);
@@ -108,12 +96,17 @@ class HeatsController extends \yii\web\Controller
                     break;
             }
 
-		if ($ved)  return $this->render('viewVed', ['arrDance' => $arrDance,
-                        'turInfo' => $turInfo,
-					]);
+		if ($ved)  
+                    return $this->render('viewVed', [
+                    'arrDance' => $arrDance,
+                    'turInfo' => $turInfo,
+                    'dataProvider' => $turInfo->search(Yii::$app->request->queryParams,null),
+                ]);
 		else
-            return $this->render('view', ['arrDance' => $arrDance,
-                        'turInfo' => $turInfo,
+            return $this->render('view', [
+                'arrDance' => $arrDance,
+                'turInfo' => $turInfo,
+                'dataProvider' => $turInfo->search(Yii::$app->request->queryParams,$arrDance),
 					]);
 	}//actionIndex
 	

@@ -127,7 +127,7 @@ class ActiveDataProvider extends BaseDataProvider
                 if (is_string($this->key)) {
                     $keys[] = $model[$this->key];
                 } else {
-                    $keys[] = call_user_func($this->key, $model);
+                    $keys[] = call_user_func($this->key, $model);                
                 }
             }
 
@@ -150,10 +150,10 @@ class ActiveDataProvider extends BaseDataProvider
                     $keys[] = $kk;
                 }
             }
-
-            return $keys;
+           // var_dump($keys);exit;
+          //  return $keys;
         }
-
+       // var_dump(array_keys($models));exit;
         return array_keys($models);
     }
 

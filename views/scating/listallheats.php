@@ -71,8 +71,9 @@ $inArr=$turInfo->getIn();
 ?>
 <?= GridView::widget([
     'dataProvider' => $provider,
-    'columns' => $columns
-]);
+    'columns' => $columns,
+    'summary' => false,
+    ]);
 
  echo Html::a('Посчет результата', ['calc','idT'=>$turInfo->gettur('idT')], ['class' => 'btn btn-success']);
  ?>

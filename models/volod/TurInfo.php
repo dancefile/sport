@@ -1,18 +1,105 @@
 <?php
-
 namespace app\models\volod;
+
+use yii\data\ArrayDataProvider;
+use yii\helpers\Html;
 
 class TurInfo extends \yii\base\Object
 {
-	private	$tur=null;
-	private	$arrDance=null;
-	private	$inArr=null;
-	private	$inArrMore=null;	
-	private	$heatsArr=null;
-	private	$names=null;	
-	private	$dancerClub=null;
-	private	$dancerTreners=null;
+    private	$tur=null;
+    private	$arrDance=null;
+    private	$inArr=null;
+    private	$inArrMore=null;	
+    private	$heatsArr=null;
+    private	$names=null;	
+    private	$dancerClub=null;
+    private	$dancerTreners=null;
+    private     $zahodDancerArr=null;
+    
+    
+        public function heatProvider($idDance)
+    {
+    
+    $data=[];
 
+for ($i=1; $i <= $this->gettur('zahodcount'); $i++) {
+	$data[$i]['heats']='Заход '.$i;
+}
+
+
+	foreach ($this->zahodDancerArr[$idDance] as $zahod => $value1) {
+		if (count($value1)) {
+				asort($value1);
+				$data[$zahod]['heats']='Заход '.$zahod;
+				$data[$zahod]['couple']=implode($value1, ', ');			
+			}}
+		
+        return new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => 
+        	[
+            	'pageSize' =>  false,
+        	],
+
+    ]);
+    
+    
+}
+    
+     public function SetZahodDancerArr($arrDance)
+    {   
+      foreach ($arrDance as $keyDance => $dance){
+	$this->zahodDancerArr[$keyDance][0]=$this->getIn();
+}
+
+
+		foreach ($this->getHeats() as $idcouple => $value1) {
+			foreach ($value1 as $iddance => $zahod) {
+				unset($this->zahodDancerArr[$iddance][0][$idcouple]);
+				$this->zahodDancerArr[$iddance][$zahod][$idcouple]=$this->getIn()[$idcouple];				
+			}
+		}   
+         
+
+    }
+
+    public function search($params,$arrDance)
+    {
+    
+        $data=[];
+        $heatsArr=$this->getHeats();
+        $inArr=$this->getIn();
+	asort($inArr);
+	 
+    foreach ($inArr as $key => $nomer): 
+    	$data[$key] = [	'nomer' => $nomer,
+    					'name'=>$this->GetCoupleName($key),
+    					'club'=>$this->GetCoupleName($key,'clubName'),
+    					'City'=>$this->GetCoupleCity($key),
+    					'Trener'=>$this->GetCoupleTrener($key),
+    					
+    					];
+	if (is_array($arrDance)) foreach ($arrDance as $key1 => $dance) {
+		if (isset($heatsArr[$key][$key1])) {
+				$data[$key]['id'.$key1]=Html::a($heatsArr[$key][$key1],NULL, ['class' => 'setheats nomer','id' =>$nomer.'_'.$key1]);			
+		} else $data[$key]['id'.$key1]=Html::a('+',NULL, ['class' => 'setheats nomer','id' =>$nomer.'_'.$key1]);
+	}
+    endforeach;
+
+    $provider = new ArrayDataProvider([
+        'allModels' => $data,
+        'pagination' => 
+        	[
+            	'pageSize' => false,
+        	],
+
+    ]);
+     
+    return $provider;
+    }
+    
+    
+    
 
 	public function GetCoupleTrener($inId,$seporate='<br>')
 	{

@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\data\ArrayDataProvider;
+
 
 
 // $turInfo->gettur('')
@@ -38,59 +38,31 @@ $this->params['breadcrumbs'][] = $this->title;
                	'format' => 'raw',
     	       ];
 	};
- $columns[]= [
-           	    'header' => 'Участники',
+        array_push($columns,
+               [
+                'header' => 'Участники',
                	'attribute' => 'name',
                	'format' => 'raw',
-    	       ];
- $columns[]= [  
-           	    'header' => 'Клуб',
+    	       ],
+               [  
+                'header' => 'Клуб',
                	'attribute' => 'club',
                	'format' => 'raw',
-    	       ];
-   $columns[]= 	[
-           	    'header' => 'Город',
+    	       ],
+               [
+                'header' => 'Город',
                	'attribute' => 'City',
                	'format' => 'raw',
-    	       ];
-  $columns[]=  	[
-           	    'header' => 'Тренеры',
+    	       ],
+               [
+           	'header' => 'Тренеры',
                	'attribute' => 'Trener',
                	'format' => 'raw',
-    	       ]; 
-
-    $data=[];
-	$heatsArr=$turInfo->getHeats();
-	$inArr=$turInfo->getIn();
-	asort($inArr);
-	 
-    foreach ($inArr as $key => $nomer): 
-    	$data[$key] = [	'nomer' => $nomer,
-    					'name'=>$turInfo->GetCoupleName($key),
-    					'club'=>$turInfo->GetCoupleName($key,'clubName'),
-    					'City'=>$turInfo->GetCoupleCity($key),
-    					'Trener'=>$turInfo->GetCoupleTrener($key),
-    					
-    					];
-	foreach ($arrDance as $key1 => $dance) {
-		if (isset($heatsArr[$key][$key1])) {
-				$data[$key]['id'.$key1]=Html::a($heatsArr[$key][$key1],NULL, ['class' => 'setheats nomer','id' =>$nomer.'_'.$key1]);			
-		} else $data[$key]['id'.$key1]=Html::a('+',NULL, ['class' => 'setheats nomer','id' =>$nomer.'_'.$key1]);
-	}
-    endforeach;
-
-    $provider = new ArrayDataProvider([
-        'allModels' => $data,
-        'pagination' => 
-        	[
-            	'pageSize' => 2000,
-        	],
-
-    ]);
+    	       ]); 
 
 ?>
 <?= GridView::widget([
-    'dataProvider' => $provider,
+    'dataProvider' => $dataProvider,
     'columns' => $columns,
 
 ]);//'new','idT'=>$turInfo->getTur('idT')
@@ -148,7 +120,6 @@ $("#setheats").select();
 			background-color: rgb(80, 80, 80);
 			-moz-opacity: 0.95;
 			opacity: 0.95;
-			-ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=95);
 			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=95);
 			filter:alpha(opacity=95);
 			z-index:999;
