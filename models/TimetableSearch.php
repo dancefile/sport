@@ -75,7 +75,7 @@ class TimetableSearch extends Timetable
 
         $query->andFilterWhere(['like', 'category_name', $this->category_name])
             ->andFilterWhere(['like', 'dances', $this->dances]);
-        $query->andWhere(['not like', 'reg_pairs', 0]);
+//        $query->andWhere(['not like', 'reg_pairs', 0]);
         
         $query->orderBy(['sortItem' => SORT_ASC]);
 

@@ -56,11 +56,11 @@ use app\models\Category;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}&emsp;{delete}',
                 'options' => [
-                    'width' => '50px',
+                    'width' => '60px',
                 ],
-                'contentOptions' =>[
-                    'class' => 'actionColumnCell'
-                ]
+//                'contentOptions' =>[
+//                    'class' => 'actionColumnCell'
+//                ]
             ],
         ],
     ]);

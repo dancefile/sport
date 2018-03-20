@@ -12,6 +12,7 @@ use app\models\Tur;
  */
 class TurSearch extends Tur
 {
+    public $otd_id;
     /**
      * @inheritdoc
      */
@@ -67,6 +68,7 @@ class TurSearch extends Tur
             'ParNextTur' => $this->ParNextTur,
             'typeSkating' => $this->typeSkating,
             'status' => $this->status,
+            'category.otd_id' => $this->otd_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

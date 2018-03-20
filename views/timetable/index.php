@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         
         $searchModel->otd_id =$otd['id'];
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $tabs[]=[

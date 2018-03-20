@@ -38,6 +38,7 @@ class TimetableController extends Controller
                 'orderColumn' => 'sortItem',
 //                'on afterRun' => self::timeupdate(5),
             ],
+            
             // your other actions
         ];
     }
@@ -109,12 +110,14 @@ class TimetableController extends Controller
     
     public function actionDeletezero($otd_id)
     {
-//        print_r($otd_id);
+//        $qq= Timetable::find()->where(['AND', ['otd_id' => $otd_id], ['reg_pairs' => 0], ['<>', 'custom', '0']])->all();
+//        print_r($qq);
 //        exit;
         Timetable::deleteAll([
-                            'and',
-                            'otd_id' => $otd_id,
-                            'reg_pairs' => '0',
+                            'AND',
+                            ['otd_id' => $otd_id],
+                            ['OR', ['reg_pairs' => 0], ['reg_pairs' => NULL]],
+                            ['custom' => 0]
                         ]);
         return $this->render('index', ['otd_id'=>$otd_id]);
     }

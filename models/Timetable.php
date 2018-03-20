@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\helpers\TimeAction;
 
 /**
  * This is the model class for table "timetable".
@@ -33,7 +34,7 @@ class Timetable extends \yii\db\ActiveRecord
         return [
 //            [['time'], 'required'],
             [['time', 'tur_name', 'tur_time'], 'safe'],
-            [['otd_id', 'tur_id'], 'safe'],
+            [['otd_id', 'tur_id', 'custom'], 'safe'],
 //            [['name'], 'string', 'max' => 250],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
             [['category_name', 'tur_number', 'reg_pairs', 'programm', 'dances', 'heats_count', 'dances_count'], 'safe'],
@@ -74,13 +75,13 @@ class Timetable extends \yii\db\ActiveRecord
     {
         $turs = \app\models\Tur::find()->joinWith(['category', 'category.otd', 'ins'])->where(['category.otd_id'=>$otd_id])->asArray()->all();
         
-        $danceTime = Setings::find()->one();
-        $dt = $danceTime->danceTime;
+        $settings = Setings::find()->one();
+        $danceTime = $settings->danceTime;
         
         foreach ($turs as $tur) {
             if ($tur['category']['program']==4){
-                self::timeTableSave($tur, '10 D La', $dt);
-                self::timeTableSave($tur, '10 D St', $dt);
+                self::timeTableSave($tur, '10 D La', $danceTime);
+                self::timeTableSave($tur, '10 D St', $danceTime);
             } else {
                 switch ($tur['category']['program']) {
                     case 1:
@@ -93,7 +94,8 @@ class Timetable extends \yii\db\ActiveRecord
                         $programm = "St, La";
                         break;
                 }
-                self::timeTableSave($tur, $programm, $dt);
+                
+                self::timeTableSave($tur, $programm, $danceTime);
             }
         } 
         self::timeUpdate($otd_id);
@@ -106,7 +108,7 @@ class Timetable extends \yii\db\ActiveRecord
     }
 
 
-    private function timeTableSave($tur, $programm, $dt)
+    public function timeTableSave($tur, $programm, $danceTime)
     {
         $tt = new Timetable();  
         $tt->otd_id = $tur['category']['otd_id'];
@@ -119,12 +121,12 @@ class Timetable extends \yii\db\ActiveRecord
         $tt->dances = $tur['dances'];
         $tt->heats_count = $tur['zahodcount'];
         $tt->dances_count = count(explode(',', $tur['dances']));
-        $tt->tur_time = date('H:i:s', StrToTime($dt) * $tur['zahodcount'] * count(explode(',', $tur['dances'])));
+        $tt->tur_time = TimeAction::secondToTime(TimeAction::timeToSecond($danceTime) * $tur['zahodcount'] * count(explode(',', $tur['dances'])));
         $tt->save();
     }
 
-
-
+    
+    
 
     public function timeUpdate($otd_id)
     {
@@ -136,7 +138,7 @@ class Timetable extends \yii\db\ActiveRecord
         foreach ($timeTable as $record) {
             $record->time = $startTime;
             $record->save();
-            $startTime = date('H:i:s', StrToTime($record->time) + StrToTime($record->tur_time));
+            $startTime = TimeAction::secondToTime(TimeAction::timeToSecond($record->time) + TimeAction::timeToSecond($record->tur_time));
         }
     }
     

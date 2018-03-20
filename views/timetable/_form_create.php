@@ -21,13 +21,20 @@ use kartik\datecontrol\DateControl;
         <?= $form
             ->field($model, 'tur_time')
             ->widget(DateControl::classname(), [
-                'type'=>DateControl::FORMAT_TIME
+                'type'=>DateControl::FORMAT_TIME,
+                'options' => ['value' => '00:01:00'],
             ])
             ->label('Длительность');
         ?>
         <?= $form->field($model, 'category_name')
                 ->textInput()
                 ->label('Название');
+        ?>
+        <?= $form->field($model, 'custom')
+                ->checkbox([
+                    'label' => 'Не удалять при обновлении',
+                    'checked ' => true,
+                ]);
         ?>
 
         

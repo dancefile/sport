@@ -61,7 +61,7 @@ class TurController extends Controller
         } else {
             $last_tur = null;
         }
-        return $this->render('..\reglament\_turs', [
+        return $this->render('../reglament/_turs', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'last_tur' => $last_tur,
