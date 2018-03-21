@@ -34,8 +34,8 @@ $('.colaps').click(function(){
 
 
 
-$(function(){
-    
+
+$(function(){   
     $('.registration_tur_item input').change(function(){
         var str = '';
         $('.registration_tur_item').each(function(){
@@ -45,18 +45,29 @@ $(function(){
         })
         
         $('.list_registrations').replaceWith('<p class="list_registrations">' + str + '</p>');
-//        $str = $('.registration_tur_item input').val() + " - " + $('.registration_tur_item label').html();
-//        alert("#" + $(this).val() + " - " + $(this).parent().next().html());
     });
 })
+
 
 $(document).ready(function(){
     var str = '';
     $('.registration_tur_item').each(function(){
         if ($(this).children('input').val()){
-            str += "<span>№" + $(this).children('input').val() + "</span> - " + $(this).children('label').html() + ', ';
+            str += "<span>№" + $(this).children('input').val() + "</span> - " + 
+                    '<a href="#' + $(this).parent().attr("id") + '" data-toggle="tab">' + $(this).children('label').html() + '</a>, ';
         }
     })
 
     $('.list_registrations').replaceWith('<p class="list_registrations">' + str + '</p>');
 })
+
+
+//var loc = window.location.hash;
+//if (loc != "") {
+//        var href = loc;
+//        var target = $('.nav-tabs').find(href);
+//        $('.nav-tabs li').removeClass('active');
+//        $('.nav-tabs a[href="'+href  +'"]').addClass('active');
+//        $('.content-fade .content-fade-panel').hide();
+//        $(target).fadeIn('fast');
+//}

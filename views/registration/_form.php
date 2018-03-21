@@ -285,11 +285,15 @@ use yii\bootstrap\Tabs;
                     <div class="showTrener trener_6"><i class="glyphicon glyphicon-plus"></i></div> 
                 </div>     	
             </div>
+            
+            
 
             <div class="rightBlock flex-item two">
                 <h3>Пары</h3>
                 <hr>
-                <p class="list_registrations"></p>
+                <div class="nav nav-tabs">
+                    <p class="list_registrations"></p>
+                </div>
                 
                 <?php
                     $inPair = $model->inPair? $model->inPair:$model->turListPair();                    
