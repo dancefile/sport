@@ -17,6 +17,7 @@ use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use kartik\widgets\DatePicker;
 use kartik\datecontrol\DateControl;
+use yii\bootstrap\Tabs;
 
 
 /* @var $this yii\web\View */
@@ -286,51 +287,75 @@ use kartik\datecontrol\DateControl;
             </div>
 
             <div class="rightBlock flex-item two">
-
                 <h3>Пары</h3>
-                <table class="turs">
-            	<?php          //Вывод таблицы с категориями для пар
-                    $otd = 0;
-                    $inPair = $model->inPair? $model->inPair:$model->turListPair();
-                  
-                    foreach ($inPair as $tur) {
-                        if ($otd <> $tur['otd']) {
-                            $otd = $tur['otd'];    
-                            printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
-                        }
-                        echo ('<tr class="turRow"><td class="number">');
-			if (!isset($tur['nomer'])) $tur['nomer']='';
-
-                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), $tur['nomer'], ['class' => '']);
-                        printf("</td> <td>%s</td> </tr>", $tur['name']);            
-                    }
-                ?>
-                </table>
-
-                <br><br>
-                <h3>Соло</h3>
-
-                <table class="turs">
-                <?php          //Вывод таблицы с категориями для соло
-                    $otd = 0;
-                    $inSolo = $model->inSolo? $model->inSolo:$model->turListSolo();
-
-                    foreach ($inSolo as $tur) {
-                        if ($otd <> $tur['otd']) {
-                            $otd = $tur['otd'];    
-                            printf ('<tr class="colaps"> <td colspan="3">Отделение %s</td></tr>', $otd);
-                        }
-                            if (!isset($tur['nomer_M'])) $tur['nomer_M']='';
-                            if (!isset($tur['nomer_W'])) $tur['nomer_W']='';
-                        echo '<tr class="turRow"> <td class="number">';
-                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), $tur['nomer_M'], ['class' => '']);
-                        echo '</td><td class="number">';
-                        echo Html::input('text', sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), $tur['nomer_W'], ['class' => '']);
-                        printf("</td> <td>%s</td> </tr>", $tur['name']);
-                    }
+                <hr>
+                <p class="list_registrations"></p>
+                
+                <?php
+                    $inPair = $model->inPair? $model->inPair:$model->turListPair();                    
+                    $tabs=[];
+                    $str='';
+                    $otd_count = 0;
                     
+                    foreach ($inPair as $key=>$tur) {
+                        if (!isset($tur['nomer'])) $tur['nomer']='';
+                        if ($key == 0){
+                            $tabs[$otd_count]['label'] = $tur['otd'];                           
+                        } elseif ($tabs[$otd_count]['label'] <> $tur['otd']) {
+                            $tabs[$otd_count]['content'] = $str;
+                            $otd_count ++;
+                            $str='';
+                            $tabs[$otd_count]['label'] = $tur['otd'];
+                        } 
+                        $str .= '<div class="registration_tur_item">' .  
+                                Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), 
+                                        $tur['nomer'], ['class' => '']).
+                                '<label>' . $tur["name"]. '</label>'.
+                                '</div>';
+                        $tabs[$otd_count]['content'] = $str;
+                    }
+                   
+                    echo Tabs::widget([
+                        'items' => $tabs
+                    ]);
                 ?>
-                </table>
+                <h3>Соло</h3>
+                <hr>
+                
+                
+                <?php
+                    $inSolo = $model->inSolo? $model->inSolo:$model->turListSolo();                    
+                    $tabs=[];
+                    $str='';
+                    $otd_count = 0;
+                    
+                    foreach ($inSolo as $key=>$tur) {
+                        if (!isset($tur['nomer_M'])) $tur['nomer_M']='';
+                        if (!isset($tur['nomer_W'])) $tur['nomer_W']='';
+                        if ($key == 0){
+                            $tabs[$otd_count]['label'] = $tur['otd'];
+                        } elseif ($tabs[$otd_count]['label'] <> $tur['otd']) {
+                            $tabs[$otd_count]['content'] = $str;
+                            $otd_count ++;
+                            $str='';
+                            $tabs[$otd_count]['label'] = $tur['otd'];
+                        } 
+                        $str .= '<div class="registration_tur_item">' .  
+                                Html::input('text', 
+                                        sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), 
+                                        $tur['nomer_M'], ['class' => '']).
+                                Html::input('text', 
+                                        sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), 
+                                        $tur['nomer_W'], ['class' => '']).
+                                '<label>' .$tur["name"]. '</label>' .
+                                '</div>';
+                        $tabs[$otd_count]['content'] = $str;
+                    }
+                   
+                    echo Tabs::widget([
+                        'items' => $tabs
+                    ]);
+                ?>
             </div>
         </div>
         <div class="form-group three">

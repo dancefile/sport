@@ -49,8 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ),
             'active' => $active,
         ];
+        
     }
-
+//echo '<pre>' . print_r($tabs, true) . '</pre>';
+//        exit;
 
     echo Tabs::widget([
         'items' => $tabs

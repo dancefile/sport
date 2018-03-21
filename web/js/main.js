@@ -33,3 +33,30 @@ $('.colaps').click(function(){
 });
 
 
+
+$(function(){
+    
+    $('.registration_tur_item input').change(function(){
+        var str = '';
+        $('.registration_tur_item').each(function(){
+            if ($(this).children('input').val()){
+                str += "№" + $(this).children('input').val() + " - " + $(this).children('label').html() + ', ';
+            }
+        })
+        
+        $('.list_registrations').replaceWith('<p class="list_registrations">' + str + '</p>');
+//        $str = $('.registration_tur_item input').val() + " - " + $('.registration_tur_item label').html();
+//        alert("#" + $(this).val() + " - " + $(this).parent().next().html());
+    });
+})
+
+$(document).ready(function(){
+    var str = '';
+    $('.registration_tur_item').each(function(){
+        if ($(this).children('input').val()){
+            str += "<span>№" + $(this).children('input').val() + "</span> - " + $(this).children('label').html() + ', ';
+        }
+    })
+
+    $('.list_registrations').replaceWith('<p class="list_registrations">' + str + '</p>');
+})

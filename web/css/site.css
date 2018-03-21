@@ -242,7 +242,8 @@ td.number {
 
 .registration-create .rightBlock h3
 {
-    margin-top: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
     /* background: #337AB7; */
     /*padding: 10px;*/
     color: #616161;
@@ -375,6 +376,26 @@ td.number {
     margin-top: 10px;
 }
 
+.registration_tur_item input{
+    width: 50px;
+    margin: 0 10px 2px 0;
+}
+
+.rightBlock hr{
+    border-top: 6px double #b5b5b5;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+p.list_registrations{
+    color: #b5b5b5;
+}
+
+p.list_registrations span{
+    color: #6198c7;
+}
+
+
 /**********************************/
 /**********************************/
 /****** Список участников *********/
@@ -383,6 +404,7 @@ td.number {
 
 .tab-content{
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 .left-panel{
     width: 180px;

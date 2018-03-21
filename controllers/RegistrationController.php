@@ -37,7 +37,7 @@ class RegistrationController extends AppController
          
          if ($model->load(Yii::$app->request->post()) && $model->validate()) {
              
-             \app\services\CustomFunction::printCheck($model);
+//             \app\services\CustomFunction::printCheck($model);
              
              RegService::regSave($model, false);
              
@@ -57,7 +57,7 @@ class RegistrationController extends AppController
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
-            \app\services\CustomFunction::printCheck($model);
+//            \app\services\CustomFunction::printCheck($model);
             
             RegService::regSave($model, true);
 
