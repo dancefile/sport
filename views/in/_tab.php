@@ -50,7 +50,6 @@
                 'groupedRow' => true,
                 'groupOddCssClass'=>'category-caption',  // configure odd group cell css class
                 'groupEvenCssClass'=>'category-caption', // configure even group cell css class
-//                'contentOptions' => ['class'=>'category-caption'],
             ],
             [
                 'attribute'=>'tur.name', 
@@ -58,15 +57,11 @@
                 'groupedRow' => true,
                 'groupOddCssClass'=>'tur-caption',  // configure odd group cell css class
                 'groupEvenCssClass'=>'tur-caption', // configure even group cell css class
-//                'contentOptions' => ['class'=>'colaps'],
             ],
             
             [
                 'attribute' => 'nomer',
                 'options' => ['width' => '50'],
-//                'value' => function($model){
-//                    return $model->nomer;
-//                }
             ],
             [
                 'attribute' => 'couple.age',
@@ -160,11 +155,16 @@
                 'headerOptions' => ['width' => '60'],
                 'buttons' => [
                    'update' => function ($url, $model, $key){
-                      return Html::a('', ['registration/update', 'id'=>$model->id], ['class' => 'glyphicon glyphicon-pencil']);
+                      return Html::a('', 
+                              ['registration/update', 
+                                  'id'=>$model->id], ['class' => 'glyphicon glyphicon-pencil']);
                    },
-//                   'delete' => function ($url, $model, $key){
-//                      return Html::a('', ['delete'], ['class' => 'glyphicon glyphicon-cancel']);
-//                   }
+                   'delete' => function ($url, $model, $key){
+                      return Html::a('', 
+                              ['in/delete', 
+                                  'id'=>$model->id], ['class' => 'glyphicon glyphicon-trash', 
+                                      'data'=>['method' => 'post']]);
+                   }
                 ]
             ],
         ],

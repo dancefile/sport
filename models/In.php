@@ -226,6 +226,16 @@ class In extends \yii\db\ActiveRecord
             ->asArray()->all();
     }
 
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            \app\models\InDance::deleteAll(['id_in'=>$this->id]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     /**
      * @inheritdoc
      * @return InQuery the active query used by this AR class.
