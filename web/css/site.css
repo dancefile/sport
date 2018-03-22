@@ -384,15 +384,73 @@ td.number {
 .rightBlock hr{
     border-top: 6px double #b5b5b5;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
-p.list_registrations{
+p.list_registrations,
+p.list_registrations_solo_M,
+p.list_registrations_solo_W{
     color: #b5b5b5;
+    font-size: 12px;
+    display: inline;
 }
 
-p.list_registrations span{
-    color: #b57676;
+p.list_registrations span,
+p.list_registrations_solo_M span,
+p.list_registrations_solo_W span{
+    color: #a0a0a0;
+    font-weight: bold;
+}
+
+div.gender_marker_mw{
+    color: #fff;
+    background: #26a221;
+    padding: 5px 7px;
+    margin-right: 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+div.gender_marker_m{
+    color: #fff;
+    background: #4285f4;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+div.gender_marker_w{
+    color: #fff;
+    background: #ea9999;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+
+.list_registrations >.gender_marker{
+    color: #fff;
+    background: #26a221;
+    /*border: 5px solid #ea9999;*/
+    padding: 5px 7px;
+    margin-right: 10px;
+}
+
+.list_registrations_solo_M >.gender_marker{
+    color: #fff;
+    background: #4285f4;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+.list_registrations_solo_W >.gender_marker{
+    color: #fff;
+    background: #ea9999;
+    padding: 5px 10px;
+    margin-right: 10px;
 }
 
 

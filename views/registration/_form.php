@@ -87,7 +87,8 @@ use yii\bootstrap\Tabs;
                         'options' => ['placeholder' => 'ДР'],
                         'pluginOptions' => [
                             'autoclose'=>true,
-                            'format' => 'dd-M-yyyy'
+                            'format' => 'dd-M-yyyy',
+                            'placeholder' => 'ДР'
                         ]
                     ])
                     ->label(false);
@@ -291,9 +292,8 @@ use yii\bootstrap\Tabs;
             <div class="rightBlock flex-item two">
                 <h3>Пары</h3>
                 <hr>
-                <div class="nav nav-tabs">
-                    <p class="list_registrations"></p>
-                </div>
+                
+                <div class="gender_marker_mw">МЖ</div><p class="list_registrations"></p>
                 
                 <?php
                     $inPair = $model->inPair? $model->inPair:$model->turListPair();                    
@@ -325,7 +325,9 @@ use yii\bootstrap\Tabs;
                 ?>
                 <h3>Соло</h3>
                 <hr>
-                
+                <div class="gender_marker_m">М</div><p class="list_registrations_solo_M"></p>
+                <br>
+                <div class="gender_marker_w">Ж</div><p class="list_registrations_solo_W"></p>
                 
                 <?php
                     $inSolo = $model->inSolo? $model->inSolo:$model->turListSolo();                    
@@ -347,10 +349,10 @@ use yii\bootstrap\Tabs;
                         $str .= '<div class="registration_tur_item">' .  
                                 Html::input('text', 
                                         sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), 
-                                        $tur['nomer_M'], ['class' => '']).
+                                        $tur['nomer_M'], ['class' => 'number_m']).
                                 Html::input('text', 
                                         sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), 
-                                        $tur['nomer_W'], ['class' => '']).
+                                        $tur['nomer_W'], ['class' => 'number_w']).
                                 '<label>' .$tur["name"]. '</label>' .
                                 '</div>';
                         $tabs[$otd_count]['content'] = $str;

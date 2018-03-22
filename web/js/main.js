@@ -36,29 +36,78 @@ $('.colaps').click(function(){
 
 
 $(function(){   
-    $('.registration_tur_item input').change(function(){
+    $('.registration_tur_item input').change(function(){        
         var str = '';
-        $('.registration_tur_item').each(function(){
+        $('[id ^="w1-"]>.registration_tur_item').each(function(){
             if ($(this).children('input').val()){
-                str += "№" + $(this).children('input').val() + " - " + $(this).children('label').html() + ', ';
+                str += "<span>№" + $(this).children('input').val() + "</span> - " + 
+                        '<a href="#' + $(this).parent().attr("id") + '" data-toggle="tab">' + $(this).children('label').html() + '</a>, ';
             }
         })
-        
-        $('.list_registrations').replaceWith('<p class="list_registrations">' + str + '</p>');
+
+        $('.list_registrations').
+                replaceWith('<p class="list_registrations">' + str + '</p>');
+
+        var str = '';
+        $('.number_m').each(function(){
+            if ($(this).val()){
+                str += "<span>№" + $(this).val() + "</span> - " + 
+                        '<a href="#' + $(this).parent().parent().attr("id") + '" data-toggle="tab">' + 
+                        $(this).parent().find('label').html() + '</a>, ';
+            }
+        })
+
+        $('.list_registrations_solo_M').
+                replaceWith('<p class="list_registrations_solo_M">' + str + '</p>');
+        var str = '';
+        $('.number_w').each(function(){
+            if ($(this).val()){
+                str += "<span>№" + $(this).val() + "</span> - " + 
+                        '<a href="#' + $(this).parent().parent().attr("id") + '" data-toggle="tab">' + 
+                        $(this).parent().find('label').html() + '</a>, ';
+            }
+        })
+
+        $('.list_registrations_solo_W').
+                replaceWith('<p class="list_registrations_solo_W">' + str + '</p>');
     });
 })
 
 
 $(document).ready(function(){
     var str = '';
-    $('.registration_tur_item').each(function(){
+    $('[id ^="w1-"]>.registration_tur_item').each(function(){
         if ($(this).children('input').val()){
             str += "<span>№" + $(this).children('input').val() + "</span> - " + 
                     '<a href="#' + $(this).parent().attr("id") + '" data-toggle="tab">' + $(this).children('label').html() + '</a>, ';
         }
     })
 
-    $('.list_registrations').replaceWith('<p class="list_registrations">' + str + '</p>');
+    $('.list_registrations').
+            replaceWith('<p class="list_registrations">' + str + '</p>');
+    
+    var str = '';
+    $('.number_m').each(function(){
+        if ($(this).val()){
+            str += "<span>№" + $(this).val() + "</span> - " + 
+                    '<a href="#' + $(this).parent().parent().attr("id") + '" data-toggle="tab">' + 
+                    $(this).parent().find('label').html() + '</a>, ';
+        }
+    })
+
+    $('.list_registrations_solo_M').
+            replaceWith('<p class="list_registrations_solo_M">' + str + '</p>');
+    var str = '';
+    $('.number_w').each(function(){
+        if ($(this).val()){
+            str += "<span>№" + $(this).val() + "</span> - " + 
+                    '<a href="#' + $(this).parent().parent().attr("id") + '" data-toggle="tab">' + 
+                    $(this).parent().find('label').html() + '</a>, ';
+        }
+    })
+
+    $('.list_registrations_solo_W').
+            replaceWith('<p class="list_registrations_solo_W">' + str + '</p>');
 })
 
 
