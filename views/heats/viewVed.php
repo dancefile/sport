@@ -19,11 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     $columns=[[
            	    'header' => 'Номер',
                	'attribute' => 'nomer',
+        'contentOptions' =>['class' => 'bigtext'],
     	       ],
 			  [
            	    'header' => 'Участники',
                	'attribute' => 'name',
                	'format' => 'raw',
+                              'contentOptions' =>['class' => 'bigtext'],
     	       ],
     	       			  [
            	    'header' => 'Клуб',
@@ -51,10 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $columns=[[
            	    'header' => 'Заход',
                	'attribute' => 'heats',
+        
     	       ],
 			  [
            	    'header' => 'пары',
                	'attribute' => 'couple',
+                'contentOptions' =>['class' => 'bigtext'],
     	       ],
 				];
 
