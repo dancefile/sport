@@ -17,7 +17,7 @@ class ParserController extends Controller
         if (Yii::$app->request->post()) {
             $start = Yii::$app->request->post('start');
             $end = Yii::$app->request->post('end');
-            $site_url = 'http://www.danceleague.ru/db.php?id=e18073,c';
+            $site_url = 'http://www.danceleague.ru/db.php?id=e18076,c';
             
             $result = CustomFunction::getReglament($site_url);
             

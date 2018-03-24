@@ -42,7 +42,7 @@ class CustomFunction
     }
     
     public function getReglament($site_url) {
-        require_once "..\components\simple_html_dom.php";       // подгружаем компонент для работы с DOM
+        require_once "simple_html_dom.php";       // подгружаем компонент для работы с DOM
         $url = $site_url;
         $page = file_get_html($url);
         $tr = $page->find('td.MainPane table tr');
