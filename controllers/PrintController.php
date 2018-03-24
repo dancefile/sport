@@ -108,8 +108,12 @@ class PrintController extends \yii\web\Controller
 
 	public function actionList($idT=13)
 	{
+                     $arr=  explode(',', $idT) ;
+           $str='';
+           foreach ($arr as $id) { 
+            
 		$turInfo = new TurInfo;
-		$turInfo->setTur($idT);
+		$turInfo->setTur($id);
 		$Competition = new Competition;
 		$judges = (new \yii\db\Query()) //получаем список судей данной категории
 	    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
@@ -125,20 +129,23 @@ class PrintController extends \yii\web\Controller
 		switch ($turInfo->gettur("typeSkating")) {
           case '1'://балы
           if ($turInfo->getTur('dancing_order')==1) {
-			return $this->render('balAllHeats', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
-			} else return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
+			$str.= $this->renderPartial('balAllHeats', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
+			} else $str.= $this->renderPartial('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
           break;
 		  case '2'://кресты
-			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
+			$str.= $this->renderPartial('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
           break;
 		  case '3'://скейтинг
-			return $this->render('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'места', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
+			$str.= $this->renderPartial('bal', ['turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'места', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
           break;
 
 		  
 		}
-
-	return $this->error('что то пошло не так :(');
+               $str.= '<div class="next-page"> </div>';
+        }
+        
+                 return $this->render('about', ['message'=>$str]);
+	//return $this->error('что то пошло не так :(');
 	}
 	
 	public function actionReporttur($idT=1)

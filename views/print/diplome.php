@@ -36,35 +36,44 @@ else {$programname=$turName;$agename='';};
 
 		
 	//asort($inArr);
-	  $columns=[[
-           	    'header' => 'Номер',
+	  $columns=[
+                 			  [
+           	    'header' => 'Место',
+               	'attribute' => 'place',
+               	'format' => 'raw',
+                'contentOptions' =>['class' => 'bigtext'],
+    	       ],
+                            [
+           	    'header' => '№',
                	'attribute' => 'nomer',
+                'contentOptions' =>['class' => 'bigtext'],
     	       ],
 			  [
            	    'header' => 'Участники',
                	'attribute' => 'name',
                	'format' => 'raw',
+               'contentOptions' =>['class' => 'bigtext'],
     	       ],
     	       			  [
            	    'header' => 'Клуб',
                	'attribute' => 'club',
                	'format' => 'raw',
+                                      'contentOptions' =>['class' => 'mText'],
     	       ],
    			  [
            	    'header' => 'Город',
                	'attribute' => 'City',
                	'format' => 'raw',
+                              'contentOptions' =>['class' => 'mText'],
     	       ],
    			  [
            	    'header' => 'Тренеры',
                	'attribute' => 'Trener',
                	'format' => 'raw',
+                              'contentOptions' =>['class' => 'mText'],
     	       ],
-   			  [
-           	    'header' => 'Место',
-               	'attribute' => 'place',
-               	'format' => 'raw',
-    	       ]];
+
+              ];
 			   
 	$diploms=[];
     foreach ($resultCouple as $nomer => $result){
@@ -137,7 +146,7 @@ $lastKey=key($diploms);
 <?php
 	foreach ($diploms as $key=>$diplom) {
 			if ($lastKey==$key) echo '<div>'; else	echo '<div class="next-page">';
-		echo '<div class="" style="height: 650px;"> </div>';
+		echo '<div class="" style="height: 150px;"> </div>';
 		echo '<div class="diplom1" style="height: 110px;">'.$diplom['name'].'</div>';
 		echo '<div class="diplom2" style="height: 90px;">'.$diplom['place'].'</div>';
 		echo '<div class="diplom2" style="height: 90px;">'.$Competition->shortname.'</div>';

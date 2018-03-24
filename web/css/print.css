@@ -57,4 +57,11 @@
     .grid-view td{
         font-size:16px;
     }
+    
+    .bigtext{
+        font-size:20px !important;  
+    }
+    .mText{
+        font-size:18px !important;  
+    }
 }
