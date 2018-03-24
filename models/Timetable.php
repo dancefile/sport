@@ -52,14 +52,14 @@ class Timetable extends \yii\db\ActiveRecord
             'otd_id' => 'Отделение',
             'tur_id' => 'Тур',
             'category_name' => 'Категория',
-            'tur_number' => 'Номер тура',
-            'reg_pairs' => 'Зарег. пар',
-            'programm' => 'Программа',
+            'tur_number' => '№ тура',
+            'reg_pairs' => 'Пар',
+            'programm' => 'Прог.',
             'dances' => 'Танцы',
-            'heats_count' => 'Заходов',
+            'heats_count' => 'Заход',
             'dances_count' => 'Танцев',
             'tur_name' => 'Тур',
-            'tur_time' => 'Длительность'
+            'tur_time' => 'Длит.'
         ];
     }
 

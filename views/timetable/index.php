@@ -4,12 +4,12 @@ use yii\helpers\Html;
 use yii\bootstrap\Tabs;
 use app\models\TimetableSearch;
 
-$this->title = 'Расписание отделения № 1';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->title = 'Расписание отделения № 1';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<h1 id="caption"><?= Html::encode($this->title) ?></h1>
+
 
 <?php $this->registerJs(
    " $('#w5 li a').click(function(){

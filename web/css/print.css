@@ -1,12 +1,11 @@
 
-/* 
-    Created on : 26.01.2018, 14:54:03
-    Author     : Михаилус
-*/
-
 @media print { 
     /*@page { margin: 1cm; }*/
-    
+    @page 
+    {
+        size: auto;   /* auto is the initial value */
+        margin: 0 15mm;  /* this affects the margin in the printer settings */
+    }
     section { page-break-before: always;}
     
     tr { widows: 4;}
@@ -34,7 +33,10 @@
     .summary,
     .action-column,
     .actionColumnCell,
-    .no-print
+    .no-print,
+    tr>td:first-child,
+    tr>th:first-child,
+    tr>td:last-child
     {
         display: none;
     }
@@ -63,5 +65,8 @@
     }
     .mText{
         font-size:18px !important;  
+    }
+    .container{
+        width: 100%;
     }
 }

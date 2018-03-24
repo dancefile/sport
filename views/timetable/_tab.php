@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Timetable */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<h1 id="caption">Расписание отделения <?= $otd_name ?></h1>
 
 <?php 
     $form = ActiveForm::begin();
@@ -32,9 +32,9 @@ use yii\widgets\ActiveForm;
     <?= Html::a('Обновить время', ['timeupdate', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
     <?= Html::a('Печать', [' '], ['onclick'=>'print()','class' => 'btn btn-success']); ?>
     <?= Html::a('Удалить нулевые', ['deletezero', 'otd_id'=>$otd_id], ['class' => 'btn btn-success']); ?>
-    <button type="submit" name="zahod">Печать заходов</button>
-    <button type="submit" name="begun">Печать бегунков</button>
-    <button type="submit" name="newheat">Распределить заходы</button>
+    <button class = 'btn btn-success' type="submit" name="zahod">Печать заходов</button>
+    <button class = 'btn btn-success' type="submit" name="begun">Печать бегунков</button>
+    <button class = 'btn btn-success' type="submit" name="newheat">Распределить заходы</button>
 
 </p>
 
@@ -54,11 +54,37 @@ use yii\widgets\ActiveForm;
             'time',
             ['class' => 'yii\grid\SerialColumn'],
 //            'category.id',
-            'category_name',
-            'tur_name',
-            'reg_pairs',
-            'dances_count',
-            'programm',
+            [
+                'attribute'=>'category_name',
+//                'options' => [
+//                    'width' => '260px',
+//                ],
+            ],
+            [
+                'attribute'=>'tur_name',
+                'options' => [
+                    'width' => '100px',
+                ],
+            ],        
+            [
+                'attribute'=>'reg_pairs',
+                'options' => [
+                    'width' => '60px',
+                ],
+            ],        
+            [
+                'attribute'=>'dances_count',
+                'options' => [
+                    'width' => '60px',
+                ],
+            ],        
+            [
+                'attribute'=>'programm',
+                'options' => [
+                    'width' => '60px',
+                ],
+            ],        
+            
             [
                 'attribute' => 'dances',
                 'value' => function ($model, $key, $index, $widget) { 
@@ -66,8 +92,19 @@ use yii\widgets\ActiveForm;
                 }
             ],
             
-            'heats_count',
-            'tur_time',
+            
+            [
+                'attribute'=>'heats_count',
+                'options' => [
+                    'width' => '60px',
+                ],
+            ],
+            [
+                'attribute'=>'tur_time',
+                'options' => [
+                    'width' => '60px',
+                ],
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}&emsp;{delete}',
