@@ -80,7 +80,7 @@ class HeatsController extends \yii\web\Controller
 	
 	public function actionIndex($idT=0,$ved=0,$uch=0) //отбражаем заходы тура
 	{
-            
+            if (!$ved && !$uch) $uch=1;
           $arr=  explode(',', $idT) ;
            $str='';
            foreach ($arr as $id) {
@@ -109,15 +109,16 @@ class HeatsController extends \yii\web\Controller
                     'arrDance' => $arrDance,
                     'turInfo' => $turInfo,
                     'dataProvider' => $turInfo->search(Yii::$app->request->queryParams,null),
-                ]);
+                ]).'<div class="next-page"> </div>';
 		//else
-               // { 
+               if ($uch) { 
             $str.= $this->renderPartial('view', [
                 'arrDance' => $arrDance,
                 'turInfo' => $turInfo,
                 'dataProvider' => $turInfo->search(Yii::$app->request->queryParams,$arrDance),
-					]);
-             //   return $str;  //}
+					]).'<div class="next-page"> </div>';
+             //   return $str;  //
+                }
                                //  var_dump($str);
            }
                  return $this->render('about', ['message'=>$str]);
