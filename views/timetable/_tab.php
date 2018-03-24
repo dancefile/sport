@@ -48,7 +48,7 @@ use yii\widgets\ActiveForm;
             [
                 'class' => 'yii\grid\CheckboxColumn',
                         'checkboxOptions' => function ($model, $key, $index, $column) {
-                            return ['value' => $model->tur_id, 'name'=>$index];
+                            return ['value' => $model->tur_id, 'name'=>$model->tur_id];
                         }
             ],
             'time',
