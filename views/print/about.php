@@ -12,5 +12,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-    <code><?= $message ?></code>
+    <?= $message ?>
 </div>

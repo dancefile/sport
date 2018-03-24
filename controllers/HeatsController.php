@@ -35,8 +35,11 @@ class HeatsController extends \yii\web\Controller
         
 	public function actionNew($idT=0) //задаем заходы автоматом
 	{
+                      $arr=  explode(',', $idT) ;
+
+           foreach ($arr as $id) {
             	$turInfo = new TurInfo;
-		$turInfo->setTur($idT);
+		$turInfo->setTur($id);
 		$inArr=$turInfo->getIn();
             if (!$turInfo->gettur("typezahod")) return $this->error('Не найден тур или не задан способ формирования заходов');
             if (!$turInfo->gettur("zahodcount")) return $this->error('Не верное кол. заходов');
@@ -71,14 +74,18 @@ class HeatsController extends \yii\web\Controller
             Yii::$app->db->createCommand()->delete('in_dance', ['in' , 'id_in', array_keys($inArr)])->execute();
 
             Yii::$app->db->createCommand()->batchInsert('in_dance', ['id_in', 'dance_id', 'zahod'], $insetArr)->execute();
-		
-        //    return $this->actionIndex($idT);
+           }
+        //   return $this->actionIndex($idT);
 	}
 	
-	public function actionIndex($idT=0,$ved=0) //отбражаем заходы тура
+	public function actionIndex($idT=0,$ved=0,$uch=0) //отбражаем заходы тура
 	{
+            
+          $arr=  explode(',', $idT) ;
+           $str='';
+           foreach ($arr as $id) {
 		$turInfo = new TurInfo;
-		$turInfo->setTur($idT);
+		$turInfo->setTur($id);
 
             if (!$turInfo->gettur("typezahod")) return $this->error('Не найден тур или не задан способ формирования заходов');
 		
@@ -96,18 +103,24 @@ class HeatsController extends \yii\web\Controller
                     break;
             }
 
+            
 		if ($ved)  
-                    return $this->render('viewVed', [
+                   $str.= $this->renderPartial('viewVed', [
                     'arrDance' => $arrDance,
                     'turInfo' => $turInfo,
                     'dataProvider' => $turInfo->search(Yii::$app->request->queryParams,null),
                 ]);
-		else
-            return $this->render('view', [
+		//else
+               // { 
+            $str.= $this->renderPartial('view', [
                 'arrDance' => $arrDance,
                 'turInfo' => $turInfo,
                 'dataProvider' => $turInfo->search(Yii::$app->request->queryParams,$arrDance),
 					]);
+             //   return $str;  //}
+                               //  var_dump($str);
+           }
+                 return $this->render('about', ['message'=>$str]);
 	}//actionIndex
 	
 	
