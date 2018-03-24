@@ -4,10 +4,10 @@ namespace app\models\volod;
 
 class Competition extends \yii\base\Model
 {
-	public $name='Открытый региональный турнир МОТЛ «Кабы не было Зимы»';
-	public $shortname='«Кабы не было Зимы»';
-	public $data='4 февраля 2018г.';
-	public $place='ТЗ «Пингвин»';
+	public $name='Открытый региональный турнир МОТЛ';
+	public $shortname='Открытый региональный турнир МОТЛ';
+	public $data='25 марта 2018г.';
+	public $place='ТЗ Резиденция танца «Рублевское»';
 	public $org='Клюшин Николай';
 	public $chief='Тудинов Сергей';
 	//public $='';
