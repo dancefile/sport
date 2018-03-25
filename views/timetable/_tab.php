@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 <?php 
     $form = ActiveForm::begin([
         'action' => ['allprint/index'], 
-        'id' => 'forum_post', 
+        'id' => 'timetable', 
         'method' => 'post',]);
     Pjax::begin(); 
 ?>
