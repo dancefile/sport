@@ -217,10 +217,10 @@ class CustomFunction
     {
         if ($model->print_check){
                 
-                $arr_str[]=[
-                    'str' => 'Рег. №'.$model->coupleId,
-                    'size'=> 25
-                    ];
+//                $arr_str[]=[
+//                    'str' => 'Рег. №'.$model->coupleId,
+//                    'size'=> 25
+//                    ];
                 $arr_str[]=[
                     'str' => $model->d1_name.' '.$model->d1_sname,
                     'size'=> 30
