@@ -22,7 +22,10 @@ use yii\widgets\ActiveForm;
 <h1 id="caption">Расписание отделения <?= $otd_name ?></h1>
 
 <?php 
-    $form = ActiveForm::begin();
+    $form = ActiveForm::begin([
+        'action' => ['allprint/index'], 
+        'id' => 'forum_post', 
+        'method' => 'post',]);
     Pjax::begin(); 
 ?>
 
