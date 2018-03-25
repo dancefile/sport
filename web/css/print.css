@@ -34,9 +34,9 @@
     .action-column,
     .actionColumnCell,
     .no-print,
-    tr>td:first-child,
-    tr>th:first-child,
-    tr>td:last-child
+    #timetable tr>td:first-child,
+    #timetable tr>th:first-child,
+    #timetable tr>td:last-child
     {
         display: none;
     }
