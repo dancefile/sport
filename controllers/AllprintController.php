@@ -19,7 +19,7 @@ class AllprintController extends \yii\web\Controller
 
             $post=Yii::$app->request->post();
             if (isset($post['selection'])) {
-if (isset($post['zahod'])) return $this->redirect('/heats?ved=1&idT='.implode(",", $post['selection']));
+if (isset($post['zahod'])) return $this->redirect('/heats?ved=1&uch=1&idT='.implode(",", $post['selection']));
 if (isset($post['begun'])) return $this->redirect('/print/list?idT='.implode(",", $post['selection']));
 if (isset($post['newheat'])) return $this->redirect('/heats/new?idT='.implode(",", $post['selection']));
 
