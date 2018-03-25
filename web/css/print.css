@@ -36,11 +36,38 @@
     .no-print,
     #timetable tr>td:first-child,
     #timetable tr>th:first-child,
-    #timetable tr>td:last-child
+    #timetable tr>td:last-child,
+    #timetable tr>td:nth-child(7),
+    #timetable tr>th:nth-child(7),
+    #timetable tr>td:nth-child(8),
+    #timetable tr>th:nth-child(8)
+    
+    
     {
         display: none;
     }
+    #timetable tr>td:nth-child(4)
+ 
     
+    
+    {
+       font-size:20px !important;
+    }
+      #timetable tr>td:nth-child(9)
+ 
+    
+    
+    {
+       width: 150px !important;
+    }
+    
+        #timetable tr>td:nth-child(8)
+ 
+    
+    
+    {
+       width: 30px !important;
+    }
     .wrap > .container {
     padding: 0px 0px 0px;
 }
