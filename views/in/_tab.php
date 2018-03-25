@@ -10,7 +10,12 @@
 <?php $form = ActiveForm::begin(['action' => ['replace'],'options' => ['method' => 'post']]); ?>
     <?php $this->registerJs(
             "$('.kv-row-select').click(function(){
-                $('#replace_ins$otd_id').val($('#tab$otd_id').yiiGridView('getSelectedRows'));
+                var keys = [];
+                $('#tab').find('input[type=checkbox]:checked').each(function(){
+//                      alert ('sfsf');
+                    keys.push($(this).val());
+                });
+                $('#replace_ins$otd_id').val(keys);
                 $('#otd_id$otd_id').val($otd_id);
             });"      
     );?>
@@ -27,7 +32,7 @@
 
 
 <?= GridView::widget([
-        'id' => 'tab'.$otd_id,
+        'id' => 'tab',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'toolbar' =>  [
@@ -42,7 +47,10 @@
         ],
         'columns' => [
             [
-                'class' => '\kartik\grid\CheckboxColumn'
+                'class' => '\kartik\grid\CheckboxColumn',
+                'checkboxOptions' => function ($model, $key, $index, $column) {
+                            return ['value' => $model->id];
+                        }
             ],
             [
                 'attribute'=>'tur.category.name', 
