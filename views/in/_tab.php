@@ -12,7 +12,6 @@
             "$('.kv-row-select').click(function(){
                 var keys = [];
                 $('#tab').find('input[type=checkbox]:checked').each(function(){
-//                      alert ('sfsf');
                     keys.push($(this).val());
                 });
                 $('#replace_ins$otd_id').val(keys);
