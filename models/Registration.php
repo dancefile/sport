@@ -1,23 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\models;
 
 use yii\helpers\ArrayHelper;
 
-
-
-
-/**
- * Description of Registration
- *
- * @author Михаилус
- */
 class Registration extends \yii\base\Model
 {
     public $print_check=true;
@@ -69,27 +55,7 @@ class Registration extends \yii\base\Model
             [['club', 'city', 'country'], 'safe'],
             [['d1_sname', 'd2_sname'], 'safe'],
             [['d_trener1_name', 'd_trener2_name', 'd_trener3_name', 'd_trener4_name', 'd_trener5_name', 'd_trener6_name'], 'safe'],
-            [['d_trener1_sname', 'd_trener2_sname', 'd_trener3_sname', 'd_trener4_sname', 'd_trener5_sname', 'd_trener6_sname'], 'safe'],
-            
-            
-//            ['d1_sname', 'required', 'when' => function ($model) {
-//                    return $model->d2_sname == '';
-//                }, 
-//                'whenClient' => 'function (attribute, value) {
-//                    return $("#d2_sname").val() == "";
-//                }', 
-//                'message' => 'Заполните field 1 либо field 2'
-//            ],
-//
-//            ['d2_sname', 'required', 'when' => function ($model) {
-//                return $model->d1_sname == '';
-//                }, 
-//                'whenClient' => 'function (attribute, value) {
-//                    return $("#d1_sname").val() == "";
-//                }', 
-//                'message' => 'Заполните field 1 либо field 2'
-//            ],
-            
+            [['d_trener1_sname', 'd_trener2_sname', 'd_trener3_sname', 'd_trener4_sname', 'd_trener5_sname', 'd_trener6_sname'], 'safe'],           
             ['turPair', 'checkTurPair'],
             ['turSolo_M', 'checkSolo_M'],
             ['turSolo_W', 'checkSolo_W'],
@@ -178,7 +144,7 @@ class Registration extends \yii\base\Model
             ->groupBy('tur.category_id')
             ->andWhere(min(['tur.nomer']))
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])
-            ->asArray()->all();
+            ->asArray();
     }
     
     public function turInSolo($couple)
