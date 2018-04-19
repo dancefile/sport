@@ -110,13 +110,8 @@ $(document).ready(function(){
             replaceWith('<p class="list_registrations_solo_W">' + str + '</p>');
 })
 
-
-//var loc = window.location.hash;
-//if (loc != "") {
-//        var href = loc;
-//        var target = $('.nav-tabs').find(href);
-//        $('.nav-tabs li').removeClass('active');
-//        $('.nav-tabs a[href="'+href  +'"]').addClass('active');
-//        $('.content-fade .content-fade-panel').hide();
-//        $(target).fadeIn('fast');
-//}
+$('.rightBlock').delegate('a','click', function(){
+//    alert ($(this).attr('href'));
+    $('#tab a[href="'+$(this).attr('href')+'"]').tab('show');
+});
+    

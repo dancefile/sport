@@ -144,7 +144,7 @@ class Registration extends \yii\base\Model
             ->groupBy('tur.category_id')
             ->andWhere(min(['tur.nomer']))
             ->orderBy(['category.otd_id' => SORT_ASC, 'tur.category_id' => SORT_ASC])
-            ->asArray();
+            ->asArray()->all();
     }
     
     public function turInSolo($couple)
@@ -177,9 +177,24 @@ class Registration extends \yii\base\Model
         $dancer1 = $couple->dancerId1;
         $dancer2 = $couple->dancerId2;
         if ($dancer1){
-            if ($dancer1->club0){
-                $this->city = $dancer1->club0->city? $dancer1->club0->city->name:'';
-                $this->country = $dancer1->club0->city->country? $dancer1->club0->city->country->name:'';
+            if (isset($dancer1->club0)){
+                $this->club = $dancer1->club0->name;
+            }
+            if (isset($dancer1->club0->city)){
+                $this->city = $dancer1->club0->city->name;
+            }
+            if (isset($dancer1->club0->city->country)){
+                $this->country = $dancer1->club0->city->country->name;
+            }
+        } else {
+            if (isset($dancer2->club0)){
+                $this->club = $dancer2->club0->name;
+            }
+            if (isset($dancer2->club0->city)){
+                $this->city = $dancer2->club0->city->name;
+            }
+            if (isset($dancer2->club0->city->country)){
+                $this->country = $dancer2->club0->city->country->name;
             }
         }
         $this->loadDancerAttr($dancer1 , $dancer2);
@@ -228,7 +243,7 @@ class Registration extends \yii\base\Model
             $this->d1_class_st = $dancer1->clas_id_st;
             $this->d1_class_la = $dancer1->clas_id_la;
             $this->d1_booknumber = $dancer1->booknumber;
-            $this->club = $dancer1->club0? $dancer1->club0->name:null;
+//            $this->club = $dancer1->club0? $dancer1->club0->name:null;
         }
         if (isset($dancer2->id)){
             $this->d2_id = $dancer2->id;
@@ -238,7 +253,7 @@ class Registration extends \yii\base\Model
             $this->d2_class_st = $dancer2->clas_id_st;
             $this->d2_class_la = $dancer2->clas_id_la;
             $this->d2_booknumber = $dancer2->booknumber;
-            $this->club = $dancer2->club0? $dancer2->club0->name:null;
+//            $this->club = $dancer2->club0? $dancer2->club0->name:null;
         }
         
     }
