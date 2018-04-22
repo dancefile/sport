@@ -48,18 +48,19 @@
             [
                 'class' => '\kartik\grid\CheckboxColumn',
                 'checkboxOptions' => function ($model, $key, $index, $column) {
-                            return ['value' => $model->id];
+                            return ['value' => $model['inId']];
                         }
             ],
+            
             [
-                'attribute'=>'tur.category.name', 
+                'attribute'=>'category', 
                 'group'=>true,
                 'groupedRow' => true,
                 'groupOddCssClass'=>'category-caption',  // configure odd group cell css class
                 'groupEvenCssClass'=>'category-caption', // configure even group cell css class
             ],
             [
-                'attribute'=>'tur.name', 
+                'attribute'=>'tur', 
                 'group'=>true,
                 'groupedRow' => true,
                 'groupOddCssClass'=>'tur-caption',  // configure odd group cell css class
@@ -67,7 +68,7 @@
             ],
             
             [
-                'attribute' => 'nomer',
+                'attribute' => 'number',
                 'options' => ['width' => '50'],
             ],
             [
@@ -75,11 +76,11 @@
                 'options' => ['width' => '60'],
             ],
             [
-                'attribute' => 'dancerId1',
+                'attribute' => 'dancer1',
                 'options' => ['width' => '170'],
                 'value' => function($model){
-                    if ($model->who == 1 || $model->who == 3){
-                        return $model->couple->dancerId1 ? $model->couple->dancerId1->dancerFullName : NULL;
+                    if ($model['who'] == 1 || $model['who'] == 3){
+                        return $model['dancer1'];
                     } else {
                         return '-';
                     }
@@ -89,12 +90,12 @@
                 'attribute' => 'classes',
                 'options' => ['width' => '50'],
                 'value' => function($model) use ($class_list){
-                    if ($model->who == 1 || $model->who == 3){
-                        if ($model->couple->dancerId1->clas_id_st){
-                            $classes[] = $class_list[$model->couple->dancerId1->clas_id_st]. '(St)';
+                    if ($model['who'] == 1 || $model['who'] == 3){
+                        if ($model['classSt1']){
+                            $classes[] = $class_list[$model['classSt1']]. '(St)';
                         }
-                        if ($model->couple->dancerId1->clas_id_la){
-                            $classes[] = $class_list[$model->couple->dancerId1->clas_id_la]. '(La)';
+                        if ($model['classLa1']){
+                            $classes[] = $class_list[$model['classLa1']]. '(La)';
                         }
                         if (isset($classes)){
                             return implode(' ', $classes);
@@ -105,11 +106,11 @@
                 }
             ],
             [
-                'attribute' => 'dancerId2',
+                'attribute' => 'dancer2',
                 'options' => ['width' => '170'],
                 'value' => function($model){
-                    if ($model->who == 2 || $model->who == 3){
-                        return $model->couple->dancerId2 ? $model->couple->dancerId2->dancerFullName : NULL;
+                    if ($model['who'] == 2 || $model['who'] == 3){
+                        return $model['dancer2'];
                     } else {
                         return '-';
                     }
@@ -119,12 +120,12 @@
                 'attribute' => 'classes',
                 'options' => ['width' => '50'],
                 'value' => function($model) use ($class_list){
-                    if ($model->who == 2 || $model->who == 3){
-                        if ($model->couple->dancerId2->clas_id_st){
-                            $classes[] = $class_list[$model->couple->dancerId2->clas_id_st]. '(St)';
+                    if ($model['who'] == 2 || $model['who'] == 3){
+                        if ($model['classSt2']){
+                            $classes[] = $class_list[$model['classSt2']]. '(St)';
                         }
-                        if ($model->couple->dancerId2->clas_id_la){
-                            $classes[] = $class_list[$model->couple->dancerId2->clas_id_la]. '(La)';
+                        if ($model['classLa2']){
+                            $classes[] = $class_list[$model['classLa2']]. '(La)';
                         }
                         if (isset($classes)){
                             return implode(' ', $classes);
@@ -134,27 +135,41 @@
                     }
                 }
             ],
-            'city',
             [
-                'attribute' => 'club',
-//                'options' => ['width' => '50'],
-                'value' => function($model) use ($club_list){
-//                    echo '<pre>', print_r($model->couple->dancerId1->club0), '</pre>';
-//                    exit;
-                    if (isset($model->couple->dancerId1->club)){
-                        $clubs[] = $club_list[$model->couple->dancerId1->club];
-                    }
-                    if (isset($model->couple->dancerId2->club0->city)){
-                        $clubs[] = $club_list[$model->couple->dancerId2->club];
-                    }
-                    if (isset($clubs)){
-                        return implode(', ', $clubs);
+                'attribute' => 'city',
+                'value' => function($model){
+                    if ($model['city1'] == $model['city2']){
+                        return $model['city1'];
+                    } else {
+                        return $model['city1']. ' '. $model['city2'];
                     }
                 }
             ],
                     
-
-            'couple.trenersString',            
+            [
+                'attribute' => 'club',
+//                'options' => ['width' => '50'],
+                'value' => function($model){
+                    if ($model['club1'] == $model['club2']){
+                        return $model['club1'];
+                    } else {
+                        return $model['club1']. ' '. $model['club2'];
+                    }
+                }
+            ],
+             
+            [
+                'attribute' => 'treners',
+                'value' => function($model){
+                    if ($model['treners1'] == $model['treners2']){
+                        return $model['treners1'];
+                    } else {
+                        return $model['treners1'].' '.$model['treners2'];
+                    }
+                    
+                }
+            ],
+           
 
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -164,12 +179,12 @@
                    'update' => function ($url, $model, $key){
                       return Html::a('', 
                               ['registration/update', 
-                                  'id'=>$model->id], ['class' => 'glyphicon glyphicon-pencil']);
+                                  'id'=>$model['inId']], ['class' => 'glyphicon glyphicon-pencil']);
                    },
                    'delete' => function ($url, $model, $key){
                       return Html::a('', 
                               ['in/delete', 
-                                  'id'=>$model->id], ['class' => 'glyphicon glyphicon-trash', 
+                                  'id'=>$model['inId']], ['class' => 'glyphicon glyphicon-trash', 
                                       'data'=>['method' => 'post']]);
                    }
                 ]

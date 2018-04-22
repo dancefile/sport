@@ -55,20 +55,20 @@ class InController extends Controller
         
         $otd_list = In::getOtdList();
         $class_list = In::getClassList();
-        $city_list = In::getCityList();
-        $club_list = In::getClubList();
-        if (!$otd_id){
-            $categories = In::getCategories($otd_list[0]);
-        } else {
-            $categories = In::getCategories($otd_id);
-        }
+//        $city_list = In::getCityList();
+//        $club_list = In::getClubList();
+//        if (!$otd_id){
+//            $categories = In::getCategories($otd_list[0]);
+//        } else {
+//            $categories = In::getCategories($otd_id);
+//        }
 //        if ($category_id){
 //            $searchModel->category_id =$category_id;
 //        } else {
 //            $searchModel->defaultOrder = ['tur_id' => SORT_ASC];
 //        }
-        $searchModel->otd_id =$otd_id;
-        $searchModel->category_id =$category_id;
+        $searchModel->otd_id = $otd_id;
+//        $searchModel->category_id = $category_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination = false;
         
@@ -78,9 +78,9 @@ class InController extends Controller
             'otd_list' =>$otd_list,
             'otd_id' => $otd_id,
             'class_list' => $class_list,
-            'city_list' => $city_list,
-            'club_list' => $club_list,
-            'categories' => $categories,
+//            'city_list' => $city_list,
+//            'club_list' => $club_list,
+//            'categories' => $categories,
 //            'category_id' => $category_id,
         ]);
     }

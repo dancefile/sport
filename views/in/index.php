@@ -36,19 +36,19 @@ $this->title = 'Список участников';
 
     
     <?=
-    $this->render('_tab', 
-        [
-            'dataProvider' =>  $dataProvider,
-            'searchModel' => $searchModel,
-            'otd_id' => $otd_id,
-            'class_list' => $class_list,
-            'city_list' => $city_list,
-            'club_list' => $club_list,
-            'categories' => $categories,
-//            'category_id' => $category_id,
-//            'categories' => $categories,
-        ]
-    );
+        $this->render('_tab', 
+            [
+                'dataProvider' =>  $dataProvider,
+                'searchModel' => $searchModel,
+                'otd_id' => $otd_id,
+                'class_list' => $class_list,
+//                'city_list' => $city_list,
+//                'club_list' => $club_list,
+//                'categories' => $categories,
+    //            'category_id' => $category_id,
+    //            'categories' => $categories,
+            ]
+        );
     ?>
     
     <?php \yii\widgets\Pjax::end()?>
