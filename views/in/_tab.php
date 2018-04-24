@@ -63,6 +63,7 @@
                 'attribute'=>'tur', 
                 'group'=>true,
                 'groupedRow' => true,
+                'subGroupOf'=>1 ,
                 'groupOddCssClass'=>'tur-caption',  // configure odd group cell css class
                 'groupEvenCssClass'=>'tur-caption', // configure even group cell css class
             ],
@@ -70,6 +71,16 @@
             [
                 'attribute' => 'number',
                 'options' => ['width' => '50'],
+                'format' => 'raw',
+                'value' => function($model){
+                    return Html::a(
+                            $model['number'],
+                            [
+                                'registration/update', 
+                                'id'=>$model['inId']
+                            ]
+                    );
+                }
             ],
             [
                 'attribute' => 'couple.age',
@@ -78,9 +89,16 @@
             [
                 'attribute' => 'dancer1',
                 'options' => ['width' => '170'],
+                'format' => 'raw',
                 'value' => function($model){
                     if ($model['who'] == 1 || $model['who'] == 3){
-                        return $model['dancer1'];
+                        return Html::a(
+                                $model['dancer1'],
+                                [
+                                    'registration/update', 
+                                    'id'=>$model['inId']
+                                ]
+                        );
                     } else {
                         return '-';
                     }
@@ -108,9 +126,16 @@
             [
                 'attribute' => 'dancer2',
                 'options' => ['width' => '170'],
+                'format' => 'raw',
                 'value' => function($model){
                     if ($model['who'] == 2 || $model['who'] == 3){
-                        return $model['dancer2'];
+                        return Html::a(
+                                $model['dancer2'],
+                                [
+                                    'registration/update', 
+                                    'id'=>$model['inId']
+                                ]
+                        );
                     } else {
                         return '-';
                     }
@@ -176,17 +201,30 @@
                 'template' => '{update}&nbsp;&nbsp;{delete}',
                 'headerOptions' => ['width' => '60'],
                 'buttons' => [
-                   'update' => function ($url, $model, $key){
-                      return Html::a('', 
-                              ['registration/update', 
-                                  'id'=>$model['inId']], ['class' => 'glyphicon glyphicon-pencil']);
-                   },
-                   'delete' => function ($url, $model, $key){
-                      return Html::a('', 
-                              ['in/delete', 
-                                  'id'=>$model['inId']], ['class' => 'glyphicon glyphicon-trash', 
-                                      'data'=>['method' => 'post']]);
-                   }
+                    'update' => function ($url, $model, $key){
+                       return Html::a('', 
+                            [
+                                'registration/update', 
+                                'id'=>$model['inId']
+                            ], 
+                            [
+                                'class' => 'glyphicon glyphicon-pencil'
+                            ]
+                        );
+                    },
+                    'delete' => function ($url, $model, $key){
+                        return Html::a('', 
+                            [
+                                'in/delete', 
+                                'id'=>$model['inId']
+                            ], 
+                            [
+                                'class' => 'glyphicon glyphicon-trash', 
+                                'data'=>['method' => 'post'],
+                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            ]
+                        );
+                    }
                 ]
             ],
         ],

@@ -55,34 +55,20 @@ class InController extends Controller
         
         $otd_list = In::getOtdList();
         $class_list = In::getClassList();
-//        $city_list = In::getCityList();
-//        $club_list = In::getClubList();
-//        if (!$otd_id){
-//            $categories = In::getCategories($otd_list[0]);
-//        } else {
-//            $categories = In::getCategories($otd_id);
-//        }
-//        if ($category_id){
-//            $searchModel->category_id =$category_id;
-//        } else {
-//            $searchModel->defaultOrder = ['tur_id' => SORT_ASC];
-//        }
+
         $searchModel->otd_id = $otd_id;
-//        $searchModel->category_id = $category_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination = false;
         
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'otd_list' =>$otd_list,
-            'otd_id' => $otd_id,
-            'class_list' => $class_list,
-//            'city_list' => $city_list,
-//            'club_list' => $club_list,
-//            'categories' => $categories,
-//            'category_id' => $category_id,
-        ]);
+        return $this->render('index', 
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'otd_list' =>$otd_list,
+                'otd_id' => $otd_id,
+                'class_list' => $class_list,
+            ]
+        );
     }
 
     /**
@@ -228,16 +214,20 @@ class InController extends Controller
         
         if (isset($post['replace'])){
             foreach ($ins as $in) {
-                $in->updateAttributes(['tur_id' => $tur->id]);
+                if (self::checkDuplicate($in, $tur)){
+                    $in->updateAttributes(['tur_id' => $tur->id]);
+                } 
             }
         } elseif (isset($post['copy'])){
             foreach ($ins as $in) {
-                $new_in = new In();
-                $new_in->couple_id = $in->couple_id;
-                $new_in->tur_id = $tur->id;
-                $new_in->nomer = $in->nomer;
-                $new_in->who = $in->who;
-                $new_in->save(false);
+                if (self::checkDuplicate($in, $tur)){
+                    $new_in = new In();
+                    $new_in->couple_id = $in->couple_id;
+                    $new_in->tur_id = $tur->id;
+                    $new_in->nomer = $in->nomer;
+                    $new_in->who = $in->who;
+                    $new_in->save(false);
+                }
             }
         }
         
@@ -245,6 +235,23 @@ class InController extends Controller
         return $this->redirect(['index', 'otd_id' => $post['otd_id']]);
     }
     
+    private function checkDuplicate($in, $tur)
+    {
+        $c = In::find()
+                ->where([
+                    'couple_id' => $in->couple_id,
+                    'tur_id' => $tur->id,
+                ]);
+        if($c->count()==0){
+            return true;
+        } else {
+            Yii::$app->session->addFlash(
+                    'danger', 
+                    'Обнаружен Дублткат! Пара №'.$in->nomer.' уже сужествует в категории '.$tur->category->name);
+        }
+    }
+
+
     private function inSave($tur, $coupleId)
     {
         foreach ($tur as $key => $value) {

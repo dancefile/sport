@@ -26,7 +26,7 @@ $this->title = 'Список участников';
     
     <?php     
         foreach ($otd_list as $otd) {
-            echo Html::a($otd->name, ['index', 'otd_id'=>$otd->id], ['class' => 'btn']);
+            echo Html::a($otd->name, ['index', 'otd_id'=>$otd->id], ['class' => $otd_id==$otd->id ? 'active btn':'btn']);
         }
     ?>
     
@@ -42,11 +42,6 @@ $this->title = 'Список участников';
                 'searchModel' => $searchModel,
                 'otd_id' => $otd_id,
                 'class_list' => $class_list,
-//                'city_list' => $city_list,
-//                'club_list' => $club_list,
-//                'categories' => $categories,
-    //            'category_id' => $category_id,
-    //            'categories' => $categories,
             ]
         );
     ?>
