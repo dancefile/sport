@@ -110,8 +110,13 @@ $(document).ready(function(){
             replaceWith('<p class="list_registrations_solo_W">' + str + '</p>');
 })
 
-$('.rightBlock').delegate('a','click', function(){
-//    alert ($(this).attr('href'));
+$('.rightBlock').delegate('p>a','click', function(){
+
     $('#tab a[href="'+$(this).attr('href')+'"]').tab('show');
+
+    var a;
+    a = $('li>a[href="'+$(this).attr('href')+'"]');
+    a.parents('ul').find('li.active').removeClass();
+    a.parent('li').addClass('active');
 });
     

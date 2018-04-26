@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Ins', 'url' => ['in/index']];
 
     <?= $this->render('_form', [
         'model' => $model,
+        
 	]) ?>
  	
  	

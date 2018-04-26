@@ -297,6 +297,12 @@ use yii\bootstrap\Tabs;
                 
                 <?php
                     $inPair = $model->inPair? $model->inPair:$model->turListPair();                    
+                    if (!empty($_POST)){
+                        $turPair = $_POST['Registration']['turPair'];
+                        $turSolo_M = $_POST['Registration']['turSolo_M'];
+                        $turSolo_W = $_POST['Registration']['turSolo_W'];
+                    }
+                    
                     $tabs=[];
                     $str='';
                     $otd_count = 0;
@@ -310,10 +316,15 @@ use yii\bootstrap\Tabs;
                             $otd_count ++;
                             $str='';
                             $tabs[$otd_count]['label'] = $tur['otd'];
-                        } 
+                        }
+                        if (isset($turPair)){
+                            $number = $turPair[$tur['id']];
+                        } else {
+                            $number = $tur['nomer'];
+                        }
                         $str .= '<div class="registration_tur_item">' .  
                                 Html::input('text', sprintf('Registration[%s][%s]', 'turPair', $tur['id']), 
-                                        $tur['nomer'], ['class' => '']).
+                                        $number, ['class' => '']).
                                 '<label>' . $tur["name"]. '</label>'.
                                 '</div>';
                         $tabs[$otd_count]['content'] = $str;
@@ -345,14 +356,24 @@ use yii\bootstrap\Tabs;
                             $otd_count ++;
                             $str='';
                             $tabs[$otd_count]['label'] = $tur['otd'];
-                        } 
+                        }
+                        if (isset($turSolo_M)){
+                            $number_M = $turSolo_M[$tur['id']];
+                        } else {
+                            $number_M = $tur['nomer_M'];
+                        }
+                        if (isset($turSolo_W)){
+                            $number_W = $turSolo_W[$tur['id']];
+                        } else {
+                            $number_W = $tur['nomer_W'];
+                        }
                         $str .= '<div class="registration_tur_item">' .  
                                 Html::input('text', 
                                         sprintf('Registration[%s][%s]', 'turSolo_M', $tur['id']), 
-                                        $tur['nomer_M'], ['class' => 'number_m']).
+                                        $number_M, ['class' => 'number_m']).
                                 Html::input('text', 
                                         sprintf('Registration[%s][%s]', 'turSolo_W', $tur['id']), 
-                                        $tur['nomer_W'], ['class' => 'number_w']).
+                                        $number_W, ['class' => 'number_w']).
                                 '<label>' .$tur["name"]. '</label>' .
                                 '</div>';
                         $tabs[$otd_count]['content'] = $str;

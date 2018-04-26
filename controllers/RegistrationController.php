@@ -43,8 +43,10 @@ class RegistrationController extends AppController
              
              return $this->redirect(['in/index']);
          } else {
+             
              return $this->render('create', [
                  'model' => $model,
+                 
              ]);
          }
      }
