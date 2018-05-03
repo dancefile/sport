@@ -71,6 +71,24 @@ class RegistrationController extends AppController
         }
     }
     
+    public function actionCheck()
+    {
+//        if (In::find()->where(['tur_id'=>$tur, 'nomer'=>$number])){
+//            Yii::$app->session->addFlash(
+//                    'danger', 
+//                    'Под номером '.$number.' в категории '.$tur.' уже есть регистрация!');
+//            return false;
+//        } else {
+//            return true;
+//        }
+        echo '<pre>' . print_r('FvSvSvS', true) . '</pre>';
+        exit;
+        Yii::$app->session->addFlash(
+                    'danger', 
+                    'уже есть регистрация!');
+        
+    }
+    
         /**
      * Finds the In model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

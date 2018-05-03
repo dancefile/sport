@@ -2,21 +2,21 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-
-use yii\widgets\ActiveForm;
-use kartik\widgets\TypeaheadBasic;
-use kartik\widgets\Select2;
-
+use yii\helpers\Url;
 use yii\web\JsExpression;
 
 use app\models\In;
 use app\models\Registration;
 use app\models\Couple;
 use app\models\Clas;
+
 use yii\widgets\Pjax;
+use yii\widgets\ActiveForm;
 use kartik\grid\GridView;
 use kartik\widgets\DatePicker;
 use kartik\datecontrol\DateControl;
+use kartik\widgets\Typeahead;
+
 use yii\bootstrap\Tabs;
 
 
@@ -29,6 +29,7 @@ use yii\bootstrap\Tabs;
     <?php $form = ActiveForm::begin(); ?>
     	<div class=" flex-container">
             <div class="leftBlock flex-item one">
+                          
             	<?= $form
                     ->field($model, 'd1_sname')
                     ->textInput(['placeholder' => 'фамилия'])
@@ -400,3 +401,8 @@ use yii\bootstrap\Tabs;
         </div>
     <?php ActiveForm::end(); ?>
 </div>
+
+
+
+
+        <div id="search_advice_wrapper"></div>

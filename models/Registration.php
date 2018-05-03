@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\helpers\ArrayHelper;
+use app\models\In;
 
 class Registration extends \yii\base\Model
 {
@@ -96,8 +97,7 @@ class Registration extends \yii\base\Model
             $this->addError($attr, 'Error');
         }
     }
-    
-     
+
     public static function getClassList()
     {
         return ArrayHelper::map(Clas::find()->all(), 'id', 'name');
