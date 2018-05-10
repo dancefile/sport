@@ -161,10 +161,6 @@ $(function () {
 
 
 
-
-
-    $(window).load(function () {
-
         $("#zayavka").keydown(function (event) {
             if (event.keyCode == 13) {
                 id_search = 'zayavka';
@@ -232,7 +228,8 @@ $(function () {
         });
 
         // читаем ввод с клавиатуры
-        $("[name='Registration[d1_sname]']").keyup(function (I) {
+        $("#registration-d1_sname, #registration-d2_sname, #registration-club, #registration-city, #registration-d_trener1_sname, #registration-d_trener2_sname, #registration-d_trener3_sname, #registration-d_trener4_sname, #registration-d_trener5_sname, #registration-d_trener6_sname").
+                keyup(function (I) {
             //alert('data');
             // определяем какие действия нужно делать при нажатии на клавиатуру
             switch (I.keyCode) {
@@ -251,8 +248,7 @@ $(function () {
                         id_search = $(this).attr('id');
                         input_initial_value = $(this).val();
                         // производим AJAX запрос к /ajax/ajax.php, передаем ему GET query, в который мы помещаем наш запрос
-                        $.get("ajax.php", {"query": $(this).val(), "id_search": id_search}, function (data) {
-                            //alert(data);
+                        $.get("/in/dancer-list", {"q": $(this).val(), "id_search": id_search}, function (data) {
                             list = jQuery.parseJSON(data);
                             // $("#"+id_search).val(data);
                             suggest_count = list.length;
@@ -266,7 +262,7 @@ $(function () {
                                         $('#search_advice_wrapper').append('<div class="advice_variant advice_variant' + list[i].type + '" id="' + list[i].id + '" ttype="' + list[i].type + '">' + list[i].name + '</div>');
                                     }
                                 }
-                            }
+                            } else {$('#search_advice_wrapper').hide();}
                         }, 'html');
                     }
                     break;
@@ -274,7 +270,7 @@ $(function () {
         });
 
         //считываем нажатие клавишь, уже после вывода подсказки
-        $("[name='Registration[d1_sname]']").keydown(function (I) {
+        $("#registration-d1_sname, #registration-d2_sname, #registration-club, #registration-city, #registration-d_trener1_sname, #registration-d_trener2_sname, #registration-d_trener3_sname, #registration-d_trener4_sname, #registration-d_trener5_sname, #registration-d_trener6_sname").keydown(function (I) {
             switch (I.keyCode) {
                 // по нажатию клавишь прячем подсказку
                 case 13: // enter
@@ -351,7 +347,7 @@ $(function () {
             }
             event.stopPropagation();
         });
-    });
+  //  });
 
     function key_activate(n) {
         $('#search_advice_wrapper div').eq(suggest_selected - 1).removeClass('active');
@@ -373,7 +369,8 @@ $(function () {
 
     function loaddancer(id, type)
     {//if (typeof(id) != "undefined")
-        $.ajax({url: "getdancer.php?id=" + id + "&id_search=" + id_search + "&type=" + type,
+
+        $.ajax({url: "/in/dancer-info?id=" + id + "&id_search=" + id_search + "&type=" + type,
             timeout: 3000}).done(
                 function (result, status) {
                     $('#results').html(result);
@@ -381,14 +378,76 @@ $(function () {
 
                         var json = jQuery.parseJSON(result);
                         //  alert(json.kniga_m);
-                        if (typeof (json.sname_m) != "undefined") {
-                            $("#sname_m").val(json.sname_m);
-                            $("#sname_m").removeClass("red_input");
+                        if (typeof (json.registration_d1_sname) != "undefined") {
+                            $("#registration-d1_sname").val(json.registration_d1_sname);
                         }
-                        if (typeof (json.name_m) != "undefined") {
-                            $("#name_m").val(json.name_m);
-                            $("#name_m").removeClass("red_input");
+                        if (typeof (json.registration_d1_name) != "undefined") {
+                            $("#registration-d1_name").val(json.registration_d1_name);
                         }
+                      if (typeof (json.registration_d2_sname) != "undefined") {
+                            $("#registration-d2_sname").val(json.registration_d2_sname);
+                        }
+                        if (typeof (json.registration_d2_name) != "undefined") {
+                            $("#registration-d2_name").val(json.registration_d2_name);
+                        }
+                        
+                        if (typeof (json.trener1_sname) != "undefined") {
+                         
+                            $("#registration-d_trener1_sname").val(json.trener1_sname);
+                            
+                        }
+                        if (typeof (json.trener2_sname) != "undefined") {
+                            $("#registration-d_trener2_sname").val(json.trener2_sname);
+                        }
+                        
+                        if (typeof (json.trener2_sname) != "undefined") {
+                            $("#registration-d_trener2_sname").val(json.trener2_sname);
+                        }
+                        
+                        if (typeof (json.trener3_sname) != "undefined") {
+                            $("#registration-d_trener3_sname").val(json.trener3_sname);
+                        }
+                        
+                        if (typeof (json.trener4_sname) != "undefined") {
+                            $("#registration-d_trener4_sname").val(json.trener4_sname);
+                        }
+                        
+                        if (typeof (json.trener5_sname) != "undefined") {
+                            $("#registration-d_trener5_sname").val(json.trener5_sname);
+                        }
+                        
+                        if (typeof (json.trener6_sname) != "undefined") {
+                            $("#registration-d_trener6_sname").val(json.trener6_sname);
+                        }
+                        
+                        if (typeof (json.trener1_name) != "undefined") {
+                            $("#registration-d_trener1_name").val(json.trener1_name);
+                        }
+                        if (typeof (json.trener2_name) != "undefined") {
+                            $("#registration-d_trener2_name").val(json.trener2_name);
+                        }
+                        
+                        if (typeof (json.trener2_name) != "undefined") {
+                            $("#registration-d_trener2_name").val(json.trener2_name);
+                        }
+                        
+                        if (typeof (json.trener3_name) != "undefined") {
+                            $("#registration-d_trener3_name").val(json.trener3_name);
+                        }
+                        
+                        if (typeof (json.trener4_name) != "undefined") {
+                            $("#registration-d_trener4_name").val(json.trener4_name);
+                        }
+                        
+                        if (typeof (json.trener5_name) != "undefined") {
+                            $("#registration-d_trener5_name").val(json.trener5_name);
+                        }
+                        
+                        if (typeof (json.trener6_name) != "undefined") {
+                            $("#registration-d_trener6_ame").val(json.trener6_name);
+                        }
+                        
+                        
                         if (typeof (json.date_m) != "undefined") {
                             $("#date_m").val(json.date_m);
                             $("#date_m").removeClass("red_input");

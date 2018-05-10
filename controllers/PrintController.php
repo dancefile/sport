@@ -68,7 +68,51 @@ class PrintController extends \yii\web\Controller
 	}
 
 
-	public function actionDiplom($idT=13)
+	public function actionDiplompdf($idT=13)
+	{
+		$Competition = new Competition;
+		$turInfo = new TurInfo;
+		$turInfo->setTur($idT);
+
+                $pdf = new FPDF('P','mm','A4');
+                $pdf->AddFont('Arial','','arial.php');
+                $pdf->AliasNbPages();
+        $pdf->SetMargins(5,5,5);
+$pdf->SetAutoPageBreak('On',5);
+		switch ($turInfo->gettur("typeSkating")) {
+          case '1'://балы
+          	$resultCouple=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT])
+					->orderBy(['result' => SORT_DESC]);
+			foreach ($results->each() as $result) {
+				$resultCouple[$result['nomer']]=['bal'=>$result['result'],'stepen' => $result['place']];
+			}	          
+			$this->renderPartial('diplomeBalPdf', ['pdf'=>$pdf,'turInfo' => $turInfo,'resultCouple' => $resultCouple, 'Competition' => $Competition]);
+          break;
+		  case '2'://кресты
+          break;
+		  case '3'://скейтинг
+		            	$resultCouple=[];
+          	$results = (new \yii\db\Query()) //получаем инфу о данном туре
+				    ->from('results')
+	    			->where(['tur_id' => $idT, 'dance_id' => null])
+					->orderBy(['place' => SORT_DESC]);
+			foreach ($results->each() as $result) {
+				$resultCouple[$result['nomer']]=['place' => $result['place']];
+			}
+			$this->renderPartial('diplomePdf', ['pdf'=>$pdf,'turInfo' => $turInfo,'resultCouple' => $resultCouple, 'Competition' => $Competition]);
+          break;
+
+		  
+		}	
+	$pdf->Output();   
+	}
+
+        
+        
+        public function actionDiplom($idT=13)
 	{
 		$Competition = new Competition;
 		$turInfo = new TurInfo;
@@ -104,11 +148,65 @@ class PrintController extends \yii\web\Controller
 		}	
 	return $this->error('что то пошло не так :(');	
 	}
-
-
+        
+        
+        
+        
 	public function actionList($idT=13)
 	{
-                     $arr=  explode(',', $idT) ;
+         
+        $pdf = new FPDF('P','mm','A4');
+	$pdf->AddFont('Arial','','arial.php');
+	$pdf->AliasNbPages();
+	  
+        
+        $arr=  explode(',', $idT) ;
+           $str='';
+           foreach ($arr as $id) { 
+        	$turInfo = new TurInfo;
+		$turInfo->setTur($id);
+		$Competition = new Competition;
+		$judges = (new \yii\db\Query()) //получаем список судей данной категории
+                    ->select(['judge.id','judge.name','judge.sname','chess.nomer'])
+                    ->from('chess,judge')
+                    ->where(['chess.category_id' => $turInfo->getTur('id')])
+                        ->andWhere('`judge`.`id`=`chess`.`judge_id`');
+		$judge=[];
+		foreach ($judges->each() as $row) {
+			$judge[$row['id']]=$row['nomer'].'. '.$row['sname'].' '.$row['name'];
+		}
+		asort($judge);
+        		switch ($turInfo->gettur("typeSkating")) {
+          case '1'://балы
+          if ($turInfo->getTur('dancing_order')==1) {
+			echo $this->renderPartial('begunAllHeats', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
+			} else { 
+                              $this->renderPartial('begunpdf', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
+                        }
+          break;
+		  case '2'://кресты
+			 $this->renderPartial('begunpdf', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => FALSE, 'polename' => '', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
+          break;
+		  case '3'://скейтинг
+			 $this->renderPartial('begunpdf', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'места', 'prosmotr'=>FALSE, 'Competition' => $Competition]);
+          break;
+
+		  
+		}
+        
+
+        
+        
+           }
+        
+        
+       $pdf->Output();   
+            
+        }
+        
+	public function actionBegun($idT=13)
+	{
+           $arr=  explode(',', $idT) ;
            $str='';
            foreach ($arr as $id) { 
             

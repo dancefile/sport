@@ -31,7 +31,9 @@ use yii\bootstrap\Tabs;
             <div class="leftBlock flex-item one">
                           
             	<?= $form
-                    ->field($model, 'd1_sname')
+                    ->field($model, 'd1_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                     ->textInput(['placeholder' => 'фамилия'])
                     ->label(false) 
                 ?>
@@ -71,7 +73,9 @@ use yii\bootstrap\Tabs;
             	<br>
 
             	<?= $form
-                    ->field($model, 'd2_sname')
+                    ->field($model, 'd2_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                     ->textInput(['placeholder' => 'фамилия'])
                     ->label(false) 
                 ?>
@@ -112,7 +116,9 @@ use yii\bootstrap\Tabs;
                 <br>
              	
                 <?= $form
-                    ->field($model, 'club')
+                    ->field($model, 'club',['inputOptions' => ['class' => 'simple',
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                     ->textInput(['placeholder' => 'Клуб'])
 //                    ->widget(TypeaheadBasic::classname(), [
 //                        'data' => $model->clubList,
@@ -123,7 +129,9 @@ use yii\bootstrap\Tabs;
                 ?>
 
                 <?= $form
-                    ->field($model, 'city')
+                    ->field($model, 'city',[ 'inputOptions' => ['class' => 'simple',
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                     ->textInput(['placeholder' => 'Город'])
 //                    ->widget(TypeaheadBasic::classname(), [
 //                        'data' => $model->cityList,
@@ -148,7 +156,9 @@ use yii\bootstrap\Tabs;
                 <div id="trener_list">
                     <div id="trener_1" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener1_sname')
+                        ->field($model, 'd_trener1_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,
@@ -172,7 +182,9 @@ use yii\bootstrap\Tabs;
                     <div class="showTrener trener_1"><i class="glyphicon glyphicon-minus"></i></div> 
                     <div id="trener_2" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener2_sname')
+                        ->field($model, 'd_trener2_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,
@@ -195,7 +207,9 @@ use yii\bootstrap\Tabs;
                     <div class="showTrener trener_2"><i class="glyphicon glyphicon-plus"></i></div> 
                     <div id="trener_3" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener3_sname')
+                        ->field($model, 'd_trener3_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,
@@ -218,7 +232,9 @@ use yii\bootstrap\Tabs;
                     <div class="showTrener trener_3"><i class="glyphicon glyphicon-plus"></i></div> 
                     <div id="trener_4" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener4_sname')
+                        ->field($model, 'd_trener4_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,
@@ -241,7 +257,9 @@ use yii\bootstrap\Tabs;
                     <div class="showTrener trener_4"><i class="glyphicon glyphicon-plus"></i></div> 
                     <div id="trener_5" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener5_sname')
+                        ->field($model, 'd_trener5_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,
@@ -264,7 +282,9 @@ use yii\bootstrap\Tabs;
                     <div class="showTrener trener_5"><i class="glyphicon glyphicon-plus"></i></div> 
                     <div id="trener_6" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener6_sname')
+                        ->field($model, 'd_trener6_sname',['inputOptions' => [
+                                                                    'autocomplete' => 'off',
+                                                                    'autocorrect' => 'off']])
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,

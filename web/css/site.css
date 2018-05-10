@@ -453,6 +453,56 @@ div.gender_marker_w{
     margin-right: 10px;
 }
 
+/**********************************/
+/**********************************/
+/****** Подсказка в регистрации *********/
+/**********************************/
+/**********************************/
+
+		#search_advice_wrapper{
+			display:none;
+			width: 350px;
+			background-color: rgb(80, 80, 80);
+			color: rgb(255, 227, 189);
+			-moz-opacity: 0.95;
+			opacity: 0.95;
+			-ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=95);
+			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=95);
+			filter:alpha(opacity=95);
+			z-index:999;
+			position: absolute;
+			top: 60px; left: 10px;
+		}
+
+		#search_advice_wrapper .advice_variant1{
+			cursor: pointer;
+			padding: 5px;
+			text-align: left;
+		}
+		#search_advice_wrapper .advice_variant1:hover{
+			color:#FEFFBD;
+			background-color:#818187;
+		}
+				#search_advice_wrapper .advice_variant2{
+			cursor: pointer;
+			padding: 5px;
+			text-align: left;
+			color:#d3fb8e;
+		}
+		#search_advice_wrapper .advice_variant2:hover{
+			color:#FEFFBD;
+			background-color:#818187;
+		}
+		#search_advice_wrapper .active{
+			cursor: pointer;
+			padding: 5px;
+			color:#FEFFBD;
+			background-color:#818187;
+		}
+
+
+
+
 
 /**********************************/
 /**********************************/
