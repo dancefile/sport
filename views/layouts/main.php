@@ -59,7 +59,7 @@ AppAsset::register($this);
                         ],
 		                ['label' => 'Судьи', 'items' => [
                                 ['label' => 'Список', 'url' => ['/judges/list']],
-                                ['label' => 'Шахматка', 'url' => ['/judges/shaxmat']],
+                                ['label' => 'Шахматка', 'url' => ['/chess']],
 
                                 ],
                         ],
