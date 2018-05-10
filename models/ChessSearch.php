@@ -4,14 +4,15 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\db\Query;
 use yii\data\ActiveDataProvider;
-use app\models\Chess;
 
 /**
  * ChessSearch represents the model behind the search form about `app\models\Chess`.
  */
 class ChessSearch extends Chess
 {
+    public $otd_id;
     /**
      * @inheritdoc
      */
@@ -41,9 +42,33 @@ class ChessSearch extends Chess
      */
     public function search($params)
     {
-        $query = Chess::find();
-
-        // add conditions that should always apply here
+        $category_list = Category::find()->all();
+        
+        $cat_query = '';
+        
+        foreach ($category_list as $category) {
+            $cat_query = $cat_query 
+                    . 'SUM(IF(category_id='. $category->id
+                    . ', nomer, 0)) AS "'.$category->id.'", ' 
+                    . 'SUM(IF(category_id='. $category->id
+                    . ', chief, 0)) AS "c'.$category->id.'", '; 
+        }
+        $cat_query = rtrim($cat_query, " \t,");
+        
+        $query = new Query();
+        
+        $query
+                ->select([
+                    'judge.id judge_id',
+                    'CONCAT(judge.name, " ", judge.sname) full_name',
+                    $cat_query
+                ])
+                ->from('chess')
+                ->join('RIGHT JOIN', 'judge', 'judge.id = chess.judge_id')
+                ->groupBy('judge_id')
+                ->orderBy('judge_id')
+                ;
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -65,6 +90,8 @@ class ChessSearch extends Chess
         ]);
 
         $query->andFilterWhere(['like', 'nomer', $this->nomer]);
+        
+        
 
         return $dataProvider;
     }

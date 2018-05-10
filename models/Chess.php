@@ -31,6 +31,7 @@ class Chess extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['keys'], 'safe'],
             [['judge_id', 'category_id'], 'required'],
             [['judge_id', 'category_id', 'nomer'], 'integer'],
             [['judge_id'], 'exist', 'skipOnError' => true, 'targetClass' => Judge::className(), 'targetAttribute' => ['judge_id' => 'id']],
