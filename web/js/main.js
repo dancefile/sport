@@ -460,10 +460,6 @@ $(function () {
                             $("#clas_la_m").val(json.clas_la_m);
                             $("#clas_la_m").removeClass("red_input");
                         }
-                        if (typeof (json.kniga_m) != "undefined") {
-                            $("#kniga_m").val(json.kniga_m);
-                            $("#kniga_m").removeClass("red_input");
-                        }
                         if (typeof (json.sname_w) != "undefined") {
                             $("#sname_w").val(json.sname_w);
                             $("#sname_w").removeClass("red_input");
