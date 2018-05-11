@@ -64,13 +64,14 @@ use yii\bootstrap\Tabs;
                 	->dropDownList($model->classList,['prompt' => 'Класс La'])
                 	->label(false) 
                 ?>
+                
                 <?= $form
                     ->field($model, 'd1_booknumber')
                     ->textInput(['placeholder' => 'Номер книжки'])
                     ->label(false) 
                 ?>
 
-            	<br>
+            	<br>v
 
             	<?= $form
                     ->field($model, 'd2_sname',['inputOptions' => [
@@ -112,8 +113,8 @@ use yii\bootstrap\Tabs;
                     ->textInput(['placeholder' => 'Номер книжки'])
                     ->label(false) 
                 ?>
+                <div id="coupleages"></div>
 
-                <br>
              	
                 <?= $form
                     ->field($model, 'club',['inputOptions' => ['class' => 'simple',

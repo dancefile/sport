@@ -161,6 +161,22 @@ $(function () {
 
 
 
+
+function get_current_age(date) {
+var d = date.split('-');
+if( typeof d[2] !== "undefined" ){
+    date = d[2]+'.'+d[1]+'.'+d[0];
+    return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
+}
+return 0;
+}
+
+
+$("#registration-d1_date-disp, #registration-d2_date-disp").change(function() {
+
+ $("#coupleages").html("Возраст: "+get_current_age($("#registration-d1_date-disp").val())+" : "+get_current_age($("#registration-d2_date-disp").val()) );
+});
+
         $("#zayavka").keydown(function (event) {
             if (event.keyCode == 13) {
                 id_search = 'zayavka';

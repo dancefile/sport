@@ -175,7 +175,7 @@ for ($i=1; $i <= $this->gettur('zahodcount'); $i++) {
 		}
 	
 	$dancers = (new \yii\db\Query()) 
-    	->select(['dancer.name','dancer.id','dancer.sname','clubName'=>'club.name','clubId'=>'dancer.club','clasLaName'=>'clasLa.name','clasStname'=>'clasSt.name'])
+    	->select(['dancer.date','dancer.name','dancer.id','dancer.sname','clubName'=>'club.name','clubId'=>'dancer.club','clasLaName'=>'clasLa.name','clasStname'=>'clasSt.name'])
 		->from('dancer')
 		->leftJoin('club','dancer.club=club.id')
 		->leftJoin('clas as clasLa','dancer.clas_id_st=clasLa.id')
@@ -183,6 +183,7 @@ for ($i=1; $i <= $this->gettur('zahodcount'); $i++) {
         ->where(['in', 'dancer.id',$ids]);
             foreach ($dancers->each() as $row) {
 				$this->names[$row['id']]['fname']=$row['sname'].' '.$row['name'];
+                                $this->names[$row['id']]['date']=$row['date'];
 				$this->names[$row['id']]['clubName']=$row['clubName'];
 				$this->names[$row['id']]['clubId']=$row['clubId'];
 				$this->names[$row['id']]['clasStname']=$row['clasStname'];
@@ -190,15 +191,45 @@ for ($i=1; $i <= $this->gettur('zahodcount'); $i++) {
 			}
 	}
 
+        
+    public    function calculate_age($birthday) {
+if ($birthday) {
+  $birthday_timestamp = strtotime($birthday);
+ // var_dump($birthday);exit;
+  $age = date('Y') - date('Y', $birthday_timestamp);
+  if (date('md', $birthday_timestamp) > date('md')) {
+    $age--;
+  }
+} else  $age=0;
+  return $age;
+}
+        
 	public function GetCoupleName($inId,$info='fname',$seporate='<br>')
 	{
 		if ($this->names===null) {$this->loadNames();}
 		$nameCouple=[];
-		if (isset($this->inArrMore[$inId]['dancer1']) && isset($this->names[$this->inArrMore[$inId]['dancer1']][$info])) {$nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer1']][$info];}
-		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->names[$this->inArrMore[$inId]['dancer2']][$info])) {$nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer2']][$info];}
-		return implode($nameCouple, $seporate);
+
+               
+		if (isset($this->inArrMore[$inId]['dancer1']) && isset($this->names[$this->inArrMore[$inId]['dancer1']][$info])) {
+                    if ($info=='fname') {$Age1=$this->calculate_age($this->names[$this->inArrMore[$inId]['dancer1']]['date']);}
+                    $nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer1']][$info];
+                    
+                }
+		if (isset($this->inArrMore[$inId]['dancer2']) && isset($this->names[$this->inArrMore[$inId]['dancer2']][$info])) {
+                    if ($info=='fname') {$Age2=$this->calculate_age($this->names[$this->inArrMore[$inId]['dancer2']]['date']);}
+                    $nameCouple[]=$this->names[$this->inArrMore[$inId]['dancer2']][$info];
+                    
+                }
+                $str='';
+                if ($info=='fname') { 
+                 $age=0;
+                 if (isset ($Age1)) $age=$Age1;
+                 if (isset ($Age2) && $Age2>$age) $age=$Age2;
+                if  ($age) $str='<span class="no-print">('.$age.')</span>';
+                }
+		return implode($nameCouple, $seporate).$str;
 	}
-	
+        
 	
 	public function setTur($idT=0) 
 	{

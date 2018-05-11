@@ -204,11 +204,14 @@ class Category extends \yii\db\ActiveRecord
 
     public function getDanceToString($dances)
     {
+        
         if (isset($dances)){
+            $dan=[];
             $dance_list = ArrayHelper::map(Dance::find()->all(), 'id', 'name');
             $dances = explode(', ', $dances);
             foreach ($dances as &$dance) {
-                $dan[] = $dance_list[$dance];
+                
+                if (isset( $dance_list[$dance])) $dan[] = $dance_list[$dance]; 
             }
             return implode(", ", $dan);
         }

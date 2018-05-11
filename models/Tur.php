@@ -91,6 +91,7 @@ class Tur extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
+    //    var_dump($this->dances);exit;
         if (isset($this->dances)){
             $this->dances = implode(", ", $this->dances);
         }

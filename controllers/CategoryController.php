@@ -79,16 +79,19 @@ class CategoryController extends AppController
         $model->skay = 1;
         $model->solo = 1;
         $model->program = 1;
-
+        $model->dancing_order=0;
+        $model->type_comp=0;
+        
         $judge_list = Judge::find()->select(['sname'])->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
-//            $tur = new Tur();
-//            $tur->category_id = $model->id;
-//            $tur->dances = $model->dances;
-//            $tur->save();
-            
+            $tur = new Tur();
+            $tur->category_id = $model->id;
+            $tur->dances = explode(", ", $model->dances);
+            $tur->nomer=1;
+            $tur->save();
+
             return $this->redirect(['reglament/index']);
         } else {
             return $this->render('create', [
