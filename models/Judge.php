@@ -32,6 +32,7 @@ class Judge extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'safe'],
             [['name'], 'required'],
             [['language_id'], 'integer'],
             [['name'], 'string', 'max' => 200],

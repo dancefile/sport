@@ -17,18 +17,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
+            'id',
             'sname',
             'name',
             [
                 'attribute' => 'language_id',
-                'value' => function ($model, $key, $index, $widget) { 
+                'value' => function ($model) { 
                     return $model->language_id == '2' ? 'Английский' : 'Русский' ;
                 }
             ],
             
-            ['class' => 'yii\grid\ActionColumn',
-            'template' => '{update}&nbsp;&nbsp;{delete}',
-			'header' => false,            
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}&nbsp;&nbsp;{delete}',
+                'header' => false,            
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    $url = '/judges/'.$action.'?id='.$model->id;
+                    return $url;
+                }
             ],
         ],
     ]); ?>

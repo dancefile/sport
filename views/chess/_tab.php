@@ -29,7 +29,7 @@
 ?>
 
 <?= GridView::widget([
-        'id' => 'tab',
+        'id' => 'chess_tab',
         'dataProvider' => $dataProvider,
         'columns' => $columns,
     ]); 

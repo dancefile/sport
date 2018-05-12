@@ -598,3 +598,25 @@ div.btn-toolbar{
 .grid-view td,.grid-view th{
     font-size:16px;
 }
+
+
+/**********************************/
+/**********************************/
+/*********** Шахматка *************/
+/**********************************/
+/**********************************/
+
+.vertical-text 
+{
+    height: 200px;
+    -webkit-writing-mode: vertical-lr;
+    writing-mode: vertical-lr;
+    font-size: 12px;
+    font-weight: lighter;
+}
+
+#chess_tab td
+{
+    font-size: 12px;
+    font-weight: lighter;
+}

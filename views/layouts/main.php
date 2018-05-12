@@ -50,30 +50,30 @@ AppAsset::register($this);
                                 ['label' => 'Регистрация', 'url' => ['/registration/create']],
                                 ['label' => 'Предварительная Регистрация', 'url' => ['/preregistration']],
                                 ['label' => 'Парсер', 'url' => ['/parser']],
-                                ],
+                            ],
                         ],
-                       ['label' => 'Регламент', 'items' => [
+                        ['label' => 'Регламент', 'items' => [
                                 ['label' => 'Регламент', 'url' => ['/reglament/index']],
                                 ['label' => 'Расписание', 'url' => ['/timetable/index']],
-                                ],
+                            ],
                         ],
-		                ['label' => 'Судьи', 'items' => [
+                        ['label' => 'Судьи', 'items' => [
                                 ['label' => 'Список', 'url' => ['/judges/list']],
                                 ['label' => 'Шахматка', 'url' => ['/chess']],
-
-                                ],
+                            ],
                         ],
                         ['label' => 'Печать', 'items' => [
                                 ['label' => 'Заходы', 'url' => ['/print/list']],
                                 ['label' => 'Результаты', 'url' => ['/judges/shaxmat']],
-								['label' => 'Дипломы', 'url' => ['/print/list']],
-                                ],
+                                ['label' => 'Дипломы', 'url' => ['/print/list']],
+                            ],
                         ],
                         ['label' => 'Справочники', 'items' => [
                                 ['label' => 'Список танцев', 'url' => ['/dance']],
                                 ['label' => 'Список отделений', 'url' => ['/otd']],
+                                ['label' => 'Статистика по клубам', 'url' => ['/statistic/club']],
                                 
-                                ],
+                            ],
                         ],
 
 
