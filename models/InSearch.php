@@ -15,6 +15,7 @@ class InSearch extends In
     public $number;
     public $dancer1;
     public $dancer2;
+//    public $max_age;
     /**
      * @inheritdoc
      */
@@ -85,7 +86,13 @@ class InSearch extends In
                     'city2.name city2',
                     'treners1' => $trenersQuery1->andWhere("dancer_trener.dancer_id = d1.id"),
                     'treners2' => $trenersQuery2->andWhere("dancer_trener.dancer_id = d2.id"),
-                    'who'
+                    'who',
+                    '(CASE who '
+                    . 'WHEN 1 THEN d1.date '
+                    . 'WHEN 2 THEN d2.date '
+                    . 'WHEN 3 THEN '
+                        . 'IF (d1.date<d2.date, d1.date, d2.date)'
+                    . 'END) max_age'
                     ])
                 ->from('in')
                 ->join('LEFT JOIN', 'couple', 'couple.id = in.couple_id')
@@ -121,6 +128,8 @@ class InSearch extends In
             ->andFilterWhere(['like', 'd1.sname', $this->dancer1])
             ->andFilterWhere(['like', 'd2.sname', $this->dancer2]);    
         
+//        $query
+//            ->andFilterWhere(['max_age' => $this->max_age]);
         
         return $dataProvider;
     }

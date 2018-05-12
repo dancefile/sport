@@ -20,10 +20,10 @@ use kartik\datecontrol\DateControl;
             ->label('Длительность');
         ?>
         <?= $form->field($model, 'category_name')->textInput() ?>
-
         <?= $form->field($model, 'tur_name')->textInput() ?>
-
-        
+        <?= $form->field($model, 'programm')->textInput() ?>
+        <?= $form->field($model, 'dances')->textInput() ?>
+               
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

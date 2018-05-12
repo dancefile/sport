@@ -82,8 +82,15 @@
                     );
                 }
             ],
+
             [
-                'attribute' => 'couple.age',
+                'attribute' => 'max_age',
+                'value' => function ($model){
+                    $age = isset($model['max_age'])? $model['max_age']:NULL;
+                    $age = (int)date('Y') - (int)($age);
+                    
+                    return $age==(int)date('Y') ? '-': $age;
+                },
                 'options' => ['width' => '60'],
             ],
             [

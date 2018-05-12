@@ -36,9 +36,10 @@ use app\models\TimetableSearch;
         $searchModel->otd_id =$otd['id'];
         
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = false;
 
         $tabs[]=[
-            'label'     =>  'Отделение '.$otd['name'],
+            'label'     =>  $otd['name'],
             'content'   =>  $this->render(
                 '_tab', 
                 [
@@ -51,8 +52,6 @@ use app\models\TimetableSearch;
         ];
         
     }
-//echo '<pre>' . print_r($tabs, true) . '</pre>';
-//        exit;
 
     echo Tabs::widget([
         'items' => $tabs

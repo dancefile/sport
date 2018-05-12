@@ -28,6 +28,7 @@ class In extends \yii\db\ActiveRecord
     public $category_id;
     public $new_category_id;
     public $replace_ins;
+   
     
     /**
      * @inheritdoc
@@ -55,7 +56,7 @@ class In extends \yii\db\ActiveRecord
     {
         return [
             [['couple_id', 'tur_id'], 'required'],
-            [['couple_id', 'tur_id'], 'integer'],
+            [['couple_id', 'tur_id', 'max_age'], 'integer'],
             [['couple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Couple::className(), 'targetAttribute' => ['couple_id' => 'id']],
             [['tur_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tur::className(), 'targetAttribute' => ['tur_id' => 'id']],
             [['common', 'turPair', 'turSolo_M', 'turSolo_W', 'dancer_trener'], 'safe'],

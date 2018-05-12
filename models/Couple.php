@@ -84,7 +84,7 @@ class Couple extends \yii\db\ActiveRecord
         $a1 = $this->dancerId1 ? $this->dancerId1->date : NULL;
         $a2 = $this->dancerId2 ? $this->dancerId2->date : NULL;
         $d = (int)date('Y') - (int)($a1 < $a2 ? $a1 : $a2);
-        return $d==(int)date('Y') ? '-': $d;
+        return 'dd';//$d==(int)date('Y') ? '-': $d;
     }
 
     public function getTrenersString()

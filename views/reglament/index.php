@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'group'=>true,
 //            'groupedRow' => true,
 //        ],
-
+        'id',
         'name',
         [
             'attribute'=>'reg_pairs', 
