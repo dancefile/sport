@@ -114,7 +114,7 @@ class Timetable extends \yii\db\ActiveRecord
         $tt->otd_id = $tur['category']['otd_id'];
         $tt->tur_id = $tur['id'];
         $tt->tur_name = $tur['name'];
-        $tt->category_name = $tur['category']['name'];
+        $tt->category_name = $tur['category']['id'].'. '.$tur['category']['name'];
         $tt->tur_number = $tur['nomer'];
         $tt->reg_pairs = count($tur['ins']);
         $tt->programm = $programm;
