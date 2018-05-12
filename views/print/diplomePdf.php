@@ -6,82 +6,42 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 
-$this->title = 'Дипломы '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
-$this->params['breadcrumbs'][] = $this->title;
-
 if (Yii::$app->request->post('programname')!==null) 
 {
-	$programname=Yii::$app->request->post('programname');
-	$agename=Yii::$app->request->post('agename');
+	$turName=Yii::$app->request->post('programname');
+
 } else {
 
 $turName=$turInfo->gettur('name');
-$pos=stripos($turName,',');
-if ($pos!==FALSE) {$programname=substr($turName, 0,$pos);$agename=substr($turName, $pos+1);}
-else {$programname=$turName;$agename='';};
 }
 
-?>
-<div class="site-about">
-	<div  class="no-print">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::beginForm ( ['print/diplom', 'idT' => $turInfo->gettur('idT')], 'post', [] ) ?>
-<p> Название программы:   <?= Html::textInput ( 'programname', $programname, $options = ['class' => 'judg'] );	?></p>
-<p> Класс + возраст:   <?= Html::textInput ( 'agename', $agename, $options );	?></p>    
-<?= Html::submitButton('Submit', ['class' => 'submit']) ?>
-<?= Html::endForm ( )?>
-<?php
+$pdf->AddPage('L','A4');
+$pdf->SetFont('Arial','',12);
+$pdf->Cell(0,0,iconv("UTF-8","Windows-1251",$turInfo->gettur('id').'. '.$turName),0,1,'C'); 
+$pdf->Ln(5); 
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(10,7,iconv("UTF-8","Windows-1251",'Место'),1,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf->Cell(10,7,iconv("UTF-8","Windows-1251",'№'),1,0,'C');
+$pdf->Cell(120,7,iconv("UTF-8","Windows-1251",'Участники'),1,0,'C');
+$pdf->Cell(40,7,iconv("UTF-8","Windows-1251",'Клуб'),1,0,'C');
+$pdf->Cell(30,7,iconv("UTF-8","Windows-1251",'Город'),1,0,'C');
+$pdf->Cell(70,7,iconv("UTF-8","Windows-1251",'Тренеры'),1,0,'C');
+
+$pdf->Ln(7);
+$pdf->SetFont('Arial','',11);
 
 	$inArr=$turInfo->getIn();
 
 		
-	//asort($inArr);
-	  $columns=[
-                 			  [
-           	    'header' => 'Место',
-               	'attribute' => 'place',
-               	'format' => 'raw',
-                'contentOptions' =>['class' => 'bigtext'],
-    	       ],
-                            [
-           	    'header' => '№',
-               	'attribute' => 'nomer',
-                'contentOptions' =>['class' => 'bigtext'],
-    	       ],
-			  [
-           	    'header' => 'Участники',
-               	'attribute' => 'name',
-               	'format' => 'raw',
-               'contentOptions' =>['class' => 'bigtext'],
-    	       ],
-    	       			  [
-           	    'header' => 'Клуб',
-               	'attribute' => 'club',
-               	'format' => 'raw',
-                                      'contentOptions' =>['class' => 'mText'],
-    	       ],
-   			  [
-           	    'header' => 'Город',
-               	'attribute' => 'City',
-               	'format' => 'raw',
-                              'contentOptions' =>['class' => 'mText'],
-    	       ],
-   			  [
-           	    'header' => 'Тренеры',
-               	'attribute' => 'Trener',
-               	'format' => 'raw',
-                              'contentOptions' =>['class' => 'mText'],
-    	       ],
-
-              ];
 			   
 	$diploms=[];
     foreach ($resultCouple as $nomer => $result){
     	$key = array_search($nomer, $inArr);
-		$names=$turInfo->GetCoupleName($key);
+		$names=$turInfo->GetCoupleName($key,'fname','-');
 		$diplom=['name'=>$names,'place'=>$result['place'] ];
 		$diploms[]=$diplom;
-		if (strripos($names,'<br>')!==false) {
+		if (strripos($names,'-')!==false) {
 		$diploms[]=$diplom;
 		} 
 		
@@ -92,60 +52,52 @@ else {$programname=$turName;$agename='';};
     					'Trener'=>$turInfo->GetCoupleTrener($key),
     					'place'=>$result['place'],
     					];
+        
+    $pdf->Cell(10,7,iconv("UTF-8","Windows-1251",$result['place']),1,0,'C');    
+   $pdf->Cell(10,7,iconv("UTF-8","Windows-1251",$nomer),1,0,'C');
+$pdf->Cell(120,7,iconv("UTF-8","Windows-1251",$names),1,0,'L');
+$pdf->Cell(40,7,iconv("UTF-8","Windows-1251",$turInfo->GetCoupleName($key,'clubName')),1,0,'C');
+$pdf->Cell(30,7,iconv("UTF-8","Windows-1251",$turInfo->GetCoupleCity($key)),1,0,'C');
+$pdf->Cell(70,7,iconv("UTF-8","Windows-1251",$turInfo->GetCoupleTrener($key,',')),1,0,'L');
+
+
+   $pdf->Ln(7); 
+        
 						
 	}
 	
-	    $provider = new ArrayDataProvider([
-        'allModels' => $data,
-        'pagination' => 
-        	[
-            	'pageSize' => 2000,
-        	],
 
-    ]);
-echo '</div>';
-echo '<div class="next-page"><h3>'.$turInfo->gettur('name').' '.$turInfo->gettur('turname').'</h3>';
 
-echo GridView::widget([
-    'dataProvider' => $provider,
-    'columns' => $columns,
-	
-	]);
-		echo '</div>';
-	echo '<center>';
-			end($diploms);
-$lastKey=key($diploms);
-?>
-<style>
-.diplom1{
-    font-size: 42px !important;
-}
-.diplom2{
-    font-size: 36px !important;
-}
-.diplom3{
-    font-size: 32px !important;
-}
-.diplom4{
-    font-size: 28px !important;
-}
-.nomer1 {
-	margin: 0px;
-    font-size: 20px !important;
-    text-align: center;
-}
-.nomer {
-	margin: 0px;
-    font-size: 30px !important;
-    text-align: center;
-}
-.otstup{
-	padding-bottom: 10px;
-}
-</style>
-<?php
 	foreach ($diploms as $key=>$diplom) {
-			if ($lastKey==$key) echo '<div>'; else	echo '<div class="next-page">';
+
+            $pdf->AddPage('P','A4');	
+	
+ $pdf->Ln(150);
+ $pdf->SetFont('Arial','',22);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",'НАГРАЖДАЕТСЯ'),0,1,'C'); 
+ $pdf->Ln(17); 
+ $pdf->SetFont('Arial','',17);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",$diplom['name']),0,1,'C'); 
+ $pdf->Ln(10); 
+  $pdf->SetFont('Arial','',17);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",'занявшие '.$diplom['place'].' место' ),0,1,'C'); 
+ $pdf->Ln(10); 
+   $pdf->SetFont('Arial','',12);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",'в категории:'),0,1,'C'); 
+ $pdf->Ln(10); 
+   $pdf->SetFont('Arial','',16);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",$turName),0,1,'C'); 
+ $pdf->Ln(10); 
+   $pdf->SetFont('Arial','',12);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",'на турнире школы танца "Итоговый кубок SPORTDANCE"'),0,1,'C'); 
+ $pdf->Ln(20); 
+   $pdf->SetFont('Arial','',12);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",'главный судья: Щукина Анна'),0,1,'C'); 
+ $pdf->Ln(10);    $pdf->SetFont('Arial','',12);
+ $pdf->Cell(0,0,iconv("UTF-8","Windows-1251",'13.05.2018'),0,1,'C');
+            
+            /*
+            
 		echo '<div class="" style="height: 150px;"> </div>';
 		echo '<div class="diplom1" style="height: 110px;">'.$diplom['name'].'</div>';
 		echo '<div class="diplom2" style="height: 90px;">'.$diplom['place'].'</div>';
@@ -155,10 +107,9 @@ $lastKey=key($diploms);
 		echo '<div class="diplom4" style="height: 75px;">'.$Competition->org.'<span style="width: 150px; display:inline-block;"></span>'.$Competition->chief.'</div>';
 		echo '<div class="diplom4" style="height: 200px;"><img src="/img/signature.gif" /><span style="width: 150px; display:inline-block;"></span><span style="width: 150px; display:inline-block;"></span></div>';
 		echo '<div class="diplom4" style="height: 50px;">'.$Competition->data.' г. Москва</div>';
-		echo '</div>';
+		echo '</div>';*/
 	} 
 		
 	
 	
-?></center>
-    					</div>
+?>

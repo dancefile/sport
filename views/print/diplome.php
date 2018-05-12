@@ -17,17 +17,18 @@ if (Yii::$app->request->post('programname')!==null)
 
 $turName=$turInfo->gettur('name');
 $pos=stripos($turName,',');
-if ($pos!==FALSE) {$programname=substr($turName, 0,$pos);$agename=substr($turName, $pos+1);}
-else {$programname=$turName;$agename='';};
+//if ($pos!==FALSE) {$programname=substr($turName, 0,$pos);$agename=substr($turName, $pos+1);}
+//else 
+{$programname=$turName;$agename='';};
 }
 
 ?>
 <div class="site-about">
 	<div  class="no-print">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::beginForm ( ['print/diplom', 'idT' => $turInfo->gettur('idT')], 'post', [] ) ?>
+    <?= Html::beginForm ( ['print/diplompdf', 'idT' => $turInfo->gettur('idT')], 'post', [] ) ?>
 <p> Название программы:   <?= Html::textInput ( 'programname', $programname, $options = ['class' => 'judg'] );	?></p>
-<p> Класс + возраст:   <?= Html::textInput ( 'agename', $agename, $options );	?></p>    
+ 
 <?= Html::submitButton('Submit', ['class' => 'submit']) ?>
 <?= Html::endForm ( )?>
 <?php
@@ -144,7 +145,7 @@ $lastKey=key($diploms);
 }
 </style>
 <?php
-	foreach ($diploms as $key=>$diplom) {
+	/*foreach ($diploms as $key=>$diplom) {
 			if ($lastKey==$key) echo '<div>'; else	echo '<div class="next-page">';
 		echo '<div class="" style="height: 150px;"> </div>';
 		echo '<div class="diplom1" style="height: 110px;">'.$diplom['name'].'</div>';
@@ -157,7 +158,7 @@ $lastKey=key($diploms);
 		echo '<div class="diplom4" style="height: 50px;">'.$Competition->data.' г. Москва</div>';
 		echo '</div>';
 	} 
-		
+		*/
 	
 	
 ?></center>

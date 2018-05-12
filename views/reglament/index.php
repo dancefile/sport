@@ -85,7 +85,14 @@ $this->params['breadcrumbs'][] = $this->title;
 //        ],
 
         'name',
+        [
+            'attribute'=>'reg_pairs', 
+            'width'=>'50px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->getCatRegPairs($model->id);
+            },
 
+        ],
         [
             'attribute' => 'clas',
             'width' => '70px',
@@ -148,14 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
             },
             'width' => '100px',
         ],
-        [
-            'attribute'=>'reg_pairs', 
-            'width'=>'50px',
-            'value'=>function ($model, $key, $index, $widget) { 
-                return $model->getCatRegPairs($model->id);
-            },
 
-        ],
 
         [
             'attribute'=>'judges_count', 

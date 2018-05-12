@@ -179,7 +179,7 @@ $pdf->SetAutoPageBreak('On',5);
         		switch ($turInfo->gettur("typeSkating")) {
           case '1'://балы
           if ($turInfo->getTur('dancing_order')==1) {
-			echo $this->renderPartial('begunAllHeats', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
+			$this->renderPartial('begunAllHeats', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
 			} else { 
                               $this->renderPartial('begunpdf', ['pdf'=>$pdf,'turInfo' => $turInfo, 'judge' =>$judge, 'pole' => TRUE, 'polename' => 'балы', 'prosmotr'=>False, 'Competition' => $Competition]);
                         }
@@ -199,7 +199,7 @@ $pdf->SetAutoPageBreak('On',5);
         
            }
         
-        
+    
        $pdf->Output();   
             
         }

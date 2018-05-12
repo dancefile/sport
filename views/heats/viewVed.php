@@ -71,7 +71,7 @@ echo GridView::widget([
     'columns' => $columns
 ]);
 }
- echo Html::a('Создать новые заходы', ['new','idT'=>$turInfo->getTur('idT')], ['class' => 'btn btn-success']);
+
  ?>
 
 </div>

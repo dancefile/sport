@@ -23,13 +23,13 @@ $this->title = 'Список участников';
 <div class="in-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <h4>Отделения</h4>
-    
+   
     <?php     
         foreach ($otd_list as $otd) {
             echo Html::a($otd->name, ['index', 'otd_id'=>$otd->id], ['class' => $otd_id==$otd->id ? 'active btn':'btn']);
         }
     ?>
-    
+     <?= Html::a('Регистрация', ['/registration/create'], ['class'=>'btn btn-success'])?>
     
     
     <?php \yii\widgets\Pjax::begin()?>

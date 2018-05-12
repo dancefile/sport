@@ -33,7 +33,7 @@ class HeatsController extends \yii\web\Controller
 	}
         
         
-	public function actionNew($idT=0) //задаем заходы автоматом
+	public function actionNew($idT=0,$AgeFlag=0) //задаем заходы автоматом
 	{
                       $arr=  explode(',', $idT) ;
 
@@ -49,7 +49,10 @@ class HeatsController extends \yii\web\Controller
             switch ($turInfo->gettur("typezahod")) {
                 case '1':
                     asort($inArr);
-                    $this->headNew($insetArr,$inArr,$couplePerHeat);
+                    if ($AgeFlag)
+                     $this->headNew($insetArr,$inArr,$couplePerHeat,null,$turInfo);
+                    else 
+                        $this->headNew($insetArr,$inArr,$couplePerHeat);
                     break;
                 case '2':
                     $this->shuffle_assoc($inArr);
@@ -126,10 +129,24 @@ class HeatsController extends \yii\web\Controller
 	
 	
 	
-	private function headNew(&$insetArr,$inArr,$couplePerHeat,$idDance=NULL) { //создаем массив для вставки в таблицу in_dance
+	private function headNew(&$insetArr,$inArr,$couplePerHeat,$idDance=NULL,$turInfo=NULL) { //создаем массив для вставки в таблицу in_dance
             $heat=1;
             $countCouple=0;
+           if ($turInfo!==NULL) {
+           foreach ($inArr as $key => &$nomer) { 
+               $age=0;
+            if (preg_match('/\((.*)\)/', $turInfo->GetCoupleName($key,'fname','<br>',true), $matches)) {
+                if (isset($matches[1])) {$age=$matches[1];}
+                
+            }
+            $nomer=$age;
+            unset($nomer);
+           }
+asort($inArr)      ;     
+           }
+            
             foreach ($inArr as $key => $nomer) {
+                 
                 if ($countCouple==$couplePerHeat) {$heat++;	$countCouple=0;};
                 $insetArr[]=[$key,$idDance,$heat];
                 $countCouple++;

@@ -7,7 +7,7 @@ use app\models\In;
 
 class Registration extends \yii\base\Model
 {
-    public $print_check=true;
+    public $print_check=false;
     public $d1_id;
     public $d1_sname;
     public $d1_name;
@@ -51,7 +51,7 @@ class Registration extends \yii\base\Model
     {
         return [
             [['d1_name', 'd2_name'], 'safe'],
-            [['d1_class_st', 'd1_class_la', 'd2_class_st', 'd2_class_la', 'print_check'], 'safe'],
+            [['d1_date','d2_date','d1_class_st', 'd1_class_la', 'd2_class_st', 'd2_class_la', 'print_check'], 'safe'],
             [['d1_booknumber', 'd2_booknumber'], 'safe'],
             [['club', 'city', 'country'], 'safe'],
             [['d1_sname', 'd2_sname'], 'safe'],

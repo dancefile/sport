@@ -44,7 +44,7 @@ use yii\bootstrap\Tabs;
                 ?>
                 <?= $form
                     ->field($model, 'd1_date')
-                    ->widget(DateControl::classname(), [
+                   ->widget(DateControl::classname(), [
                         // 'type' => DatePicker::TYPE_INPUT,
                         'value' => '',
                         'options' => ['placeholder' => 'ДР'],
@@ -71,7 +71,7 @@ use yii\bootstrap\Tabs;
                     ->label(false) 
                 ?>
 
-            	<br>v
+            	<br>
 
             	<?= $form
                     ->field($model, 'd2_sname',['inputOptions' => [

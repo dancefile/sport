@@ -8,7 +8,7 @@ use yii\grid\GridView;
 
 
 // $turInfo->gettur('')
-$this->title = $turInfo->gettur('name').' '.$turInfo->gettur('turname');
+$this->title = $turInfo->getTur('idT').'. '.$turInfo->gettur('name').' '.$turInfo->gettur('turname');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ]);//'new','idT'=>$turInfo->getTur('idT')
  echo Html::a('Создать новые заходы', ['','idT'=>$turInfo->getTur('idT')], ['class' => 'greatGeats btn btn-success']);
+  echo ' '.Html::a('Создать новые заходы с учетом возраста', ['','idT'=>$turInfo->getTur('idT')], ['class' => 'greatGeatsAge btn btn-success']);
  ?>
 
 </div>
@@ -78,6 +79,14 @@ window.onload=function(){
 $( ".greatGeats" ).click(function() {
   
 $.get( "<?='/heats/new?idT='.$turInfo->getTur('idT') ?>", function( ) {
+location.reload();
+});
+  return false;
+ });
+ 
+ $( ".greatGeatsAge" ).click(function() {
+  
+$.get( "<?='/heats/new?idT='.$turInfo->getTur('idT').'&AgeFlag=1' ?>", function( ) {
 location.reload();
 });
   return false;

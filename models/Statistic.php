@@ -4,7 +4,7 @@
 namespace app\models;
 
 use yii\data\ActiveDataProvider;
-
+use yii\data\ArrayDataProvider;
 class Statistic
 {
     
@@ -41,11 +41,40 @@ class Statistic
                 ->groupBy('club')
                 ->orderBy('club')
                 ;
+        $data=[];
+        $names=[];
+        foreach ($query->each() as $row) {
+        if ($row['dancer_count']){
+            if (isset($names[$row['club']])) {
+                $names[$row['club']]['dancer_count'] = $names[$row['club']]['dancer_count']+$row['dancer_count'];
+                $names[$row['club']]['in_count'] = $names[$row['club']]['in_count']+$row['in_count'];
+            }
+            else {
+              $names[$row['club']]=['id'=>$row['id'],'dancer_count'=>$row['dancer_count'],'in_count'=>$row['in_count']];  
+            }
         
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        }
+            
+        }
+         foreach ($names as $name => $arrName) {
+         $data[]=['club'=>$name,'id'=>$arrName['id'],'dancer_count'=>$arrName['dancer_count'],'in_count'=>$arrName['in_count']];    
+             
+         }
         
-        return $dataProvider;
+       // $dataProvider = new ActiveDataProvider([
+        //    'query' => $query,
+        //]);
+        //exit;
+       // return $dataProvider;
+        
+      return new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => 
+        	[
+            	'pageSize' =>  false,
+        	],
+
+    ]);  
+        
     }
 }

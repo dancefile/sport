@@ -4,12 +4,12 @@ namespace app\models\volod;
 
 class Competition extends \yii\base\Model
 {
-	public $name='Открытый региональный турнир МОТЛ';
-	public $shortname='Открытый региональный турнир МОТЛ';
-	public $data='25 марта 2018г.';
-	public $place='ТЗ Резиденция танца «Рублевское»';
-	public $org='Клюшин Николай';
-	public $chief='Тудинов Сергей';
+	public $name='Школа танца "Итоговый кубок SPORTDANCE"';
+	public $shortname='Итоговый кубок SPORTDANCE';
+	public $data='13 мая 2018г.';
+	public $place='ФСК Заречье';
+	public $org='Щукина Анна';
+	public $chief='Щукина Анна';
 	//public $='';
 }
 	

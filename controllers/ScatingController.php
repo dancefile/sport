@@ -114,7 +114,7 @@ class ScatingController extends \yii\web\Controller
 		return $this->render('about', ['message' => '<pre> Ошибка! ' .$message. '</pre>']);	
 	}//error
 
-	public function actionCalc($idT=0) //подсчет результатов тура
+	public function actionCalc($idT=0,$s1=2.6,$s2=2) //подсчет результатов тура
 	{
 		$tur = (new \yii\db\Query()) //получаем инфу о данном туре и категории
 		->select(['tur.category_id','turname'=>'tur.name','tur.ParNextTur','tur.dances','tur.nomer','category.name','tur.typeSkating'])
@@ -169,8 +169,8 @@ class ScatingController extends \yii\web\Controller
 					$krest=ceil($krest * 100/$count)/100; 
 					$sumArr[$key]=$krest;
 					$stepen=3;  
-					if ($krest>=3.5) {$stepen=2;}; 
-					if ($krest>=4.5) {$stepen=1;};
+					if ($krest>=$s2) {$stepen=2;}; 
+					if ($krest>=$s1) {$stepen=1;};
 					$stepeni[$key]=$stepen;  
 					$insetResultsArr[]=[$idT, $key, $stepen, $krest];
     			endforeach;
