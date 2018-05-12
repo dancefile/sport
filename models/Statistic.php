@@ -26,46 +26,68 @@ class Statistic
     }
     
     public function getStatClub() {
-        $query = new \yii\db\Query();        
-        $query 
-                ->select([
-                    'club.name club', 
-                    'club.id id', 
-                    'COUNT(DISTINCT(dancer.id)) dancer_count',
-                    'COUNT(DISTINCT(in.id)) in_count'
+        
+        $dancerArr=[];
+        $query = new \yii\db\Query();  
+        $query->select([
+                    'in.couple_id couple_id', 
+                    'in.id id',
+                    'in.who who',
+                    'couple.dancer_id_1 dancer_id_1',
+                    'couple.dancer_id_2 dancer_id_2',
                     ])
-                ->from('club')
-                ->join('LEFT JOIN', 'dancer', 'dancer.club=club.id')
-                ->join('LEFT JOIN', 'couple', 'couple.dancer_id_1=dancer.id OR couple.dancer_id_2=dancer.id')
-                ->join('LEFT JOIN', 'in', 'in.couple_id=couple.id')
-                ->groupBy('club')
-                ->orderBy('club')
+        ->from('in')
+        ->join('LEFT JOIN', 'tur', 'in.tur_id=tur.id')
+        ->join('LEFT JOIN', 'couple', 'in.couple_id=couple.id')
+                
+        ->where(['tur.nomer'=>1]);
+        foreach ($query->each() as $row) {
+            switch ($row['who']){
+                case 1:
+                    if (isset($dancerArr[$row['dancer_id_1']])) {$dancerArr[$row['dancer_id_1']]++;} else {$dancerArr[$row['dancer_id_1']]=1;};
+                    break;
+                case 2:
+                   if (isset($dancerArr[$row['dancer_id_2']])) {$dancerArr[$row['dancer_id_2']]++;} else {$dancerArr[$row['dancer_id_2']]=1;}; 
+                    break;
+                case 3:
+                    if (isset($dancerArr[$row['dancer_id_1']])) {$dancerArr[$row['dancer_id_1']]++;} else {$dancerArr[$row['dancer_id_1']]=1;};
+                    if (isset($dancerArr[$row['dancer_id_2']])) {$dancerArr[$row['dancer_id_2']]++;} else {$dancerArr[$row['dancer_id_2']]=1;};
+                    break;
+            }
+  
+        }
+        
+        $query = new \yii\db\Query(); 
+        $query->select([
+                    'dancer.id id',
+                    'club.name club', 
+                    'dancer.name name',
+                    'dancer.sname sname',
+                    ])
+                ->from('dancer')
+                ->join('LEFT JOIN', 'club', 'dancer.club=club.id')
+                ->where(['in', 'dancer.id' ,array_keys($dancerArr)])
                 ;
-        $data=[];
+
         $names=[];
         foreach ($query->each() as $row) {
-        if ($row['dancer_count']){
-            if (isset($names[$row['club']])) {
-                $names[$row['club']]['dancer_count'] = $names[$row['club']]['dancer_count']+$row['dancer_count'];
-                $names[$row['club']]['in_count'] = $names[$row['club']]['in_count']+$row['in_count'];
-            }
+        if (isset($names[$row['club']][$row['sname'].' '.$row['name']])) {
+                $names[$row['club']][$row['sname'].' '.$row['name']]=$names[$row['club']][$row['sname'].' '.$row['name']]+$dancerArr[$row['id']];} 
             else {
-              $names[$row['club']]=['id'=>$row['id'],'dancer_count'=>$row['dancer_count'],'in_count'=>$row['in_count']];  
+               $names[$row['club']][$row['sname'].' '.$row['name']]=$dancerArr[$row['id']]; 
             }
-        
-        }
             
         }
-         foreach ($names as $name => $arrName) {
-         $data[]=['club'=>$name,'id'=>$arrName['id'],'dancer_count'=>$arrName['dancer_count'],'in_count'=>$arrName['in_count']];    
+        
+       $namesSum=[];
+            foreach ($names as $name => $arrSName) {
+             $namesSum[$name]=['dancer_count'=>count($arrSName),'in_count'=> array_sum($arrSName)];   
+            }
+       $data=[];
+         foreach ($namesSum as $name => $arrName) {
+         $data[]=['club'=>$name,'dancer_count'=>$arrName['dancer_count'],'in_count'=>$arrName['in_count']];    
              
          }
-        
-       // $dataProvider = new ActiveDataProvider([
-        //    'query' => $query,
-        //]);
-        //exit;
-       // return $dataProvider;
         
       return new ArrayDataProvider([
             'allModels' => $data,

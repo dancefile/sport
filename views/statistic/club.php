@@ -13,7 +13,7 @@ $this->title = 'Статистика';
                 'class' => 'yii\grid\SerialColumn',
                 'options' => ['width' => '50'],
             ],
-            'id',
+
             'club:text:Клуб',
 //            'city:text:Город',
             'dancer_count:text:Количество танцоров',
