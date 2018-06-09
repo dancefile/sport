@@ -23,18 +23,27 @@ class Registration extends \yii\base\Model
     public $d2_class_la;
     public $d2_booknumber;
     public $club;
+    public $club_id;
     public $city;
+    public $city_id;
     public $country;
+    public $country_id;
+    public $d_trener1_id;
     public $d_trener1_name;
     public $d_trener1_sname;
+    public $d_trener2_id;
     public $d_trener2_name;
     public $d_trener2_sname;
+    public $d_trener3_id;
     public $d_trener3_name;
     public $d_trener3_sname;
+    public $d_trener4_id;
     public $d_trener4_name;
     public $d_trener4_sname;
+    public $d_trener5_id;
     public $d_trener5_name;
     public $d_trener5_sname;
+    public $d_trener6_id;
     public $d_trener6_name;
     public $d_trener6_sname;
     public $coupleId;
@@ -50,6 +59,8 @@ class Registration extends \yii\base\Model
     public function rules()
     {
         return [
+            [['d1_id', 'd2_id', 'club_id', 'city_id', 'country_id'], 'integer'],
+            [['d_trener1_id', 'd_trener2_id', 'd_trener3_id', 'd_trener4_id', 'd_trener5_id', 'd_trener6_id'], 'integer'],
             [['d1_name', 'd2_name'], 'safe'],
             [['d1_date','d2_date','d1_class_st', 'd1_class_la', 'd2_class_st', 'd2_class_la', 'print_check'], 'safe'],
             [['d1_booknumber', 'd2_booknumber'], 'safe'],
@@ -179,22 +190,28 @@ class Registration extends \yii\base\Model
         if ($dancer1){
             if (isset($dancer1->club0)){
                 $this->club = $dancer1->club0->name;
+                $this->club_id = $dancer1->club0->id;
             }
             if (isset($dancer1->club0->city)){
                 $this->city = $dancer1->club0->city->name;
+                $this->city_id = $dancer1->club0->city->id;
             }
             if (isset($dancer1->club0->city->country)){
                 $this->country = $dancer1->club0->city->country->name;
+                $this->country_id = $dancer1->club0->city->country->id;
             }
         } else {
             if (isset($dancer2->club0)){
                 $this->club = $dancer2->club0->name;
+                $this->club_id = $dancer2->club0->id;
             }
             if (isset($dancer2->club0->city)){
                 $this->city = $dancer2->club0->city->name;
+                $this->city_id = $dancer2->club0->city->id;
             }
             if (isset($dancer2->club0->city->country)){
                 $this->country = $dancer2->club0->city->country->name;
+                $this->country_id = $dancer2->club0->city->country->id;
             }
         }
         $this->loadDancerAttr($dancer1 , $dancer2);
@@ -267,6 +284,7 @@ class Registration extends \yii\base\Model
             foreach ($treners as $trener) {
                 $this->{'d_trener'. $i .'_name'} = $trener->trener->name;
                 $this->{'d_trener'. $i .'_sname'} = $trener->trener->sname;
+                $this->{'d_trener'. $i .'_id'} = $trener->trener->id;
                 $i++;
             }
         }
@@ -277,6 +295,7 @@ class Registration extends \yii\base\Model
             foreach ($treners as $key=>$trener) {
                 $this->{'d_trener'. $i .'_name'} = $trener->trener->name;
                 $this->{'d_trener'. $i .'_sname'} = $trener->trener->sname;
+                $this->{'d_trener'. $i .'_id'} = $trener->trener->id;
                 $i++;
             }
         }

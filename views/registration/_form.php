@@ -30,12 +30,47 @@ use yii\bootstrap\Tabs;
     	<div class=" flex-container">
             <div class="leftBlock flex-item one">
                           
-            	<?= $form
-                    ->field($model, 'd1_sname',['inputOptions' => [
-                                                                    'autocomplete' => 'off',
-                                                                    'autocorrect' => 'off']])
-                    ->textInput(['placeholder' => 'фамилия'])
-                    ->label(false) 
+            	<?= Html::activeHiddenInput($model, 'd1_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd2_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'club_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'city_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'country_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd_trener1_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd_trener2_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd_trener3_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd_trener4_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd_trener5_id'); ?>
+            	<?= Html::activeHiddenInput($model, 'd_trener6_id'); ?>
+                
+                <?php
+                    $template = '<div><p>{{sname}} {{name}} {{date}}</p></div>';
+                    
+                    echo $form->field($model, 'd1_sname')
+                        ->widget(Typeahead::classname(), [
+                            'options' => [
+                                'placeholder' => 'Фамилия',
+                                'autofocus' => 'autofocus',
+                            ],
+                            'dataset' => [
+                                [
+                                    'display' => 'sname',
+                                    'remote' => [
+                                        'url' => Url::to(['in/dancer-list']) . '?q=%QUERY',
+                                        'wildcard' => '%QUERY'
+                                    ],
+                                    'limit' => 10,
+                                    'templates' => [
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
+                                        'suggestion' => new JsExpression("Handlebars.compile('{$template}')")
+                                    ]
+                                ]
+                            ],
+                            'pluginEvents' =>  [
+                                'typeahead:selected' => 'function(event, data) {find_in(data,"d1");}',
+                            ],
+                        ])
+                        ->label(false)
+                    ;
                 ?>
                 <?= $form
                     ->field($model, 'd1_name')
@@ -73,12 +108,34 @@ use yii\bootstrap\Tabs;
 
             	<br>
 
-            	<?= $form
-                    ->field($model, 'd2_sname',['inputOptions' => [
-                                                                    'autocomplete' => 'off',
-                                                                    'autocorrect' => 'off']])
-                    ->textInput(['placeholder' => 'фамилия'])
-                    ->label(false) 
+            	<?php
+                    $template = '<div><p>{{sname}} {{name}} {{date}}</p></div>';
+                    
+                    echo $form->field($model, 'd2_sname')
+                        ->widget(Typeahead::classname(), [
+                            'options' => [
+                                'placeholder' => 'Фамилия',
+                            ],
+                            'dataset' => [
+                                [
+                                    'display' => 'sname',
+                                    'remote' => [
+                                        'url' => Url::to(['in/dancer-list']) . '?q=%QUERY',
+                                        'wildcard' => '%QUERY'
+                                    ],
+                                    'limit' => 10,
+                                    'templates' => [
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
+                                        'suggestion' => new JsExpression("Handlebars.compile('{$template}')")
+                                    ]
+                                ]
+                            ],
+                            'pluginEvents' =>  [
+                                'typeahead:selected' => 'function(event, data) {find_in(data,"d2");}',
+                            ],
+                        ])
+                        ->label(false)
+                    ;
                 ?>
                 <?= $form
                     ->field($model, 'd2_name')
@@ -115,24 +172,45 @@ use yii\bootstrap\Tabs;
                 ?>
                 <div id="coupleages"></div>
 
-             	
-                <?= $form
-                    ->field($model, 'club',['inputOptions' => ['class' => 'simple',
-                                                                    'autocomplete' => 'off',
-                                                                    'autocorrect' => 'off']])
-                    ->textInput(['placeholder' => 'Клуб'])
-//                    ->widget(TypeaheadBasic::classname(), [
-//                        'data' => $model->clubList,
-//                        'options' => ['placeholder' => 'Клуб'],
-//                        'pluginOptions' => ['highlight'=>true],
-//                    ])
-                    ->label(false);
+             	<?php
+                    $template = '<div><p>{{club_name}} {{city_name}}</p></div>';
+                    
+                    echo $form->field($model, 'club')
+                        ->widget(Typeahead::classname(), [
+                            'options' => [
+                                'placeholder' => 'Клуб',
+                            ],
+                            'dataset' => [
+                                [
+                                    'display' => 'club_name',
+                                    'remote' => [
+                                        'url' => Url::to(['in/club-list']) . '?q=%QUERY',
+                                        'wildcard' => '%QUERY'
+                                    ],
+                                    'limit' => 10,
+                                    'templates' => [
+                                        'notFound' => '<div class="text-danger" style="padding:0 8px">Unable to find repositories for selected query.</div>',
+                                        'suggestion' => new JsExpression("Handlebars.compile('{$template}')")
+                                    ]
+                                ]
+                            ],
+                            'pluginEvents' =>  [
+                                'typeahead:selected' => 'function(event, data) {'
+                                . '$("#registration-club_id").val(data.club_id);'
+                                . '$("#registration-city_id").val(data.city_id);'
+                                . '$("#registration-city").val(data.city_name);'
+                                . '$("#registration-country_id").val(data.country_id);'
+                                . '$("#registration-country").val(data.country_name);}',
+                                'typeahead:autocomplete' => 'function(event, data) {find_in(data,"d2");}'
+                            ],
+                        ])
+                        ->label(false)
+                    ;
                 ?>
+                
 
                 <?= $form
-                    ->field($model, 'city',[ 'inputOptions' => ['class' => 'simple',
-                                                                    'autocomplete' => 'off',
-                                                                    'autocorrect' => 'off']])
+                    ->field($model, 'city')
                     ->textInput(['placeholder' => 'Город'])
 //                    ->widget(TypeaheadBasic::classname(), [
 //                        'data' => $model->cityList,
@@ -157,9 +235,7 @@ use yii\bootstrap\Tabs;
                 <div id="trener_list">
                     <div id="trener_1" class="trenerItem">
                         <?= $form
-                        ->field($model, 'd_trener1_sname',['inputOptions' => [
-                                                                    'autocomplete' => 'off',
-                                                                    'autocorrect' => 'off']])
+                        ->field($model, 'd_trener1_sname')
                         ->textInput(['placeholder' => 'Фамилия тренера'])
 //                        ->widget(TypeaheadBasic::classname(), [
 //                            'data' => $model->trenerSnameList,

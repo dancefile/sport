@@ -336,103 +336,153 @@ class InController extends Controller
            echo Json::encode($out); 
         }
         
-    
-    public function actionDancerList($q = null,$id_search = null) {
+    public function actionDancerList($q = null) 
+    {
         $query = new Query;
 
-        $out = [];
-        
-     switch ($id_search) {   
-        
-        case 'registration-d1_sname': //фамилия партнера
-        case 'registration-d2_sname': //фамилия партнерши	
-        
-        
-           $query->select(['sname', 'name', 'id'])
+        $query->select('*')
             ->from('dancer')
-            ->where('sname LIKE "%' . $q .'%"')
-            ->orderBy('sname')
-            ->limit(10);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
+            ->where('dancer.sname LIKE "%' . $q .'%"')
+//            ->join('LEFT JOIN', 'couple', 'couple.dancer_id_1=dancer.id OR couple.dancer_id_2=dancer.id')
+            ->orderBy('sname');
+        $command = $query->createCommand();
+        $data = $command->queryAll();
        
-          foreach ($data as $d) {
-            $out[] = [
-                'type' => 1,
-                'name' => $d['sname'] .' '.$d['name'],
-                'id' => $d['id'],
-            ];
-           }
-        
-        break;
-        
-        
-        case 'registration-club': //клуб
-           
-           $query->select(['name'])->distinct()
-            ->from('club')
-            ->where('name LIKE "%' . $q .'%"')
-            ->orderBy('name')
-             ->limit(10);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-       
-          foreach ($data as $d) {
-            $out[] = [
-                'type' => 1,
-                'name' => $d['name'],
-                'id' => 0,
-            ];
-           }
-           break;
-        case 'registration-city': //город
-           $query->select(['name'])->distinct()
-            ->from('city')
-            ->where('name LIKE "%' . $q .'%"')
-            ->orderBy('name')
-             ->limit(10);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-       
-          foreach ($data as $d) {
-            $out[] = [
-                'type' => 1,
-                'name' => $d['name'],
-                'id' => 0,
-            ];
-           }
-           break; 
-           
-           case 'registration-d_trener1_sname'://фамилия тренера
-           case 'registration-d_trener2_sname':
-           case 'registration-d_trener3_sname':
-           case 'registration-d_trener4_sname':
-           case 'registration-d_trener5_sname':
-           case 'registration-d_trener6_sname':
-           
-                      $query->select(['sname', 'name', 'id'])
-            ->from('trener')
-            ->where('sname LIKE "%' . $q .'%"')
-            ->orderBy('sname')
-            ->limit(10);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-       
-          foreach ($data as $d) {
-            $out[] = [
-                'type' => 1,
-                'name' => $d['sname'] .' '.$d['name'],
-                'id' => $d['id'],
-            ];
-           }
-               
-           break; 
-           
-     }
-        
-        
-        echo Json::encode($out);
+        echo Json::encode($data);
     }
+    public function actionClubList($q = null) 
+    {
+        $query = new Query;
+
+        $query->select(['club.id club_id', 'club.name club_name', 'city.id city_id', 'city.name city_name'])
+            ->from('club')
+            ->where('club.name LIKE "%' . $q .'%"')
+            ->join('LEFT JOIN', 'city', 'city.id=club.city_id')
+            ->orderBy('city.name');
+        $command = $query->createCommand();
+        $data = $command->queryAll();
+       
+        echo Json::encode($data);
+    }
+      
+    public function actionFindByDancerId($dancer_id) {
+        $couple = Couple::find()->where(['or', ['dancer_id_1' => $dancer_id], ['dancer_id_2' => $dancer_id]])->one();
+        if ($couple){
+            $in = In::find()->where(['couple_id' => $couple->id])->one();
+            if ($in){
+                $out['id'] = $in->id;
+                $out['number'] = $in->nomer;
+                $out['couple_id'] = $in->couple_id;
+                $out['dancer1_name'] = $in->couple->dancerId1? $in->couple->dancerId1->name: '';
+                $out['dancer1_sname'] = $in->couple->dancerId1? $in->couple->dancerId1->sname: '';
+                $out['dancer2_name'] = $in->couple->dancerId2? $in->couple->dancerId2->name: '';
+                $out['dancer2_sname'] = $in->couple->dancerId2? $in->couple->dancerId2->name: '';
+            
+                echo Json::encode($out);
+            }
+        } else {
+            return false;
+        }
+        
+    }
+        
+    
+//    public function actionDancerList($q = null,$id_search = null) {
+//        $query = new Query;
+//
+//        $out = [];
+//        
+//     switch ($id_search) {   
+//        
+//        case 'registration-d1_sname': //фамилия партнера
+//        case 'registration-d2_sname': //фамилия партнерши	
+//        
+//        
+//           $query->select(['sname', 'name', 'id'])
+//            ->from('dancer')
+//            ->where('sname LIKE "%' . $q .'%"')
+//            ->orderBy('sname')
+//            ->limit(10);
+//            $command = $query->createCommand();
+//            $data = $command->queryAll();
+//       
+//          foreach ($data as $d) {
+//            $out[] = [
+//                'type' => 1,
+//                'name' => $d['sname'] .' '.$d['name'],
+//                'id' => $d['id'],
+//            ];
+//           }
+//        
+//        break;
+//        
+//        
+//        case 'registration-club': //клуб
+//           
+//           $query->select(['name'])->distinct()
+//            ->from('club')
+//            ->where('name LIKE "%' . $q .'%"')
+//            ->orderBy('name')
+//             ->limit(10);
+//            $command = $query->createCommand();
+//            $data = $command->queryAll();
+//       
+//          foreach ($data as $d) {
+//            $out[] = [
+//                'type' => 1,
+//                'name' => $d['name'],
+//                'id' => 0,
+//            ];
+//           }
+//           break;
+//        case 'registration-city': //город
+//           $query->select(['name'])->distinct()
+//            ->from('city')
+//            ->where('name LIKE "%' . $q .'%"')
+//            ->orderBy('name')
+//             ->limit(10);
+//            $command = $query->createCommand();
+//            $data = $command->queryAll();
+//       
+//          foreach ($data as $d) {
+//            $out[] = [
+//                'type' => 1,
+//                'name' => $d['name'],
+//                'id' => 0,
+//            ];
+//           }
+//           break; 
+//           
+//           case 'registration-d_trener1_sname'://фамилия тренера
+//           case 'registration-d_trener2_sname':
+//           case 'registration-d_trener3_sname':
+//           case 'registration-d_trener4_sname':
+//           case 'registration-d_trener5_sname':
+//           case 'registration-d_trener6_sname':
+//           
+//                      $query->select(['sname', 'name', 'id'])
+//            ->from('trener')
+//            ->where('sname LIKE "%' . $q .'%"')
+//            ->orderBy('sname')
+//            ->limit(10);
+//            $command = $query->createCommand();
+//            $data = $command->queryAll();
+//       
+//          foreach ($data as $d) {
+//            $out[] = [
+//                'type' => 1,
+//                'name' => $d['sname'] .' '.$d['name'],
+//                'id' => $d['id'],
+//            ];
+//           }
+//               
+//           break; 
+//           
+//     }
+//        
+//        
+//        echo Json::encode($out);
+//    }
     
     
 

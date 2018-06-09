@@ -17,6 +17,7 @@ class RegService
 {
     public static function regSave($model, $update)
     {
+        
         $ds = self::dancerSave($model, $update);
         $existInPairRecors = $model->turInPair($model->coupleId);
         $existInSoloRecors = $model->turInSolo($model->coupleId);
@@ -160,10 +161,10 @@ class RegService
     private function dancerSave($model, $update)
     {
         if ($model['d1_sname']) {
-            if (!$update){
-                $d1 = new Dancer;
-            } else {
+            if ($update || $model->d1_id){
                 $d1 = Dancer::findOne($model->d1_id);
+            } else {
+                $d1 = new Dancer;
             }
             $d1->sname = $model['d1_sname'];
             $d1->name = $model['d1_name'];
@@ -199,11 +200,22 @@ class RegService
     
     private function coupleSave($d1, $d2)
     {
-        $couple = new Couple;
-        $couple->dancer_id_1 = $d1? $d1->id:NULL;
-        $couple->dancer_id_2 = $d2? $d2->id:NULL;
-        $couple->save(false);
+        $dancer_1_id = $d1? $d1->id:NULL;
+        $dancer_2_id = $d2? $d2->id:NULL;
         
+        $couple = Couple::find()
+                ->where([
+                    'dancer_id_1'=>$dancer_1_id,
+                    'dancer_id_2'=>$dancer_2_id,
+                ])
+                ->one();
+
+        if (!$couple){
+            $couple = new Couple;
+            $couple->dancer_id_1 = $dancer_1_id;
+            $couple->dancer_id_2 = $dancer_2_id;
+            $couple->save(false);
+        }
         return $couple->id;
     }
 
