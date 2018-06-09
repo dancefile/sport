@@ -22,34 +22,28 @@ class RegService
         $existInPairRecors = $model->turInPair($model->coupleId);
         $existInSoloRecors = $model->turInSolo($model->coupleId);
         
-        if(!$update){
-            $cp = self::coupleSave($ds[0], $ds[1]);
+        if($model->coupleId){
+            $cp = self::coupleUpdate($ds[0], $ds[1], $model->coupleId);
         } else {
-            $cp = $model->coupleId;
+            $cp = self::coupleSave($ds[0], $ds[1]);
         }
         
         if (array_filter($model->turSolo_M)) {
             self::inSave($model->turSolo_M, $cp, 1);
         }
-        if ($update){
-            self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_M, 1);
-        }
         
         if (array_filter($model->turSolo_W)) {
             self::inSave($model->turSolo_W, $cp, 2);
         }
-        if ($update){
-            self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_W, 2);
-        }
-
+        
         if (array_filter($model->turPair)) {
             self::inSave($model->turPair, $cp, 3);
         }
         if ($update){
+            self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_M, 1);
+            self::deleteInSaveRecord($existInSoloRecors, $model->turSolo_W, 2);
             self::deleteInSaveRecord($existInPairRecors, $model->turPair, 3);
-        }
         
-        if ($update){
             if ($ds[0]){
                 $to_delete[] = $ds[0]->id;
             }
@@ -178,10 +172,10 @@ class RegService
             $d1 = NULL;
         }
         if ($model['d2_sname']) {
-            if (!$update){
-                $d2 = new Dancer;
-            } else {
+            if ($update || $model->d2_id){
                 $d2 = Dancer::findOne($model->d2_id);
+            } else {
+                $d2 = new Dancer;
             }
             $d2->sname = $model['d2_sname'];
             $d2->name = $model['d2_name'];
@@ -203,19 +197,24 @@ class RegService
         $dancer_1_id = $d1? $d1->id:NULL;
         $dancer_2_id = $d2? $d2->id:NULL;
         
-        $couple = Couple::find()
-                ->where([
-                    'dancer_id_1'=>$dancer_1_id,
-                    'dancer_id_2'=>$dancer_2_id,
-                ])
-                ->one();
-
-        if (!$couple){
-            $couple = new Couple;
-            $couple->dancer_id_1 = $dancer_1_id;
-            $couple->dancer_id_2 = $dancer_2_id;
-            $couple->save(false);
-        }
+        $couple = new Couple;
+        $couple->dancer_id_1 = $dancer_1_id;
+        $couple->dancer_id_2 = $dancer_2_id;
+        $couple->save(false);
+        
+        return $couple->id;
+    }
+    
+    private function coupleUpdate($d1, $d2, $couple_id)
+    {
+        $dancer_1_id = $d1? $d1->id:NULL;
+        $dancer_2_id = $d2? $d2->id:NULL;
+        
+        $couple = Couple::findOne($couple_id);
+        $couple->dancer_id_1 = $dancer_1_id;
+        $couple->dancer_id_2 = $dancer_2_id;
+        $couple->save(false);
+        
         return $couple->id;
     }
 
